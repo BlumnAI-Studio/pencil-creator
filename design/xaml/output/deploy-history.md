@@ -14,3 +14,4 @@
 | 2026-04-28 | v1.0.9 | sample08 추가: 요르단의 우주여행 (PixiJS 2.5D 우주 탐사·요르단의 보물획득 UX·스테이지 목표 루프·개선된 우주선 HUD) |
 | 2026-04-28 | v1.1.0 | sample09 추가: Pixel Voice Lab (sample02 AI Voice Components의 PixiJS 픽셀 아트 UI 재해석·블록형 음성파동·챗봇·상담사 콘솔·데이터센터 노드) |
 | 2026-05-06 | v1.1.1 | sample010 + sample011 추가: Avatar Studio (CAT17 Character Animation 6 기법·살아있는 아바타·군중 16) + LUMIÈRE FUTUR (Apple sticky scrollytelling·47층 floor scrub·가로 핀 트랙·제미나이 photoreal 17장·shimmer 마감재) |
+| 2026-05-07 | v1.1.2 | sample12 추가: LUMIÈRE 2300 (라이트 사이버펑크 미래도시 분양·Lenis smooth scroll·CSS view-timeline·film-roll 타이틀·PixiJS 5-lane sky traffic·잡지 zigzag/spread·제미나이 photoreal 23장·10 chapter) |
