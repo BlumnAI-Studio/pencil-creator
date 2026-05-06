@@ -109,19 +109,33 @@
   <div class="ch-tag"><span class="num">CH-01</span><span>The 7 Districts</span></div>
 </section>
 
-<!-- ░░ CH-02 · SKY LANES — full bleed PixiJS canvas ░░ -->
+<!-- ░░ CH-02 · SKY LANES — photoreal BG + alpha cyber cars + diverse typo ░░ -->
 <section id="ch-02" class="ch ch-skylane">
-  <div class="sl-bg"><canvas id="sl-pixi" class="sl-pixi" aria-hidden="true"></canvas></div>
+  <div class="sl-bg">
+    <img src="img/lane-bg.png" alt="" class="sl-bg-img">
+    <canvas id="sl-pixi" class="sl-pixi" aria-hidden="true"></canvas>
+    <div class="sl-veil"></div>
+  </div>
   <div class="sl-content">
-    <div class="ch-eyebrow light"><span class="num">02</span><span>SKY-LANE NETWORK</span></div>
-    <h2 class="ch-title light shift-y">Diving Into<br>the Lanes</h2>
-    <p class="ch-body light">Five sky-lanes stack the city. Local shuttles, express ribbons, the orbit gate above — your address is one ride from anywhere.</p>
+    <div class="ch-eyebrow light glitch-label" data-text="02 · SKY-LANE NETWORK">
+      <span class="num">02</span>
+      <span class="decode" data-decode="SKY-LANE NETWORK">SKY-LANE NETWORK</span>
+    </div>
+    <h2 class="ch-title light flip-title">
+      <span class="line"><span class="word"><i>D</i><i>i</i><i>v</i><i>i</i><i>n</i><i>g</i></span> <span class="word"><i>I</i><i>n</i><i>t</i><i>o</i></span></span>
+      <span class="line"><span class="word"><i>t</i><i>h</i><i>e</i></span> <span class="word"><i>L</i><i>a</i><i>n</i><i>e</i><i>s</i></span></span>
+    </h2>
+    <p class="ch-body light line-mask">
+      <span class="lm">Five sky-lanes stack the city.</span>
+      <span class="lm">Local shuttles, express ribbons, the orbit gate above —</span>
+      <span class="lm">your address is one ride from anywhere.</span>
+    </p>
     <div class="sl-lanes">
-      <div class="sl-lane"><span class="ll" style="background:#FFB800"></span><span class="lname">GROUND</span><span class="lmeta">Pedestrian + nature path</span></div>
-      <div class="sl-lane"><span class="ll" style="background:#00C8E8"></span><span class="lname">L1 LOCAL</span><span class="lmeta">30 km/h · auto-shuttle</span></div>
-      <div class="sl-lane"><span class="ll" style="background:#FF6BC1"></span><span class="lname">L2 CITY</span><span class="lmeta">80 km/h · district links</span></div>
-      <div class="sl-lane"><span class="ll" style="background:#8B6FFF"></span><span class="lname">L3 EXPRESS</span><span class="lmeta">200 km/h · cross-city</span></div>
-      <div class="sl-lane"><span class="ll" style="background:#B5FF3A"></span><span class="lname">L4 ORBIT</span><span class="lmeta">Mars shuttle launch</span></div>
+      <div class="sl-lane" style="--c:#FFB800"><span class="ll"></span><span class="lname">GROUND</span><span class="lmeta typewriter">Pedestrian + nature path</span></div>
+      <div class="sl-lane" style="--c:#00C8E8"><span class="ll"></span><span class="lname">L1&nbsp;LOCAL</span><span class="lmeta typewriter">30 km/h · auto-shuttle</span></div>
+      <div class="sl-lane" style="--c:#FF6BC1"><span class="ll"></span><span class="lname">L2&nbsp;CITY</span><span class="lmeta typewriter">80 km/h · district links</span></div>
+      <div class="sl-lane" style="--c:#8B6FFF"><span class="ll"></span><span class="lname">L3&nbsp;EXPRESS</span><span class="lmeta typewriter">200 km/h · cross-city</span></div>
+      <div class="sl-lane" style="--c:#B5FF3A"><span class="ll"></span><span class="lname">L4&nbsp;ORBIT</span><span class="lmeta typewriter">Mars shuttle launch</span></div>
     </div>
   </div>
   <div class="ch-tag light"><span class="num">CH-02</span><span>Diving Into the Lanes</span></div>

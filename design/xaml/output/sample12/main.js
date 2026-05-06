@@ -140,7 +140,7 @@
     }
   }
 
-  // ───── 6) PixiJS Sky-lane traffic ─────
+  // ───── 6) PixiJS Sky-lane traffic — photoreal car sprites on screen-blend ─────
   if (typeof PIXI !== 'undefined') {
     const canvas = document.getElementById('sl-pixi');
     if (canvas) {
@@ -150,50 +150,121 @@
         backgroundAlpha: 0,
         antialias: true,
       });
-      const drawBg = () => {
-        const g = new PIXI.Graphics();
-        const w = app.screen.width;
-        const h = app.screen.height;
-        // horizon line
-        g.lineStyle(1, 0x00C8E8, 0.3).moveTo(0, h * 0.85).lineTo(w, h * 0.85);
-        app.stage.addChild(g);
-      };
-      drawBg();
-      const laneY = (i, h) => h * (0.18 + i * 0.16);
-      const laneColors = [0xB5FF3A, 0x00C8E8, 0xFF6BC1, 0x8B6FFF, 0xFFB800];
-      const laneSpeed = [-1.8, -2.6, 1.4, 2.2, 1.0];
-      const cars = [];
-      const NUM = 22;
-      for (let i = 0; i < NUM; i++) {
-        const lane = Math.floor(Math.random() * 5);
-        const c = new PIXI.Container();
-        const body = new PIXI.Graphics();
-        const color = laneColors[lane];
-        body.beginFill(0x1A1F2E).drawRoundedRect(-22, -8, 44, 16, 6).endFill();
-        body.beginFill(color, 0.95).drawRoundedRect(-18, -5, 36, 10, 4).endFill();
-        const tail = new PIXI.Graphics();
-        tail.beginFill(color, 0.5).drawCircle(-30, 0, 7).endFill();
-        tail.beginFill(color, 0.25).drawCircle(-46, 0, 11).endFill();
-        tail.beginFill(color, 0.12).drawCircle(-66, 0, 16).endFill();
-        c.addChild(tail, body);
-        c.x = Math.random() * app.screen.width;
-        c.y = laneY(lane, app.screen.height);
-        c.alpha = 0.92;
-        c._lane = lane;
-        c._speed = laneSpeed[lane] * (0.7 + Math.random() * 0.6);
-        app.stage.addChild(c);
-        cars.push(c);
-      }
-      app.ticker.add((delta) => {
-        for (const c of cars) {
-          c.x += c._speed * delta;
-          if (c._speed < 0 && c.x < -80) c.x = app.screen.width + 80;
-          if (c._speed > 0 && c.x > app.screen.width + 80) c.x = -80;
-          c.y = laneY(c._lane, app.screen.height);
+      const laneY = (i, h) => h * (0.28 + i * 0.13);
+      const laneSpeed = [-1.6, -2.2, 1.2, 2.0, 0.8]; // 5 lanes
+      const carUrls = ['img/car-cyan.png', 'img/car-magenta.png', 'img/car-violet.png'];
+      const tints = [0xB5FF3A, 0x00C8E8, 0xFF6BC1, 0x8B6FFF, 0xFFB800];
+
+      Promise.all(carUrls.map((url) => PIXI.Assets.load(url).catch(() => null))).then((textures) => {
+        const valid = textures.filter(Boolean);
+        if (valid.length === 0) return;
+        const cars = [];
+        const NUM = 14;
+        for (let i = 0; i < NUM; i++) {
+          const lane = Math.floor(Math.random() * 5);
+          const tex = valid[Math.floor(Math.random() * valid.length)];
+          const sprite = new PIXI.Sprite(tex);
+          sprite.anchor.set(0.5);
+          // size — small flying cars (60-90px tall) fit in lane corridor
+          const targetH = 50 + Math.random() * 30;
+          const ratio = tex.width / tex.height;
+          sprite.height = targetH;
+          sprite.width = targetH * ratio;
+          sprite.x = Math.random() * app.screen.width;
+          sprite.y = laneY(lane, app.screen.height);
+          sprite.alpha = 0.92;
+          // Slight color tint variation per lane
+          sprite.tint = tints[lane];
+          sprite._lane = lane;
+          sprite._speed = laneSpeed[lane] * (0.7 + Math.random() * 0.6);
+          // flip horizontally if speed is negative so they face direction
+          if (sprite._speed < 0) sprite.scale.x = -Math.abs(sprite.scale.x);
+          else sprite.scale.x = Math.abs(sprite.scale.x);
+          // depth via scale + alpha
+          const depth = 0.7 + Math.random() * 0.5;
+          sprite.scale.x *= depth;
+          sprite.scale.y *= depth;
+          sprite.alpha *= depth;
+          app.stage.addChild(sprite);
+          cars.push(sprite);
         }
+        app.ticker.add((delta) => {
+          for (const c of cars) {
+            c.x += c._speed * delta;
+            const w = Math.abs(c.width) + 80;
+            if (c._speed < 0 && c.x < -w) c.x = app.screen.width + w;
+            if (c._speed > 0 && c.x > app.screen.width + w) c.x = -w;
+            c.y = laneY(c._lane, app.screen.height);
+          }
+        });
       });
     }
   }
+
+  // ───── 7) Decode scramble — chapter labels ─────
+  function scrambleText(el) {
+    const final = el.dataset.decode || el.textContent;
+    const chars = '!@#$%^&*()_-+=[]{}|;:,./<>?ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let frame = 0;
+    const total = 24;
+    const tick = () => {
+      let out = '';
+      for (let i = 0; i < final.length; i++) {
+        if (i < (frame / total) * final.length) {
+          out += final[i];
+        } else if (final[i] === ' ' || final[i] === '·' || final[i] === '-') {
+          out += final[i];
+        } else {
+          out += chars[Math.floor(Math.random() * chars.length)];
+        }
+      }
+      el.textContent = out;
+      frame++;
+      if (frame <= total) requestAnimationFrame(tick);
+      else el.textContent = final;
+    };
+    tick();
+  }
+  const decodeIo = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !entry.target._decoded) {
+        entry.target._decoded = true;
+        scrambleText(entry.target);
+        decodeIo.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.decode').forEach((el) => decodeIo.observe(el));
+
+  // ───── 8) Typewriter — meta lane text ─────
+  function typewriterText(el) {
+    const final = el.textContent;
+    el.textContent = '';
+    let i = 0;
+    const speed = 22;
+    const tick = () => {
+      if (i < final.length) {
+        el.textContent += final[i++];
+        setTimeout(tick, speed + Math.random() * 30);
+      } else {
+        el.classList.add('done');
+      }
+    };
+    tick();
+  }
+  const typeIo = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !entry.target._typed) {
+        entry.target._typed = true;
+        // small stagger by index
+        const delay = Array.from(entry.target.parentElement.parentElement.children)
+          .indexOf(entry.target.parentElement) * 220;
+        setTimeout(() => typewriterText(entry.target), delay);
+        typeIo.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.typewriter').forEach((el) => typeIo.observe(el));
 
   console.info(
     '%cLUMIÈRE 2300 · sample12 v2',

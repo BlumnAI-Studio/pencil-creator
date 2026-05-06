@@ -663,10 +663,10 @@ img, svg { display: block; max-width: 100%; }
   backdrop-filter: blur(8px);
 }
 
-/* ═════════ CH-02 · Sky lanes — full bleed ═════════ */
+/* ═════════ CH-02 · Sky lanes — photoreal BG + alpha cars + diverse typo ═════════ */
 .ch-skylane {
   position: relative;
-  background: linear-gradient(180deg, #1A0B2E 0%, #3D1B6B 50%, #FF6BC1 100%);
+  background: #1A0B2E;
   color: #FFFFFF;
   min-height: 110vh;
   padding: 140px 0 120px;
@@ -675,9 +675,35 @@ img, svg { display: block; max-width: 100%; }
 .sl-bg {
   position: absolute; inset: 0;
   z-index: 0;
+  overflow: hidden;
+}
+.sl-bg-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.78) saturate(1.1);
+  animation: sl-park linear both;
+  animation-timeline: view();
+  animation-range: entry 0% exit 100%;
+  will-change: transform;
+}
+@keyframes sl-park {
+  from { transform: scale(1.06) translateY(0); }
+  to   { transform: scale(1.18) translateY(-6%); }
 }
 .sl-pixi {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
+  /* photoreal cars on black BG → SCREEN blend = black drops out */
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.sl-veil {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(26, 11, 46, 0.5) 0%, rgba(26, 11, 46, 0) 30%),
+    linear-gradient(135deg, rgba(26, 11, 46, 0) 0%, rgba(26, 11, 46, 0.55) 100%),
+    radial-gradient(ellipse 50% 50% at 30% 50%, rgba(10, 14, 30, 0.45) 0%, transparent 70%);
+  pointer-events: none;
 }
 .sl-content {
   position: relative;
@@ -693,29 +719,42 @@ img, svg { display: block; max-width: 100%; }
 }
 .sl-content > .ch-eyebrow,
 .sl-content > .ch-title,
-.sl-content > .ch-body { grid-column: 1; max-width: 600px; }
+.sl-content > .ch-body { grid-column: 1; max-width: 640px; }
 .sl-lanes {
   grid-column: 2; grid-row: 1 / 4;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px) saturate(140%);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px) saturate(160%);
   padding: 32px 36px;
   border-radius: var(--r-xl);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  display: flex; flex-direction: column; gap: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  display: flex; flex-direction: column; gap: 12px;
   align-self: end;
 }
 .sl-lane {
+  position: relative;
   display: grid;
-  grid-template-columns: 36px 1fr 1.3fr;
-  gap: 14px; align-items: center;
-  padding: 12px 0;
+  grid-template-columns: 60px 1fr 1.6fr;
+  gap: 12px; align-items: center;
+  padding: 14px 0;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+  transition: transform 0.5s var(--easing);
 }
 .sl-lane:last-child { border-bottom: none; }
+.sl-lane:hover { transform: translateX(8px); }
 .sl-lane .ll {
-  width: 24px; height: 4px;
+  height: 4px; width: 100%;
   border-radius: 2px;
-  box-shadow: 0 0 10px currentColor;
+  background: var(--c, #00C8E8);
+  box-shadow: 0 0 12px var(--c, #00C8E8);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: bar-grow linear both;
+  animation-timeline: view();
+  animation-range: entry 30% entry 80%;
+}
+@keyframes bar-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 .lname {
   font-family: var(--f-cyber);
@@ -724,9 +763,154 @@ img, svg { display: block; max-width: 100%; }
   color: #FFFFFF;
 }
 .lmeta {
-  font-family: var(--f-body);
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.78);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: -0.2px;
+  color: rgba(255, 255, 255, 0.82);
+  white-space: nowrap;
+}
+
+/* ═════════ Diverse typography animations for CH-02 ═════════ */
+
+/* 1. Glitch RGB-split label */
+.glitch-label {
+  position: relative;
+  isolation: isolate;
+}
+.glitch-label::before,
+.glitch-label::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0; top: 0;
+  font-family: var(--f-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0.85;
+  display: flex; align-items: center; gap: 14px;
+  padding-left: 44px; /* match num circle */
+}
+.glitch-label::before {
+  color: var(--cyan);
+  animation: glitch-l 4s infinite steps(1, end);
+  z-index: -1;
+}
+.glitch-label::after {
+  color: var(--magenta);
+  animation: glitch-r 4s infinite steps(1, end);
+  z-index: -2;
+}
+@keyframes glitch-l {
+  0%, 88%, 100% { transform: translate(0, 0); opacity: 0; }
+  90% { transform: translate(-2px, 1px); opacity: 0.85; }
+  92% { transform: translate(2px, -1px); opacity: 0.85; }
+  94% { transform: translate(-1px, 2px); opacity: 0.85; }
+  96% { transform: translate(1px, -2px); opacity: 0; }
+}
+@keyframes glitch-r {
+  0%, 88%, 100% { transform: translate(0, 0); opacity: 0; }
+  90% { transform: translate(2px, -1px); opacity: 0.85; }
+  92% { transform: translate(-2px, 1px); opacity: 0.85; }
+  94% { transform: translate(1px, -2px); opacity: 0.85; }
+  96% { transform: translate(-1px, 2px); opacity: 0; }
+}
+.decode {
+  position: relative;
+  display: inline-block;
+}
+
+/* 2. 3D flip-in title — letter-by-letter */
+.flip-title {
+  perspective: 1000px;
+  display: flex; flex-direction: column;
+}
+.flip-title .line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.18em;
+  overflow: visible;
+}
+.flip-title .word {
+  display: inline-flex;
+  perspective: 800px;
+}
+.flip-title .word i {
+  display: inline-block;
+  font-style: normal;
+  transform-origin: 50% 50% -32px;
+  opacity: 0;
+  animation: flip-letter linear both;
+  animation-timeline: view();
+  animation-range: entry 5% entry 70%;
+}
+@keyframes flip-letter {
+  from { transform: rotateX(-100deg) translateY(28px); opacity: 0; }
+  to   { transform: rotateX(0deg) translateY(0); opacity: 1; }
+}
+/* stagger via nth-child delay */
+.flip-title .word i:nth-child(1) { animation-delay: 0s; }
+.flip-title .line:nth-child(1) .word:nth-child(1) i:nth-child(1) { animation-range: entry 5% entry 35%; }
+.flip-title .line:nth-child(1) .word:nth-child(1) i:nth-child(2) { animation-range: entry 8% entry 38%; }
+.flip-title .line:nth-child(1) .word:nth-child(1) i:nth-child(3) { animation-range: entry 11% entry 41%; }
+.flip-title .line:nth-child(1) .word:nth-child(1) i:nth-child(4) { animation-range: entry 14% entry 44%; }
+.flip-title .line:nth-child(1) .word:nth-child(1) i:nth-child(5) { animation-range: entry 17% entry 47%; }
+.flip-title .line:nth-child(1) .word:nth-child(1) i:nth-child(6) { animation-range: entry 20% entry 50%; }
+.flip-title .line:nth-child(1) .word:nth-child(2) i:nth-child(1) { animation-range: entry 24% entry 54%; }
+.flip-title .line:nth-child(1) .word:nth-child(2) i:nth-child(2) { animation-range: entry 27% entry 57%; }
+.flip-title .line:nth-child(1) .word:nth-child(2) i:nth-child(3) { animation-range: entry 30% entry 60%; }
+.flip-title .line:nth-child(1) .word:nth-child(2) i:nth-child(4) { animation-range: entry 33% entry 63%; }
+.flip-title .line:nth-child(2) .word:nth-child(1) i:nth-child(1) { animation-range: entry 38% entry 68%; }
+.flip-title .line:nth-child(2) .word:nth-child(1) i:nth-child(2) { animation-range: entry 41% entry 71%; }
+.flip-title .line:nth-child(2) .word:nth-child(1) i:nth-child(3) { animation-range: entry 44% entry 74%; }
+.flip-title .line:nth-child(2) .word:nth-child(2) i:nth-child(1) { animation-range: entry 48% entry 78%; }
+.flip-title .line:nth-child(2) .word:nth-child(2) i:nth-child(2) { animation-range: entry 51% entry 81%; }
+.flip-title .line:nth-child(2) .word:nth-child(2) i:nth-child(3) { animation-range: entry 54% entry 84%; }
+.flip-title .line:nth-child(2) .word:nth-child(2) i:nth-child(4) { animation-range: entry 57% entry 87%; }
+.flip-title .line:nth-child(2) .word:nth-child(2) i:nth-child(5) { animation-range: entry 60% entry 90%; }
+
+/* 3. Line-by-line mask reveal body */
+.line-mask {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.line-mask .lm {
+  display: block;
+  overflow: hidden;
+}
+.line-mask .lm::before {
+  content: attr(data-text);
+}
+.line-mask .lm {
+  position: relative;
+  transform: translateY(110%);
+  animation: lm-up linear both;
+  animation-timeline: view();
+}
+.line-mask .lm:nth-child(1) { animation-range: entry 25% entry 55%; }
+.line-mask .lm:nth-child(2) { animation-range: entry 32% entry 62%; }
+.line-mask .lm:nth-child(3) { animation-range: entry 39% entry 69%; }
+@keyframes lm-up {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* 4. Typewriter meta lines — JS-driven (no CSS keyframes for content; just cursor) */
+.typewriter::after {
+  content: '|';
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--cyan);
+  animation: cursor-blink 0.7s step-end infinite;
+}
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+.typewriter.done::after { display: none; }
+
+@supports not (animation-timeline: view()) {
+  .flip-title .word i { opacity: 1; transform: none; }
+  .line-mask .lm { opacity: 1; transform: none; }
+  .sl-lane .ll { transform: scaleX(1); }
 }
 
 /* ═════════ CH-03 · Infrastructure — staggered grid ═════════ */
