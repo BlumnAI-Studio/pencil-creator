@@ -16,3 +16,4 @@
 | 2026-05-06 | v1.1.1 | sample010 + sample011 추가: Avatar Studio (CAT17 Character Animation 6 기법·살아있는 아바타·군중 16) + LUMIÈRE FUTUR (Apple sticky scrollytelling·47층 floor scrub·가로 핀 트랙·제미나이 photoreal 17장·shimmer 마감재) |
 | 2026-05-07 | v1.1.2 | sample12 추가: LUMIÈRE 2300 (라이트 사이버펑크 미래도시 분양·Lenis smooth scroll·CSS view-timeline·film-roll 타이틀·PixiJS 5-lane sky traffic·잡지 zigzag/spread·제미나이 photoreal 23장·10 chapter) |
 | 2026-05-07 | v1.1.3 | sample12 CH-02 강화: photoreal lane BG + 검정BG 알파 사이버카 (PixiJS Sprite screen-blend) + 타이포 5종(decode scramble·3D flip-letter·line mask·bar grow·typewriter) + glitch RGB split |
+| 2026-05-07 | v1.1.4 | sample12 CH-04 픽셀 시티(PixiJS 순수 8-bit 픽셀 아트) + CH-05 Three.js 3D 인터랙티브 메가타워(47층 + 드래그 회전 + 호버 floor highlight) + CH-04a/b/c 신규(Genesis · Model House · Terminal) + 14 photoreal 자산 추가 |
