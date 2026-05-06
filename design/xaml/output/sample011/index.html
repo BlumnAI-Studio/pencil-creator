@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMIÈRE FUTUR — 분양 데모 (Case W · sample011)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@100..900&family=Lexend:wght@200;300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Mouse glow follower -->
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<!-- Top navigation -->
+<header class="topbar">
+  <a class="brand" href="#hero">
+    <span class="brand-mark">LF</span>
+    <span class="brand-text">
+      <span class="en">LUMIÈRE FUTUR</span>
+      <span class="ko">루미에르 퓨처</span>
+    </span>
+  </a>
+  <nav class="nav">
+    <a href="#overview">01 Overview</a>
+    <a href="#tower">02 Tower</a>
+    <a href="#amenity">03 Amenity</a>
+    <a href="#soso">04 Garden</a>
+    <a href="#interior">05 Interior</a>
+    <a href="#contact">06 Contact</a>
+  </nav>
+  <a class="phone-pill" href="#contact">
+    <span class="dot"></span>
+    1899.0506 · 견본주택
+  </a>
+</header>
+
+<!-- Section progress dots (right side) -->
+<aside class="section-rail" aria-hidden="true">
+  <a href="#hero" class="rail-dot active" data-i="0"></a>
+  <a href="#overview" class="rail-dot" data-i="1"></a>
+  <a href="#tower" class="rail-dot" data-i="2"></a>
+  <a href="#amenity" class="rail-dot" data-i="3"></a>
+  <a href="#soso" class="rail-dot" data-i="4"></a>
+  <a href="#interior" class="rail-dot" data-i="5"></a>
+  <a href="#lookbook" class="rail-dot" data-i="6"></a>
+  <a href="#contact" class="rail-dot" data-i="7"></a>
+</aside>
+
+<!-- ░░░░ 1 · HERO — full photoreal aerial + Trajan stack ░░░░ -->
+<section id="hero" class="section hero">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="img/hero-aerial.png" alt="" class="hero-img" data-mouse-scene>
+    <div class="hero-img-overlay"></div>
+  </div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-aura" aria-hidden="true"></div>
+
+  <!-- Trajan stacked title -->
+  <div class="hero-content">
+    <div class="hero-eyebrow motion" data-reveal>
+      <span class="bar"></span>
+      <span class="text">FORTHCOMING · 2026</span>
+    </div>
+    <h1 class="trajan-stack">
+      <span class="line motion" data-reveal data-delay="0">THE</span>
+      <span class="line motion" data-reveal data-delay="180">FUTURE</span>
+      <span class="line motion" data-reveal data-delay="360">IS HOME</span>
+    </h1>
+    <p class="hero-sub motion" data-reveal data-delay="640">
+      미래는 머무르는 자에게 먼저 도달한다
+    </p>
+    <div class="hero-meta motion" data-reveal data-delay="820">
+      <span>대구 수성 1번지</span>
+      <span class="dot-sep">·</span>
+      <span>지상 47층</span>
+      <span class="dot-sep">·</span>
+      <span>전세대 한강뷰</span>
+    </div>
+  </div>
+
+  <a class="scroll-cue" href="#overview">
+    <span>SCROLL</span>
+    <span class="line"></span>
+  </a>
+</section>
+
+<!-- ░░░░ 2 · OVERVIEW — Apple-style sticky scrolly ░░░░ -->
+<section id="overview" class="section overview scrolly" style="height: 400vh;">
+  <div class="chapter-pin">
+    <span class="num">01</span>
+    <span class="lbl">OVERVIEW</span>
+  </div>
+
+  <div class="scrolly-pin">
+    <div class="overview-scrolly">
+      <!-- Visual column: pinned masterplan with mask reveal -->
+      <div class="visual-col">
+        <div class="mask-reveal">
+          <img src="img/masterplan.png" alt="단지 마스터플랜" loading="lazy">
+        </div>
+      </div>
+
+      <!-- Text column: stack-up steps -->
+      <div class="text-col">
+        <h2 class="section-title">
+          <span class="en motion" data-reveal>Building the Way We Live</span>
+          <span class="ko motion" data-reveal data-delay="200">사는 방식을 다시 짓는다</span>
+        </h2>
+
+        <div class="stack-text">
+          <div class="step active" data-step="0">
+            <span class="eyebrow">SITE · 대지</span>
+            <span class="heading">42,850㎡, 평지형 정남향</span>
+            <span class="body">대구 수성 범어 1번지, 대구의 정점에 자리한 17,598㎡ 평지형 부지. 도시의 가장 높은 곳에서 다음의 위계를 정의합니다.</span>
+          </div>
+          <div class="step" data-step="1">
+            <span class="eyebrow">SCALE · 규모</span>
+            <span class="heading">B6 / 47F · 메가 타워 3개동</span>
+            <span class="body">아웃리거 트러스 구조의 47층 메가 타워 3개동 + 부속 단지. 외피는 트리플 글레이즈 Low-E + 청동 프레임으로 마감됩니다.</span>
+          </div>
+          <div class="step" data-step="2">
+            <span class="eyebrow">UNITS · 세대</span>
+            <span class="heading">824세대 · 8 타입</span>
+            <span class="body">59㎡부터 134㎡까지 8 타입. 모든 세대가 한강 또는 대구 도심을 향한 파노라마 뷰를 갖습니다.</span>
+          </div>
+          <div class="step" data-step="3">
+            <span class="eyebrow">MOBILITY · 주차</span>
+            <span class="heading">2.42 대 / 세대</span>
+            <span class="body">100% 지하주차 + EV 충전 24%. 자율주차존, 전 세대 도어-투-도어 픽업 동선이 설계되었습니다.</span>
+          </div>
+        </div>
+
+        <div class="step-rail">
+          <span class="tick"></span><span class="tick"></span>
+          <span class="tick"></span><span class="tick"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░░ 3 · TOWER — sticky with floor scrub ░░░░ -->
+<section id="tower" class="section tower scrolly" style="height: 500vh;"
+  data-floor-stops='[{"top":"82%","tag":"1F · GRAND LOBBY"},{"top":"66%","tag":"10F · PRIVATE GYM"},{"top":"50%","tag":"25F · OBSERVATORY"},{"top":"30%","tag":"35F · SKY LOUNGE"},{"top":"10%","tag":"47F · PENTHOUSE"}]'>
+  <div class="chapter-pin">
+    <span class="num">02</span>
+    <span class="lbl">TOWER · 외관</span>
+  </div>
+
+  <div class="scrolly-pin">
+    <div class="tower-scrolly">
+      <div class="pin-stage">
+        <!-- Visual column: tower image with floor highlight overlay -->
+        <div class="visual-col">
+          <img src="img/hero-aerial.png" alt="타워 입면">
+          <div class="floor-overlay" style="top: 82%;"></div>
+          <div class="floor-tag" style="top: calc(82% - 20px);">1F · GRAND LOBBY</div>
+        </div>
+
+        <!-- Text column -->
+        <div class="text-col">
+          <h2 class="section-title">
+            <span class="en motion" data-reveal>The Architectural Score</span>
+            <span class="ko motion" data-reveal data-delay="200">건축은 시간의 악보가 된다</span>
+          </h2>
+
+          <div class="stack-text">
+            <div class="step active" data-step="0">
+              <span class="eyebrow">1F · GRAND LOBBY</span>
+              <span class="heading">청동과 대리석으로 지은 첫인상</span>
+              <span class="body">천장고 12m의 그랜드 로비. 대리석 풀 슬라브 벽, 청동 프레임, 컨시어지 라운지가 호텔의 첫 동선을 그립니다.</span>
+            </div>
+            <div class="step" data-step="1">
+              <span class="eyebrow">10F · PRIVATE GYM</span>
+              <span class="heading">전 거울벽 + 천장고 3.2m</span>
+              <span class="body">트레드밀 6대, 필라테스 룸 4실, 전망창. 24h 운영, 입주민 전용 PT 라운지 + 사우나 연결.</span>
+            </div>
+            <div class="step" data-step="2">
+              <span class="eyebrow">25F · OBSERVATORY</span>
+              <span class="heading">뷰가 일상이 되는 층</span>
+              <span class="body">단지 정중앙에 위치한 옵서버토리. 아침 명상 룸, 워크스튜디오, 공유 회의실 6실로 구성됩니다.</span>
+            </div>
+            <div class="step" data-step="3">
+              <span class="eyebrow">35F · SKY LOUNGE</span>
+              <span class="heading">해질녘 도시를 거실로</span>
+              <span class="body">청동 프레임 큰 창 너머 한강의 일몰. 황금조명 + 가죽 라운지, 입주민 전용 와인 테이블.</span>
+            </div>
+            <div class="step" data-step="4">
+              <span class="eyebrow">47F · PENTHOUSE</span>
+              <span class="heading">하늘 가까이의 자리</span>
+              <span class="body">전동 LED 시그널 크라운, 옥상 풀, 프라이빗 헬리패드. 1개동 1층뿐인 절대적 위치.</span>
+            </div>
+          </div>
+
+          <div class="step-rail">
+            <span class="tick"></span><span class="tick"></span><span class="tick"></span>
+            <span class="tick"></span><span class="tick"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░░ 4 · AMENITY — sticky with image cross-fade ░░░░ -->
+<section id="amenity" class="section amenity scrolly" style="height: 400vh;">
+  <div class="chapter-pin">
+    <span class="num">03</span>
+    <span class="lbl">AMENITY · 시설</span>
+  </div>
+
+  <div class="scrolly-pin">
+    <div class="amenity-scrolly">
+      <div class="pin-stage">
+        <!-- Text column with stacked stories -->
+        <div class="text-col">
+          <h2 class="section-title">
+            <span class="en motion" data-reveal>Amenity as Lifestyle</span>
+            <span class="ko motion" data-reveal data-delay="200">취향이 곧 일상이 되는 공간</span>
+          </h2>
+          <div class="stack-text" style="min-height: 280px;">
+            <div class="step active" data-step="0">
+              <span class="num-tag">01</span>
+              <h3>스카이 라운지 · 35F</h3>
+              <p>해질녘 도시를 거실로 들이는 입주민 전용 라운지. 청동 프레임 사이로 황금조명이 흐르고, 일몰의 한강이 액자가 됩니다.</p>
+            </div>
+            <div class="step" data-step="1">
+              <span class="num-tag">02</span>
+              <h3>인피니티 풀 · B1</h3>
+              <p>지하 1층 천장고 4.6m, 25m 풀과 사우나 · 아쿠아 라운지가 한 동선으로 이어집니다. 청록 워터, 베이지 트래버틴 마감.</p>
+            </div>
+            <div class="step" data-step="2">
+              <span class="num-tag">03</span>
+              <h3>프라이빗 짐 · 10F</h3>
+              <p>전 거울벽 + 천장고 3.2m, 24h 운영. 퍼스널 트레이너 라운드 예약과 PT 룸 4실, 필라테스 리포머 6대.</p>
+            </div>
+            <div class="step" data-step="3">
+              <span class="num-tag">04</span>
+              <h3>리딩 라운지 · 3F</h3>
+              <p>3,200권의 큐레이션 컬렉션과 6개의 프라이빗 부스. 가죽 윙 체어, 황금 펜던트 램프, 따뜻한 우드 책장.</p>
+            </div>
+          </div>
+          <div class="step-rail">
+            <span class="tick"></span><span class="tick"></span>
+            <span class="tick"></span><span class="tick"></span>
+          </div>
+        </div>
+
+        <!-- Visual column with cross-fading images -->
+        <div class="visual-col">
+          <div class="crossfade-stage">
+            <div class="frame active">
+              <img src="img/amen-skylounge.png" alt="스카이 라운지" loading="lazy">
+              <div class="badge">35F · SKY</div>
+            </div>
+            <div class="frame">
+              <img src="img/amen-pool.png" alt="인피니티 풀" loading="lazy">
+              <div class="badge">B1 · WELLNESS</div>
+            </div>
+            <div class="frame">
+              <img src="img/amen-gym.png" alt="프라이빗 짐" loading="lazy">
+              <div class="badge">10F · ACTIVE</div>
+            </div>
+            <div class="frame">
+              <img src="img/amen-library.png" alt="리딩 라운지" loading="lazy">
+              <div class="badge">3F · STUDY</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░░ 5 · SOSO GARDEN — photoreal 9s loop pan ░░░░ -->
+<section id="soso" class="section soso">
+  <div class="soso-bg" aria-hidden="true">
+    <img src="img/soso-garden.png" alt="" class="soso-img">
+    <div class="soso-veil"></div>
+  </div>
+
+  <div class="soso-content">
+    <div class="section-eyebrow light"><span class="num">04</span><span class="lbl">GARDEN</span></div>
+    <h2 class="soso-title motion" data-reveal>소 · 소 · 담 · 원</h2>
+    <p class="soso-sub motion" data-reveal data-delay="240">이야기가 머무는 뜰</p>
+    <p class="soso-body motion" data-reveal data-delay="420">
+      한국 정원의 절제와 미래의 빛을 한 자리에. 정자, 연못, 디딤돌이 하루의 호흡을 가다듬는 9분의 산책로. 입주민만의 특권으로, 도시 한가운데 머무는 시간이 됩니다.
+    </p>
+    <div class="soso-stats motion" data-reveal data-delay="600">
+      <div><span class="k">중정 면적</span><span class="v">5,420㎡</span></div>
+      <div><span class="k">조경 식재</span><span class="v">소나무 12 / 활엽수 36</span></div>
+      <div><span class="k">산책로</span><span class="v">9분 · 720m</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░░ 6 · INTERIOR — Apple-style sticky horizontal scrub ░░░░ -->
+<section id="interior" class="section interior scrolly hpin" style="height: 460vh;">
+  <div class="chapter-pin">
+    <span class="num">05</span>
+    <span class="lbl">INTERIOR · 세대</span>
+  </div>
+
+  <div class="scrolly-pin hpin-stage">
+    <div class="hpin-header">
+      <h2 class="section-title">
+        <span class="en motion" data-reveal>The Quiet Inside</span>
+        <span class="ko motion" data-reveal data-delay="200">조용한 안쪽이 곧 품격</span>
+      </h2>
+      <div class="hpin-meta">
+        <span class="counter-frame"><span id="hpin-cur">01</span> / 04</span>
+        <span class="hpin-name" id="hpin-name">LIVING · 134㎡</span>
+      </div>
+    </div>
+
+    <div class="hpin-track" id="hpin-track">
+      <article class="hpin-card">
+        <div class="hpin-img"><img src="img/interior-living.png" alt="거실"></div>
+        <div class="hpin-body">
+          <span class="int-tag">LIVING · 134㎡</span>
+          <h3>거실</h3>
+          <p>천장고 2.7m + 폭 7.2m 파노라마 창. 대리석 마감 TV월과 청동 디테일이 풍경을 액자로 잡아줍니다. 한강의 일몰이 매일 다른 그림이 됩니다.</p>
+        </div>
+      </article>
+      <article class="hpin-card">
+        <div class="hpin-img"><img src="img/interior-kitchen.png" alt="주방"></div>
+        <div class="hpin-body">
+          <span class="int-tag">KITCHEN · BOFFI</span>
+          <h3>이탈리아 하이엔드 키친</h3>
+          <p>BOFFI 시그니처 마감 + Gaggenau 빌트인. 4m 대리석 아일랜드와 다이닝 라운지가 자연스럽게 연결되는 호스팅 동선.</p>
+        </div>
+      </article>
+      <article class="hpin-card">
+        <div class="hpin-img"><img src="img/interior-bedroom.png" alt="침실"></div>
+        <div class="hpin-body">
+          <span class="int-tag">MASTER · 23.4㎡</span>
+          <h3>마스터 베드룸</h3>
+          <p>드레스룸 + 욕실 + 베드룸이 하나의 스위트로 연결되는 럭셔리 호텔 형태의 동선. 야경창은 차광 블라인드 통합.</p>
+        </div>
+      </article>
+      <article class="hpin-card">
+        <div class="hpin-img"><img src="img/interior-bath.png" alt="욕실"></div>
+        <div class="hpin-body">
+          <span class="int-tag">BATH · STONE</span>
+          <h3>마블 스파 베스룸</h3>
+          <p>대리석 풀 슬라브 + 일자형 vanity + 워크인 샤워. 욕조 옆 도시 야경창은 채광·환기 듀얼 컨트롤로 호텔급 스파 무드.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="hpin-progress" aria-hidden="true">
+      <span class="seg" data-i="0"></span>
+      <span class="seg" data-i="1"></span>
+      <span class="seg" data-i="2"></span>
+      <span class="seg" data-i="3"></span>
+    </div>
+
+    <div class="hpin-hint">
+      <span>SCROLL TO REVEAL</span>
+      <span class="bar"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░░ 7 · LOOKBOOK (마감재) ░░░░ -->
+<section id="lookbook" class="section lookbook">
+  <div class="section-eyebrow"><span class="num">06</span><span class="lbl">LOOKBOOK · 마감재</span></div>
+  <h2 class="section-title">
+    <span class="en motion" data-reveal>The Essence of Finish</span>
+    <span class="ko motion" data-reveal data-delay="200">결을 만지는 손이 품격을 짓는다</span>
+  </h2>
+
+  <div class="lb-grid">
+    <div class="lb-tile glass-card scroll-tilt" data-tilt>
+      <div class="lb-swatch">
+        <img src="img/mat-marble.png" alt="Calacatta Oro 대리석" loading="lazy">
+      </div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="lb-cat">STONE</span><h4>Calacatta Oro</h4><p>이탈리아 토스카나 산 — 거실 TV월·아일랜드</p></div>
+    </div>
+    <div class="lb-tile glass-card scroll-tilt" data-tilt>
+      <div class="lb-swatch">
+        <img src="img/mat-oak.png" alt="훈제 유럽 오크" loading="lazy">
+      </div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="lb-cat">WOOD</span><h4>Smoked European Oak</h4><p>핀란드 산 — 침실·서재 마루</p></div>
+    </div>
+    <div class="lb-tile glass-card scroll-tilt" data-tilt>
+      <div class="lb-swatch">
+        <img src="img/mat-bronze.png" alt="에이지드 브론즈" loading="lazy">
+      </div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="lb-cat">METAL</span><h4>Aged Bronze</h4><p>독일 SCHOLLER — 가구 손잡이·창틀</p></div>
+    </div>
+    <div class="lb-tile glass-card scroll-tilt" data-tilt>
+      <div class="lb-swatch">
+        <img src="img/mat-glass.png" alt="트리플 Low-E 글래스" loading="lazy">
+      </div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="lb-cat">GLASS</span><h4>Triple Low-E Crystal</h4><p>독일 INTERPANE — 외피·욕실 파티션</p></div>
+    </div>
+    <div class="lb-tile glass-card scroll-tilt" data-tilt>
+      <div class="lb-swatch">
+        <img src="img/mat-linen.png" alt="벨기에 린넨" loading="lazy">
+      </div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="lb-cat">TEXTILE</span><h4>Belgian Linen</h4><p>침실 헤드보드·드레이프</p></div>
+    </div>
+    <div class="lb-tile glass-card scroll-tilt" data-tilt>
+      <div class="lb-swatch">
+        <img src="img/mat-moss.png" alt="한국 정원 모스" loading="lazy">
+      </div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="lb-cat">LANDSCAPE</span><h4>Korean Garden Moss</h4><p>중정 정원·옥상 가든 식재</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░░ 8 · CONTACT ░░░░ -->
+<section id="contact" class="section contact">
+  <div class="contact-card glass-card">
+    <div class="section-eyebrow"><span class="num">07</span><span class="lbl">CONTACT</span></div>
+    <h2 class="section-title">
+      <span class="en motion" data-reveal>Your Next Address</span>
+      <span class="ko motion" data-reveal data-delay="200">다음 주소는 당신의 자리입니다</span>
+    </h2>
+    <p class="contact-body motion" data-reveal data-delay="380">
+      견본주택 · 대구 수성구 범어동 1번지 (지하철 2호선 범어역 도보 4분)
+    </p>
+    <div class="contact-stats">
+      <div class="stat"><span class="k">개관</span><span class="v">2026.05.20</span></div>
+      <div class="stat"><span class="k">분양</span><span class="v">2026.06.10</span></div>
+      <div class="stat"><span class="k">예약문의</span><span class="v">1899.0506</span></div>
+    </div>
+    <form class="contact-form" onsubmit="event.preventDefault(); alert('관심 등록이 완료되었습니다');">
+      <div class="row">
+        <input type="text" placeholder="성함" required>
+        <input type="tel" placeholder="연락처" required>
+      </div>
+      <select>
+        <option>평형 관심 (전체)</option>
+        <option>59㎡</option>
+        <option>74㎡</option>
+        <option>84㎡</option>
+        <option>110㎡</option>
+        <option>134㎡</option>
+      </select>
+      <button type="submit">관심 등록 →</button>
+    </form>
+  </div>
+</section>
+
+<!-- ░░░░ FOOTER ░░░░ -->
+<footer class="foot">
+  <div class="foot-row">
+    <span class="foot-brand">© 2026 LUMIÈRE FUTUR — sample011 (Case W demo)</span>
+    <span class="foot-meta">사업주체. 루미에르개발 · 시공. (가칭)미래건설 · 신탁. 한국토지신탁</span>
+  </div>
+  <div class="foot-techbar">
+    <span class="t-pill">trajan stack</span>
+    <span class="t-pill">ken-burns</span>
+    <span class="t-pill">soso 9s loop</span>
+    <span class="t-pill">mouse parallax</span>
+    <span class="t-pill new">Apple sticky scrolly</span>
+    <span class="t-pill new">stack-text reveal</span>
+    <span class="t-pill new">image cross-fade</span>
+    <span class="t-pill new">floor scrub</span>
+    <span class="t-pill new">mask reveal</span>
+    <span class="t-pill new">scroll tilt</span>
+    <span class="t-pill new">cursor glow</span>
+    <span class="t-pill new">counter-up</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

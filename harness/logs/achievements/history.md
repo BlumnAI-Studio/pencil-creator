@@ -2,6 +2,11 @@
 
 | 날짜 | 업적명 | 유형 | 카테고리 | 트리거 디자인 |
 |------|--------|------|---------|--------|
+| 2026-05-06 | 공간을 짓는 자 | 첫도전 | 건축/공간 | LUMIÈRE FUTUR sample011 Case W (분양 단지 + 내부 세대 photoreal) |
+| 2026-05-06 | 사과 한 입 — Apple 스크롤리 영입 | 특별 | - | LUMIÈRE FUTUR sample011 Case W (sticky scrollytelling 첫 적용) |
+| 2026-05-06 | 트리플 퍼펙트 | 특별 | - | LUMIÈRE FUTUR sample011 Case W (3축 만점 세 번째) |
+| 2026-05-06 | 두 단계 점프 | 특별 | - | LUMIÈRE FUTUR sample011 Case W (Lv.51 → Lv.53) |
+| 2026-05-06 | C → W 파이프라인 첫 100% 통과 | 특별 | - | LUMIÈRE FUTUR sample011 Case W (양쪽 만점) |
 | 2026-05-06 | 분양의 정석 | 첫도전 | 분양/럭셔리 | 분양 럭셔리 룩앤필 영입 Case C (anadd+herenn) |
 | 2026-05-06 | 손끝의 무대 | 첫도전 | 인터랙션 | 분양 럭셔리 룩앤필 영입 Case C (mouse parallax+fullPage+Swiper) |
 | 2026-05-06 | Lv.50 돌파 — 전문 디자이너의 길로 | 특별 | - | 분양 럭셔리 룩앤필 영입 Case C |
