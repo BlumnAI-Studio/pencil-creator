@@ -17,6 +17,8 @@
 
 <!-- Top progress bar -->
 <div class="prog-bar" aria-hidden="true"></div>
+<div class="reality-grid" aria-hidden="true"></div>
+<div class="scanline" aria-hidden="true"></div>
 
 <!-- Top navigation -->
 <header class="topbar">
@@ -30,6 +32,9 @@
   <nav class="nav">
     <a href="#ch-01">City</a>
     <a href="#ch-02">Sky Lanes</a>
+    <a href="#ch-04a">Genesis</a>
+    <a href="#ch-04c">Model House</a>
+    <a href="#ch-04b">Terminal</a>
     <a href="#ch-05">Tower</a>
     <a href="#ch-06">Amenity</a>
     <a href="#ch-07">Interior</a>
@@ -47,6 +52,9 @@
   <a href="#ch-02" class="ch-dot"><span>02</span></a>
   <a href="#ch-03" class="ch-dot"><span>03</span></a>
   <a href="#ch-04" class="ch-dot"><span>04</span></a>
+  <a href="#ch-04a" class="ch-dot"><span>04A</span></a>
+  <a href="#ch-04c" class="ch-dot"><span>04C</span></a>
+  <a href="#ch-04b" class="ch-dot"><span>04B</span></a>
   <a href="#ch-05" class="ch-dot"><span>05</span></a>
   <a href="#ch-06" class="ch-dot"><span>06</span></a>
   <a href="#ch-07" class="ch-dot"><span>07</span></a>
@@ -78,6 +86,22 @@
       <span>AI CONCIERGE 24/7</span>
     </div>
   </div>
+  <div class="hero-hud hud-left" aria-hidden="true">
+    <span class="hud-k">REALTIME CITY INDEX</span>
+    <strong>98.7</strong>
+    <small>Air quality, lane density, solar reserve synced</small>
+    <div class="hud-bars"><i style="--h:72%"></i><i style="--h:46%"></i><i style="--h:88%"></i><i style="--h:61%"></i><i style="--h:93%"></i></div>
+  </div>
+  <div class="hero-hud hud-right" aria-hidden="true">
+    <span class="hud-k">UNIT MATCHING</span>
+    <strong>134㎡ · SKY VIEW</strong>
+    <small>AI concierge selected east river + orbit gate sightline</small>
+    <div class="hud-ring"><span></span></div>
+  </div>
+  <div class="hero-lockup" aria-hidden="true">
+    <span>LIVE SHOW SUITE</span>
+    <b>OPENING 2300.05.20</b>
+  </div>
   <a class="scroll-cue" href="#ch-01"><span>SCROLL</span><span class="line"></span></a>
   <div class="ch-tag"><span class="num">CH-00</span><span>Above the Clouds</span></div>
 </section>
@@ -102,8 +126,20 @@
     <div class="city-visual reveal-right">
       <div class="city-mask">
         <img src="img/masterplan.png" alt="LUMIÈRE 2300 master plan">
+        <div class="district-overlay" aria-hidden="true">
+          <button class="district-node n1" data-label="D-01 Residential"></button>
+          <button class="district-node n2" data-label="D-03 Mobility"></button>
+          <button class="district-node n3" data-label="D-04 Bio Park"></button>
+          <button class="district-node n4" data-label="D-07 Orbit Gate"></button>
+          <span class="district-route r1"></span>
+          <span class="district-route r2"></span>
+        </div>
       </div>
       <div class="city-tag">7 DISTRICTS · 280 km²</div>
+      <div class="city-console">
+        <span>MASTERPLAN SIMULATION</span>
+        <b>12 active transfer hubs</b>
+      </div>
     </div>
   </div>
   <div class="ch-tag"><span class="num">CH-01</span><span>The 7 Districts</span></div>
@@ -114,6 +150,12 @@
   <div class="sl-bg">
     <img src="img/lane-bg.png" alt="" class="sl-bg-img">
     <canvas id="sl-pixi" class="sl-pixi" aria-hidden="true"></canvas>
+    <div class="lane-depth-map" aria-hidden="true">
+      <span class="depth-line d1"></span>
+      <span class="depth-line d2"></span>
+      <span class="depth-line d3"></span>
+      <span class="depth-line d4"></span>
+    </div>
     <div class="sl-veil"></div>
   </div>
   <div class="sl-content">
@@ -136,6 +178,11 @@
       <div class="sl-lane" style="--c:#FF6BC1"><span class="ll"></span><span class="lname">L2&nbsp;CITY</span><span class="lmeta typewriter">80 km/h · district links</span></div>
       <div class="sl-lane" style="--c:#8B6FFF"><span class="ll"></span><span class="lname">L3&nbsp;EXPRESS</span><span class="lmeta typewriter">200 km/h · cross-city</span></div>
       <div class="sl-lane" style="--c:#B5FF3A"><span class="ll"></span><span class="lname">L4&nbsp;ORBIT</span><span class="lmeta typewriter">Mars shuttle launch</span></div>
+    </div>
+    <div class="sl-telemetry" aria-hidden="true">
+      <span>TRAFFIC AI</span>
+      <b>14,822 vehicles/min</b>
+      <small>Collision-free vector routing</small>
     </div>
   </div>
   <div class="ch-tag light"><span class="num">CH-02</span><span>Diving Into the Lanes</span></div>
@@ -190,18 +237,188 @@
   <canvas id="pixel-stage" class="pixel-stage" aria-hidden="true"></canvas>
   <div class="pixel-veil"></div>
   <div class="pixel-content reveal-up">
-    <div class="ch-eyebrow light center"><span class="num">04</span><span>PIXEL CITY · 8-BIT TOMORROW</span></div>
-    <h2 class="d01-title">Welcome<br>to D-01</h2>
-    <p class="d01-sub">The residential core of LUMIÈRE 2300, rendered as the future remembers itself — pixel by pixel.</p>
+    <div class="ch-eyebrow light center"><span class="num">04</span><span>PIXEL CITY · LIVING DISTRICT</span></div>
+    <h2 class="d01-title">D-01<br>Rush Hour</h2>
+    <p class="d01-sub">Crowds cross the plaza, drones drift between towers, and sky cars stream through stacked rails.</p>
     <div class="pixel-meta">
-      <span>16×16 PIXEL ART</span>
+      <span>76 WALKERS</span>
       <span class="dot-sep">·</span>
-      <span>PIXIJS GRAPHICS</span>
+      <span>40 SKY CARS</span>
       <span class="dot-sep">·</span>
-      <span>30 FPS LOOP</span>
+      <span>18 DRONES</span>
     </div>
   </div>
   <div class="ch-tag light"><span class="num">CH-04</span><span>Pixel City</span></div>
+</section>
+
+<!-- ░░ CH-04A · UNIT GENESIS — AI floorplan line drawing cutscene ░░ -->
+<section id="ch-04a" class="ch ch-genesis">
+  <div class="gen-bg" aria-hidden="true">
+    <img src="img/int-living.png" alt="" class="gen-img gen-img-a">
+    <img src="img/int-kitchen.png" alt="" class="gen-img gen-img-b">
+    <img src="img/int-bedroom.png" alt="" class="gen-img gen-img-c">
+    <div class="gen-veil"></div>
+  </div>
+  <div class="gen-shell">
+    <div class="gen-copy reveal-left">
+      <div class="ch-eyebrow light"><span class="num">04A</span><span>AI SHOW SUITE · UNIT GENESIS</span></div>
+      <h2 class="ch-title light shift-x">Plan Lines<br>Become Home</h2>
+      <p class="ch-body light">Your preference profile is converted into a 134㎡ sky-view unit. Walls draw themselves first, then view corridors, furniture zones, and material previews lock into place.</p>
+      <div class="gen-stats">
+        <span><b>134㎡</b> Matched area</span>
+        <span><b>7.2m</b> Panorama glass</span>
+        <span><b>88%</b> Morning-light score</span>
+      </div>
+    </div>
+    <div class="floorplan-stage reveal-right">
+      <svg class="floorplan-svg" viewBox="0 0 760 520" aria-label="AI generated apartment floorplan">
+        <defs>
+          <filter id="planGlow">
+            <feGaussianBlur stdDeviation="2.4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="planLine" x1="0" x2="1">
+            <stop offset="0%" stop-color="#32E6FF"/>
+            <stop offset="52%" stop-color="#EAF7FF"/>
+            <stop offset="100%" stop-color="#FF4FD8"/>
+          </linearGradient>
+        </defs>
+        <g class="fp-grid">
+          <path d="M40 80 H720 M40 140 H720 M40 200 H720 M40 260 H720 M40 320 H720 M40 380 H720 M40 440 H720"/>
+          <path d="M80 40 V480 M160 40 V480 M240 40 V480 M320 40 V480 M400 40 V480 M480 40 V480 M560 40 V480 M640 40 V480"/>
+        </g>
+        <g class="fp-plan" filter="url(#planGlow)">
+          <path class="fp-wall fp-main" d="M92 92 H668 V430 H92 Z"/>
+          <path class="fp-wall d1" d="M92 226 H308 V92"/>
+          <path class="fp-wall d2" d="M308 226 H496 V92"/>
+          <path class="fp-wall d3" d="M496 92 V246 H668"/>
+          <path class="fp-wall d4" d="M92 312 H278 V430"/>
+          <path class="fp-wall d5" d="M278 312 H454 V430"/>
+          <path class="fp-wall d6" d="M454 312 H668"/>
+          <path class="fp-window w1" d="M124 92 H272"/>
+          <path class="fp-window w2" d="M520 92 H642"/>
+          <path class="fp-window w3" d="M668 142 V226"/>
+          <path class="fp-door dr1" d="M308 226 A42 42 0 0 1 350 268"/>
+          <path class="fp-door dr2" d="M496 246 A38 38 0 0 0 534 284"/>
+          <path class="fp-door dr3" d="M278 312 A36 36 0 0 1 314 348"/>
+          <path class="fp-zone z1" d="M120 120 H280 V204 H120 Z"/>
+          <path class="fp-zone z2" d="M338 118 H470 V198 H338 Z"/>
+          <path class="fp-zone z3" d="M520 122 H640 V226 H520 Z"/>
+          <path class="fp-zone z4" d="M128 336 H250 V406 H128 Z"/>
+          <path class="fp-zone z5" d="M488 336 H640 V406 H488 Z"/>
+          <path class="fp-view" d="M188 128 C270 64 418 48 600 96"/>
+          <path class="fp-view v2" d="M550 154 C642 188 692 252 706 382"/>
+        </g>
+        <g class="fp-nodes">
+          <circle cx="188" cy="128" r="5"/><circle cx="404" cy="158" r="4"/><circle cx="600" cy="96" r="5"/>
+          <circle cx="550" cy="154" r="4"/><circle cx="706" cy="382" r="5"/>
+        </g>
+        <g class="fp-labels">
+          <text x="122" y="150">LIVING</text>
+          <text x="340" y="148">AI KITCHEN</text>
+          <text x="522" y="154">MASTER</text>
+          <text x="130" y="366">BATH</text>
+          <text x="490" y="366">SKY VIEW</text>
+        </g>
+        <rect class="fp-scan" x="72" y="76" width="616" height="368"/>
+      </svg>
+      <div class="gen-panels">
+        <span class="gen-panel p1"><b>VIEW</b> East river corridor</span>
+        <span class="gen-panel p2"><b>MATERIAL</b> Plasma glass + nano alloy</span>
+        <span class="gen-panel p3"><b>FLOW</b> Lobby to suite in 92 sec</span>
+      </div>
+    </div>
+  </div>
+  <div class="ch-tag light"><span class="num">CH-04A</span><span>Unit Genesis</span></div>
+</section>
+
+<!-- ░░ CH-04C · 3D AI MODEL HOUSE — Gemini texture showroom ░░ -->
+<section id="ch-04c" class="ch ch-modelhouse">
+  <div class="mh-bg" aria-hidden="true">
+    <img src="img/2026-05-07-modelhouse-city-window.png" alt="" class="mh-bg-img">
+    <div class="mh-veil"></div>
+  </div>
+  <div class="mh-shell">
+    <div class="mh-copy reveal-left">
+      <div class="ch-eyebrow light"><span class="num">04C</span><span>GEMINI TEXTURE · 3D AI MODEL HOUSE</span></div>
+      <h2 class="ch-title light shift-x">Generated<br>Show Suite</h2>
+      <p class="ch-body light">Gemini-generated marble, walnut, glass, fabric, stone, skyline, and luminous ceiling textures wrap the 3D unit so the floorplan cutscene becomes a real walk-in model house.</p>
+      <div class="mh-metrics">
+        <span><b>8</b> AI texture plates</span>
+        <span><b>134㎡</b> Show-unit scale</span>
+        <span><b>360°</b> Slow orbit preview</span>
+      </div>
+      <div class="mh-textures" aria-hidden="true">
+        <span><img src="img/2026-05-07-modelhouse-marble-floor.png" alt="">Marble</span>
+        <span><img src="img/2026-05-07-modelhouse-walnut-panel.png" alt="">Walnut</span>
+        <span><img src="img/2026-05-07-modelhouse-holo-glass.png" alt="">Glass</span>
+        <span><img src="img/2026-05-07-modelhouse-fabric-sofa.png" alt="">Fabric</span>
+      </div>
+    </div>
+    <div class="mh-stage reveal-right">
+      <canvas id="modelhouse-3d" class="modelhouse-3d" aria-label="3D AI model house with generated textures"></canvas>
+      <div class="mh-scanline"></div>
+      <div class="mh-hud mh-hud-a"><span>TEXTURE SYNC</span><b>GEMINI · 8 PLATES</b></div>
+      <div class="mh-hud mh-hud-b"><span>ROOM LAYER</span><b>LIVING · KITCHEN · BATH</b></div>
+      <div class="mh-orbit-hint"><span class="dot-3d"></span><span>DRAG TO ROTATE · TEXTURE-LIT UNIT</span></div>
+    </div>
+  </div>
+  <div class="ch-tag light"><span class="num">CH-04C</span><span>3D AI Model House</span></div>
+</section>
+
+<!-- ░░ CH-04B · ORBIT GATE LAUNCH — space elevator cutscene ░░ -->
+<section id="ch-04b" class="ch ch-orbit">
+  <div class="orbit-bg" aria-hidden="true">
+    <img src="img/infra-elevator.png" alt="" class="orbit-img">
+    <div class="orbit-veil"></div>
+  </div>
+  <div class="orbit-scene" aria-hidden="true">
+    <svg class="orbit-svg" viewBox="0 0 1200 720" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="orbitCable" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#32E6FF" stop-opacity="0"/>
+          <stop offset="42%" stop-color="#32E6FF" stop-opacity="0.72"/>
+          <stop offset="100%" stop-color="#EAF7FF" stop-opacity="0.92"/>
+        </linearGradient>
+      </defs>
+      <path class="orb-ring r1" d="M164 522 C350 340 822 300 1088 432"/>
+      <path class="orb-ring r2" d="M92 604 C360 416 826 388 1160 524"/>
+      <path class="orb-ring r3" d="M330 226 C560 118 828 132 1036 254"/>
+      <path class="orb-cable" d="M612 720 C594 520 602 282 642 -40"/>
+      <path class="orb-cable side" d="M574 720 C584 500 590 288 618 -40"/>
+      <g class="orb-capsule">
+        <path d="M0 -36 L18 -10 L14 34 L-14 34 L-18 -10 Z"/>
+        <path d="M-9 -8 H9 V16 H-9 Z"/>
+      </g>
+      <g class="orb-sparks">
+        <circle cx="612" cy="520" r="3"/><circle cx="636" cy="440" r="2"/><circle cx="594" cy="362" r="2.5"/>
+        <circle cx="650" cy="292" r="2"/><circle cx="610" cy="204" r="2.5"/>
+      </g>
+      <path class="orb-launch-trace" d="M612 676 C600 510 608 280 642 56"/>
+    </svg>
+    <div class="launch-hud hud-a"><span>ORBIT GATE</span><b>T-00:08</b></div>
+    <div class="launch-hud hud-b"><span>CAPSULE</span><b>MARS SHUTTLE LINK</b></div>
+    <div class="launch-flare"></div>
+  </div>
+  <div class="orbit-terminal-wrap reveal-right">
+    <canvas id="orbit-terminal-3d" class="orbit-terminal-3d" aria-label="3D Orbit Gate Terminal"></canvas>
+    <div class="ot-hud ot-hud-a"><span>TERMINAL CORE</span><b>D-07 BOARDING RING</b></div>
+    <div class="ot-hud ot-hud-b"><span>TEXTURE SET</span><b>GEMINI · 6 PLATES</b></div>
+    <div class="ot-hint"><span class="dot-3d"></span><span>DRAG TO INSPECT · SHUTTLE DOCKING</span></div>
+  </div>
+  <div class="orbit-copy reveal-up">
+    <div class="ch-eyebrow light center"><span class="num">04B</span><span>D-07 · ORBIT GATE TERMINAL</span></div>
+    <h2 class="ch-title light">Boarding<br>Above Earth</h2>
+    <p class="ch-body light">The launch is no longer only a cable in the sky. A full 3D terminal opens around the orbit gate: glass dome, departure board, docking ring, shuttle bay, and Earth-window texture.</p>
+    <div class="orbit-meta">
+      <span>36,000km CABLE</span>
+      <span class="dot-sep">·</span>
+      <span>2 DAILY LAUNCHES</span>
+      <span class="dot-sep">·</span>
+      <span>D-07 TRANSFER</span>
+    </div>
+  </div>
+  <div class="ch-tag light"><span class="num">CH-04B</span><span>3D Orbit Gate Terminal</span></div>
 </section>
 
 <!-- ░░ CH-05 · TOWER — Three.js interactive 3D mega-tower ░░ -->
@@ -210,18 +427,24 @@
     <div class="tw-visual">
       <div class="tw-3d-frame">
         <canvas id="tower-3d" class="tower-3d" aria-label="Interactive 3D Mega-Tower"></canvas>
+        <div class="tw-radar" aria-hidden="true"><span></span><i></i></div>
         <div class="tw-floor-tag" id="tw-floor-tag"><span class="fno-3d" id="tw-fno">47F</span><span class="fname-3d" id="tw-fname">Penthouse</span></div>
         <div class="tw-3d-hint">
           <span class="dot-3d"></span>
-          <span>DRAG TO ROTATE · HOVER A FLOOR</span>
+          <span>DRAG TO ROTATE · HOVER A FLOOR · CITY SCAN</span>
         </div>
-        <div class="tw-spec">D-01-A · 47F · 1.8M ㎡ · LIVE 3D</div>
+        <div class="tw-spec">D-01 CLUSTER · 47F · SKY-BRIDGE · LIVE 3D</div>
       </div>
     </div>
     <div class="tw-text">
       <div class="ch-eyebrow"><span class="num">05</span><span>TOWER · D-01-A · LIVE 3D</span></div>
-      <h2 class="ch-title shift-x">47 Stories<br>of Sky</h2>
-      <p class="ch-body">Drag the tower. The architecture turns to meet you. Each floor lights up the moment you ask its name.</p>
+      <h2 class="ch-title shift-x">A Cluster<br>Above Reality</h2>
+      <p class="ch-body">The 3D model now reads like a living district: layered glass facade, sky bridges, orbit rings, nearby towers, ground grid, and moving air traffic.</p>
+      <div class="tw-metrics">
+        <span><b>3</b> Mega towers</span>
+        <span><b>5</b> Sky bridges</span>
+        <span><b>24/7</b> Concierge AI</span>
+      </div>
       <ul class="floor-list">
         <li class="f-item" data-floor="1" style="--c:#FFB800"><span class="fno">1F</span><span class="fname">Grand Lobby</span><span class="fmeta">Marble + bronze concierge</span></li>
         <li class="f-item" data-floor="10" style="--c:#4DD0B0"><span class="fno">10F</span><span class="fname">Wellness</span><span class="fmeta">AI gym + holographic spa</span></li>
@@ -350,6 +573,9 @@
 <!-- ░░ CH-09 · RESERVATION ░░ -->
 <section id="ch-09" class="ch ch-reserve">
   <div class="reserve-card reveal-up">
+    <div class="reserve-concierge" aria-hidden="true">
+      <img src="img/humanoid-concierge.png" alt="">
+    </div>
     <div class="ch-eyebrow"><span class="num">09</span><span>RESERVATION</span></div>
     <h2 class="ch-title shift-x">Your Address<br>in 2300</h2>
     <p class="ch-body">Holographic show-suite opens 2300.05.20. Sales open 2300.06.10. Concierge replies in your language.</p>
@@ -373,6 +599,10 @@
       </select>
       <button type="submit"><span>Reserve Your Address →</span></button>
     </form>
+    <div class="reserve-holo">
+      <span>AI SHOW-SUITE QUEUE</span>
+      <b>Live slot matching enabled</b>
+    </div>
     <div class="reserve-success">Reservation received. The concierge will reach you within 24 hours.</div>
   </div>
 </section>
@@ -394,7 +624,15 @@
     <span class="t-pill new">Mask reveal images</span>
     <span class="t-pill new">Magnetic hover</span>
     <span class="t-pill new">Cinematic chapter floods</span>
-    <span class="t-pill">Light cyberpunk</span>
+    <span class="t-pill new">Dark glass HUD overhaul</span>
+    <span class="t-pill new">3D city cluster</span>
+    <span class="t-pill new">Hologram masterplan</span>
+    <span class="t-pill new">AI floorplan line draw</span>
+    <span class="t-pill new">Gemini texture model house</span>
+    <span class="t-pill new">3D Orbit Gate Terminal</span>
+    <span class="t-pill new">Opaque 3-type sky cars</span>
+    <span class="t-pill new">Orbit Gate launch cutscene</span>
+    <span class="t-pill">Reality cyberpunk</span>
     <span class="t-pill">Orbitron + Space Grotesk</span>
     <span class="t-pill">Photoreal × 23</span>
   </div>
