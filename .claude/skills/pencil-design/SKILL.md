@@ -18,7 +18,12 @@ description: |
   - "Blend에서 편집할 수 있게 변환해줘", "design-wpf-app에 추가해줘"
   - "WPF 애니메이션 Blend 호환으로 변환", "XAML UserControl로 변환"
   - design/xaml/sample/ 의 XAML을 design-wpf-app/migrated/ 로 전환 요청 시
-  펜슬이나 .pen 파일이 언급되지 않은 일반 이미지 생성은 image-gen 스킬을 사용한다.
+  - "이미지 생성해줘", "그림 만들어줘", "일러스트 생성", "이미지 그려줘"
+  - "제미나이로 이미지 만들어", "제미나이 이용해 이미지 생성", "Gemini 이미지"
+  - "제트이미지를 이용해 이미지생성", "z-image로 그려줘", "ComfyUI로 이미지", "로컬로 이미지 생성"
+  - "OOO 내용으로 이미지 생성해줘" 패턴 모두
+  - "이미지 편집해줘", "이 이미지를 수정해줘"
+  - 펜슬 카드 삽화/배경/썸네일/HTML 페이지용 이미지가 필요할 때
 allowed-tools: mcp__pencil__get_guidelines, mcp__pencil__open_document, mcp__pencil__get_editor_state, mcp__pencil__batch_design, mcp__pencil__get_screenshot, mcp__pencil__find_empty_space_on_canvas, mcp__pencil__snapshot_layout, mcp__pencil__batch_get, mcp__pencil__get_style_guide_tags, mcp__pencil__get_style_guide, Read, Write, Glob, Grep, WebSearch, WebFetch, Agent, Bash
 ---
 
@@ -665,3 +670,160 @@ tools/RESTORE/
 ├── find-pencil.ps1       ← 창 복원 (이 섹션에서 사용)
 └── archive-project.ps1   ← 프로젝트 아카이브 (별도 용도)
 ```
+
+---
+
+## 13. 이미지 생성 / 편집 (Gemini · ComfyUI Z-Image-Turbo)
+
+펜슬 카드의 삽화·배경, HTML 페이지의 히어로 이미지, 디자인 레퍼런스 등 이미지가 필요할 때 사용한다.
+프로바이더 추상화 구조로 **Gemini**(클라우드, generate + edit)와 **ComfyUI Z-Image-Turbo**(로컬, generate only)를 지원한다.
+
+### 13.1 기본 설정
+
+| 항목 | 값 |
+|------|-----|
+| 시크릿 파일 | `.secret/gemini.json` (저장소 루트 기준, ComfyUI는 불필요) |
+| 기본 프로바이더 | `gemini` |
+| 이미지 저장 루트 | `image/` (저장소 루트 기준) |
+| 저장 패턴 | `image/{provider}/{YYYY-MM-DD}-{topic}.png` |
+| 스크립트 | `.claude/skills/pencil-design/scripts/image-gen.py` |
+
+> 환경변수 `GEMINI_SECRET_PATH`, `IMAGE_GEN_ROOT`로 경로 override 가능.
+> 시크릿 형식: `{ "api_key": "...", "image_model": "gemini-3.1-flash-image-preview" }`
+
+### 13.2 프로바이더 비교
+
+| 항목 | Gemini | ComfyUI Z-Image-Turbo |
+|------|--------|----------------------|
+| 호출명 | `--provider gemini` | `--provider comfyui` 또는 `z-image` / `z-image-turbo` |
+| 위치 | 클라우드 (Google API) | 로컬 (`http://192.168.0.64:8188`) |
+| API 키 | 필요 (`.secret/gemini.json` → `api_key`) | 불필요 |
+| 모델 | gemini-3.1-flash-image-preview | Z-Image-Turbo BF16 (4 step) |
+| 이미지 편집 | O (generate + edit) | X (text-to-image only) |
+| 비율 지원 | 자유 | 1:1, 16:9, 9:16, 4:3, 3:4 |
+| 속도 | 네트워크 의존 | 로컬 GPU, 약 5–15초 |
+| 주의 | 일일 쿼터 | ComfyUI 서버 실행 필요 |
+
+### 13.3 CLI 사용법
+
+> ⚠️ **Windows 환경 — 반드시 `py` 사용**
+> Windows의 `python` 명령은 보통 Microsoft Store 스텁(exit 49, "Python"만 출력)을 가리켜 **조용히 실패**한다. 백그라운드 실행 시 디버깅이 매우 어렵다. **반드시 Python Launcher `py`를 사용**한다. 본 문서의 예제는 호환을 위해 `python` 으로 표기되어 있으나, Windows에서는 `py`로 치환 실행한다.
+
+#### 이미지 생성 (Gemini)
+
+```bash
+py .claude/skills/pencil-design/scripts/image-gen.py generate \
+  --prompt "A friendly robot reading a book in a cozy library" \
+  --topic robot-reading \
+  --provider gemini \
+  --aspect-ratio 16:9
+```
+
+#### 이미지 생성 (ComfyUI Z-Image-Turbo, 로컬)
+
+```bash
+py .claude/skills/pencil-design/scripts/image-gen.py generate \
+  --prompt "A futuristic cityscape at sunset, cyberpunk style" \
+  --topic cyber-city \
+  --provider comfyui \
+  --aspect-ratio 16:9
+```
+
+`--provider` 별칭: `comfyui`, `z-image`, `z-image-turbo` 모두 동일.
+
+#### 이미지 편집 (Gemini only)
+
+```bash
+py .claude/skills/pencil-design/scripts/image-gen.py edit \
+  --prompt "배경을 석양이 지는 해변으로 바꿔줘" \
+  --input-image image/samsung.jpg \
+  --topic samsung-sunset \
+  --provider gemini
+```
+
+> ComfyUI Z-Image-Turbo는 text-to-image 전용이므로 edit 미지원. 편집은 gemini 사용.
+
+#### 출력 형식
+
+성공 시:
+```json
+{"status": "ok", "path": "image/gemini/2026-05-06-robot-reading.png", "provider": "gemini"}
+```
+
+실패 시:
+```json
+{"status": "error", "message": "에러 메시지"}
+```
+
+### 13.4 워크플로우
+
+```
+Step 1. 프롬프트 준비
+  → 사용자 요청에서 이미지 설명 추출
+  → 영문 프롬프트가 품질이 더 좋음 (한글도 지원)
+
+Step 2. 이미지 생성
+  → image-gen.py generate 실행 (Windows: py)
+  → JSON 출력에서 path 확인
+
+Step 3. 결과 확인
+  → Read 도구로 시각적 확인 (PNG 표시 지원)
+  → 만족스럽지 않으면 프롬프트 수정 후 재생성
+
+Step 4. (선택) 펜슬 / HTML 통합
+  → 펜슬 카드 삽화: batch_design의 G() 오퍼레이션으로 frame에 이미지 삽입
+  → HTML 페이지: design/xaml/output/sample{N}/ 의 <img src="..."> 또는 background-image
+```
+
+### 13.5 ComfyUI 서버 요구사항
+
+- 엔드포인트: `http://192.168.0.64:8188`
+- 서버 시작: `cd C:\Users\psmon\ComfyUI && .\venv\Scripts\Activate.ps1 && python main.py --listen 0.0.0.0 --port 8188`
+- 서버 미실행 시 에러 메시지에 시작 방법 안내가 포함됨
+
+### 13.6 프로바이더 구조
+
+```
+.claude/skills/pencil-design/scripts/
+├── image-gen.py              ← 메인 CLI
+└── providers/
+    ├── __init__.py           ← 프로바이더 레지스트리
+    ├── gemini_provider.py    ← Gemini 구현 (클라우드, .secret/gemini.json)
+    └── comfyui_provider.py   ← ComfyUI Z-Image-Turbo (로컬, 키 불필요)
+```
+
+향후 프로바이더 추가 시:
+1. `providers/{name}_provider.py` 생성 (인터페이스: `generate`, `edit`)
+2. `providers/__init__.py`의 `get_provider()`에 등록
+3. `--provider {name}`으로 호출
+
+### 13.7 의존성 설치
+
+```bash
+# Gemini provider — generate (필수)
+py -m pip install google-genai
+
+# Gemini provider — edit (선택, 이미지 편집 시 필요)
+py -m pip install Pillow
+
+# ComfyUI provider — 추가 의존성 없음 (urllib만 사용)
+```
+
+설치 확인:
+```bash
+py -c "from google import genai; print('genai OK')"
+py -c "from PIL import Image; print('PIL OK')"
+```
+
+### 13.8 안티패턴
+
+| 안티패턴 | 결과 | 올바른 방법 |
+|----------|------|-------------|
+| API key를 스킬/스크립트에 하드코딩 | 보안 위험 | `.secret/gemini.json` → `api_key` 자동 로딩 |
+| 키를 여러 파일에 중복 보관 | 동기화 누락 | 서비스당 `.secret/{service}.json` 하나만 사용 |
+| JSON 출력 미파싱 후 경로 추측 | 에러 시 잘못된 경로 사용 | `status` 필드 확인 후 `path` 사용 |
+| 한글 파일명 사용 | OS 호환성 문제 | 영문 topic 키워드 사용 |
+| 이미지 확인 없이 바로 게시 | 품질 미검증 | Read 도구로 시각적 확인 후 게시 |
+| ComfyUI에 edit 호출 | NotImplementedError | 편집은 gemini provider 사용 |
+| ComfyUI 서버 미확인 후 생성 시도 | 타임아웃/연결 오류 | 서버 상태 먼저 확인 또는 에러 안내 참조 |
+| Windows에서 `python` 명령 사용 | MS Store 스텁이 조용히 실패 (exit 49) | **반드시 `py` 사용** |
