@@ -488,3 +488,88 @@
 | Web Starfield (Canvas) | https://github.com/anthony-hopkins/web_starfield |
 | WebGL Parallax Starfield | https://github.com/rocket-boots/webgl-starfield |
 | Interactive 3D Galaxy | https://codetap.org/project/interactive-3d-galaxy-animation |
+
+---
+
+# 7차 조사 — 캐릭터 애니메이션 (2026-04-30)
+
+> 목적: 12 Principles of Animation 기반 WPF 캐릭터 애니메이션 6종 조사 및 CAT17 추가
+> 신규 패러다임: 기존 CAT1~16에 부재했던 "캐릭터" 컨텍스트 (스프라이트/스켈레탈/idle 사이클)
+
+---
+
+## CAT17: 캐릭터 애니메이션 (Character Animation)
+
+### 39. Sprite Sheet Walk Cycle (스프라이트 시트 워크 사이클)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Animation Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview), [Microsoft Learn - Storyboards Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/storyboards-overview), [CodeProject - Animation using Storyboards](https://www.codeproject.com/Articles/364529/Animation-using-Storyboards-in-WPF) |
+| 핵심 기술 | ImageBrush.Viewbox + RectAnimationUsingKeyFrames, DiscreteRectKeyFrame |
+| 애니메이션 | 8 셀 × 96px sprite sheet, 0.1s/frame discrete swap, 0.8s loop, RepeatBehavior=Forever |
+| 샘플 파일 | [`sample/39-sprite-sheet-walk-cycle.xaml`](sample/39-sprite-sheet-walk-cycle.xaml) |
+
+### 40. Squash & Stretch (스쿼시 & 스트레치)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - DoubleAnimation Tutorial](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/how-to-animate-a-property-by-using-a-storyboard), [Disney 12 Principles of Animation](https://en.wikipedia.org/wiki/Twelve_basic_principles_of_animation), [moldstud - Storyboards in XAML](https://moldstud.com/articles/p-step-by-step-guide-to-building-simple-storyboards-in-xaml-your-ultimate-tutorial) |
+| 핵심 기술 | ScaleTransform non-uniform (ScaleX↔ScaleY 반비례), QuadraticEase, SplineDoubleKeyFrame |
+| 애니메이션 | 점프 시 ScaleX 0.85 ScaleY 1.20 (stretch) → 착지 시 ScaleX 1.50 ScaleY 0.55 (squash) → 1.0 복귀, RenderTransformOrigin 0.5,1.0 (volume preservation) |
+| 샘플 파일 | [`sample/40-squash-and-stretch.xaml`](sample/40-squash-and-stretch.xaml) |
+
+### 41. Idle Breathing Loop (대기 호흡 루프)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - SineEase EasingMode](https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.animation.sineease), [GitHub - XamlFlair Animation Library](https://github.com/XamlFlair/XamlFlair) |
+| 핵심 기술 | ScaleTransform ScaleY 1.0→1.04 + ScaleX 1.0→1.02 + TranslateTransform.Y -3px, SineEase EaseInOut, AutoReverse=True, RepeatBehavior=Forever |
+| 애니메이션 | 미세 호흡 효과 (1.6s 주기), RenderTransformOrigin 0.5,1.0 (발 고정), 자연스러운 idle 상태 표현 |
+| 샘플 파일 | [`sample/41-idle-breathing.xaml`](sample/41-idle-breathing.xaml) |
+
+### 42. Eye Blink Sequence (눈 깜빡임 시퀀스)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - LinearDoubleKeyFrame](https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.animation.lineardoublekeyframe), [Petr Závodný - Basic Animations in WPF](https://www.petrzavodny.com/blog/BasicAnimationsWPFMini.html) |
+| 핵심 기술 | ScaleTransform.ScaleY 1.0 → 0.05 → 1.0, LinearDoubleKeyFrame, BeginTime stagger 0.02s (자연스러운 양안 비대칭) |
+| 애니메이션 | 단일 깜빡임 0.1s, double-blink @5s 추가, 평상시 ~3s 간격 자동 깜빡임, 캐릭터 생동감 표현 |
+| 샘플 파일 | [`sample/42-eye-blink-sequence.xaml`](sample/42-eye-blink-sequence.xaml) |
+
+### 43. Head Tracking / Look-at Cursor (시선 추적)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - MouseEventArgs.GetPosition](https://learn.microsoft.com/en-us/dotnet/api/system.windows.input.mouseeventargs.getposition), [Microsoft Learn - RotateTransform](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/transforms-overview) |
+| 핵심 기술 | RotateTransform code-behind via MouseMove, Math.Atan2(dy, dx) → degrees, damping 0.15, TransformGroup (Rotate + Translate eye-offset) |
+| 애니메이션 | 머리 ±15° 기울기 + 동공 ±6px 오프셋 (clamp), 마우스 위치 따라 실시간 추적, 인터랙티브 UI |
+| 샘플 파일 | [`sample/43-head-tracking.xaml`](sample/43-head-tracking.xaml) |
+
+### 44. Anticipation & Follow-Through (사전동작 & 잔여동작)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Disney 12 Principles - Anticipation & Follow-Through](https://en.wikipedia.org/wiki/Twelve_basic_principles_of_animation), [Microsoft Learn - SplineDoubleKeyFrame](https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.animation.splinedoublekeyframe) |
+| 핵심 기술 | SplineDoubleKeyFrame (KeySpline 0.4,0,0.2,1), TranslateTransform.X 4단계 (-30 → 280 → 310 overshoot → 280 settle), 동시 RotateTransform tilt |
+| 애니메이션 | 1.전조 (0.4s pull-back) → 2.본동작 (0.5s dash) → 3.오버슛 (0.15s 잔여) → 4.안정 (0.35s settle) — 액션 4단계 타임라인 |
+| 샘플 파일 | [`sample/44-anticipation-followthrough.xaml`](sample/44-anticipation-followthrough.xaml) |
+
+---
+
+## COMBINED SAMPLE: Pixel Hero Animation Suite
+
+| 항목 | 내용 |
+|------|------|
+| 조합 기법 | Sprite Walk Cycle + Idle Breathing + Squash & Stretch + Eye Blink |
+| 파이프라인 | Walk (RectAnim 8 frames) ⇄ Idle Breath (ScaleY SineEase 1.6s) → Land Squash (KeySpline 0.15s) → Blink (LinearKey 0.1s @3s 간격) |
+| 가치 | 캐릭터 1체에 4기법 동시 적용, 게임/게이미피케이션 UI 즉시 활용 가능 (Case W에서 CSS animation + WAAPI 변환) |
+
+---
+
+## 추가 참고 자료
+
+| 리소스 | URL |
+|--------|-----|
+| Disney 12 Principles of Animation | https://en.wikipedia.org/wiki/Twelve_basic_principles_of_animation |
+| WPF Sprite Animation Guide | https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview |
+| XamlFlair Animation Library | https://github.com/XamlFlair/XamlFlair |

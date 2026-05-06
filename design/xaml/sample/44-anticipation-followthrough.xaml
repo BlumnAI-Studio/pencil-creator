@@ -1,0 +1,52 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Anticipation and Follow-Through" Height="320" Width="480" Background="#0A0F1C">
+    <Grid>
+        <Rectangle x:Name="hero" Width="60" Height="80"
+                   Fill="#FFE66D" RadiusX="6" RadiusY="6"
+                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Margin="60,0,0,0"
+                   RenderTransformOrigin="0.5,1.0">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform x:Name="heroX" X="0"/>
+                    <RotateTransform x:Name="heroR" Angle="0"/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+            <Rectangle.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <!-- 1) Anticipation: pull back + crouch tilt (0.0 - 0.4s) -->
+                            <DoubleAnimationUsingKeyFrames
+                                Storyboard.TargetName="heroX"
+                                Storyboard.TargetProperty="X">
+                                <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="-30"
+                                    KeySpline="0.4,0,0.2,1"/>
+                                <!-- 2) Main action: forward dash (0.4 - 0.9s) -->
+                                <SplineDoubleKeyFrame KeyTime="0:0:0.9" Value="280"
+                                    KeySpline="0.6,0,0.2,1"/>
+                                <!-- 3) Follow-through: overshoot + settle (0.9 - 1.4s) -->
+                                <SplineDoubleKeyFrame KeyTime="0:0:1.05" Value="310"
+                                    KeySpline="0.4,0,0.2,1"/>
+                                <SplineDoubleKeyFrame KeyTime="0:0:1.4" Value="280"
+                                    KeySpline="0.4,0,0.2,1"/>
+                                <!-- Reset -->
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.0" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames
+                                Storyboard.TargetName="heroR"
+                                Storyboard.TargetProperty="Angle">
+                                <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="-12"/>
+                                <SplineDoubleKeyFrame KeyTime="0:0:0.9" Value="14"/>
+                                <SplineDoubleKeyFrame KeyTime="0:0:1.05" Value="6"/>
+                                <SplineDoubleKeyFrame KeyTime="0:0:1.4" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.0" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Rectangle.Triggers>
+        </Rectangle>
+    </Grid>
+</Window>
