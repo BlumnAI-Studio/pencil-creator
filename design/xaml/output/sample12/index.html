@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMIÈRE 2300 — A City of Light</title>
+  <meta name="description" content="LUMIÈRE 2300 — Future city of light. Mega-towers above sky-lanes. The sky becomes your living room.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Space+Grotesk:wght@300;400;500;700&family=Chakra+Petch:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Cursor halo -->
+<div class="cursor-halo" aria-hidden="true"></div>
+
+<!-- Top progress bar -->
+<div class="prog-bar" aria-hidden="true"></div>
+
+<!-- Top navigation -->
+<header class="topbar">
+  <a class="brand" href="#hero">
+    <span class="brand-mark">L</span>
+    <span class="brand-text">
+      <span class="en">LUMIÈRE 2300</span>
+      <span class="sub">A CITY OF LIGHT</span>
+    </span>
+  </a>
+  <nav class="nav">
+    <a href="#ch-01">City</a>
+    <a href="#ch-02">Sky Lanes</a>
+    <a href="#ch-05">Tower</a>
+    <a href="#ch-06">Amenity</a>
+    <a href="#ch-07">Interior</a>
+    <a href="#ch-09">Reserve</a>
+  </nav>
+  <a class="reserve-pill" href="#ch-09">
+    <span class="dot"></span> Reserve · 1899.0506
+  </a>
+</header>
+
+<!-- Right side rail -->
+<aside class="ch-rail" aria-hidden="true">
+  <a href="#hero" class="ch-dot active"><span>00</span></a>
+  <a href="#ch-01" class="ch-dot"><span>01</span></a>
+  <a href="#ch-02" class="ch-dot"><span>02</span></a>
+  <a href="#ch-03" class="ch-dot"><span>03</span></a>
+  <a href="#ch-04" class="ch-dot"><span>04</span></a>
+  <a href="#ch-05" class="ch-dot"><span>05</span></a>
+  <a href="#ch-06" class="ch-dot"><span>06</span></a>
+  <a href="#ch-07" class="ch-dot"><span>07</span></a>
+  <a href="#ch-08" class="ch-dot"><span>08</span></a>
+  <a href="#ch-09" class="ch-dot"><span>09</span></a>
+</aside>
+
+<main class="stage">
+
+<!-- ░░ CH-00 · HERO — film roll title + parallax bg ░░ -->
+<section id="hero" class="ch hero">
+  <div class="hero-bg">
+    <img src="img/hero-city.png" alt="LUMIÈRE 2300 city" class="hero-img">
+    <canvas id="hero-pixi" class="hero-pixi" aria-hidden="true"></canvas>
+    <div class="hero-veil"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="bar"></span><span>FORTHCOMING · YEAR 2300</span></div>
+    <h1 class="film-title">
+      <span class="film-line"><span>L</span><span>U</span><span>M</span><span>I</span><span>È</span><span>R</span><span>E</span></span>
+      <span class="film-line cyber"><span>2</span><span>·</span><span>3</span><span>·</span><span>0</span><span>·</span><span>0</span></span>
+    </h1>
+    <p class="hero-sub">The Sky Becomes Your Living Room</p>
+    <div class="hero-meta">
+      <span>D-01 RESIDENTIAL</span>
+      <span class="dot-sep">·</span>
+      <span>SKY-LANE 03</span>
+      <span class="dot-sep">·</span>
+      <span>AI CONCIERGE 24/7</span>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#ch-01"><span>SCROLL</span><span class="line"></span></a>
+  <div class="ch-tag"><span class="num">CH-00</span><span>Above the Clouds</span></div>
+</section>
+
+<!-- ░░ CH-01 · CITY — split panel + mask reveal ░░ -->
+<section id="ch-01" class="ch ch-city">
+  <div class="city-grid">
+    <div class="city-text reveal-left">
+      <div class="ch-eyebrow"><span class="num">01</span><span>CITY MAP</span></div>
+      <h2 class="ch-title shift-x">The 7<br>Districts</h2>
+      <p class="ch-body">A future city is a story told in chapters. LUMIÈRE 2300 sets seven of them — and your home is the prologue.</p>
+      <ul class="d-list">
+        <li class="d-item" data-d="1"><span class="d-no">D-01</span><span class="d-name">Residential Core</span><span class="d-meta">Mega-Tower × 3 · 1,800 units</span></li>
+        <li class="d-item" data-d="2"><span class="d-no">D-02</span><span class="d-name">Commerce</span><span class="d-meta">Holo shopping · AI dining</span></li>
+        <li class="d-item" data-d="3"><span class="d-no">D-03</span><span class="d-name">Mobility Hub</span><span class="d-meta">Sky-lane stations × 12</span></li>
+        <li class="d-item" data-d="4"><span class="d-no">D-04</span><span class="d-name">Bio Park</span><span class="d-meta">Vertical farm · Korean garden</span></li>
+        <li class="d-item" data-d="5"><span class="d-no">D-05</span><span class="d-name">Energy</span><span class="d-meta">Solar · fusion · 100% self-sufficient</span></li>
+        <li class="d-item" data-d="6"><span class="d-no">D-06</span><span class="d-name">Memory Vault</span><span class="d-meta">Quantum archive 1 EB</span></li>
+        <li class="d-item" data-d="7"><span class="d-no">D-07</span><span class="d-name">Orbit Gate</span><span class="d-meta">Space elevator · Mars shuttle</span></li>
+      </ul>
+    </div>
+    <div class="city-visual reveal-right">
+      <div class="city-mask">
+        <img src="img/masterplan.png" alt="LUMIÈRE 2300 master plan">
+      </div>
+      <div class="city-tag">7 DISTRICTS · 280 km²</div>
+    </div>
+  </div>
+  <div class="ch-tag"><span class="num">CH-01</span><span>The 7 Districts</span></div>
+</section>
+
+<!-- ░░ CH-02 · SKY LANES — full bleed PixiJS canvas ░░ -->
+<section id="ch-02" class="ch ch-skylane">
+  <div class="sl-bg"><canvas id="sl-pixi" class="sl-pixi" aria-hidden="true"></canvas></div>
+  <div class="sl-content">
+    <div class="ch-eyebrow light"><span class="num">02</span><span>SKY-LANE NETWORK</span></div>
+    <h2 class="ch-title light shift-y">Diving Into<br>the Lanes</h2>
+    <p class="ch-body light">Five sky-lanes stack the city. Local shuttles, express ribbons, the orbit gate above — your address is one ride from anywhere.</p>
+    <div class="sl-lanes">
+      <div class="sl-lane"><span class="ll" style="background:#FFB800"></span><span class="lname">GROUND</span><span class="lmeta">Pedestrian + nature path</span></div>
+      <div class="sl-lane"><span class="ll" style="background:#00C8E8"></span><span class="lname">L1 LOCAL</span><span class="lmeta">30 km/h · auto-shuttle</span></div>
+      <div class="sl-lane"><span class="ll" style="background:#FF6BC1"></span><span class="lname">L2 CITY</span><span class="lmeta">80 km/h · district links</span></div>
+      <div class="sl-lane"><span class="ll" style="background:#8B6FFF"></span><span class="lname">L3 EXPRESS</span><span class="lmeta">200 km/h · cross-city</span></div>
+      <div class="sl-lane"><span class="ll" style="background:#B5FF3A"></span><span class="lname">L4 ORBIT</span><span class="lmeta">Mars shuttle launch</span></div>
+    </div>
+  </div>
+  <div class="ch-tag light"><span class="num">CH-02</span><span>Diving Into the Lanes</span></div>
+</section>
+
+<!-- ░░ CH-03 · INFRASTRUCTURE — staggered grid reveal ░░ -->
+<section id="ch-03" class="ch ch-infra">
+  <header class="ch-head reveal-up">
+    <div class="ch-eyebrow"><span class="num">03</span><span>CITY'S ENGINES</span></div>
+    <h2 class="ch-title">The Hidden Engines</h2>
+    <p class="ch-body">Behind every quiet morning, four engines turn. The city breathes because they breathe.</p>
+  </header>
+  <div class="infra-grid">
+    <article class="i-card g1" style="--delay:0">
+      <div class="i-img"><img src="img/infra-farm.png" alt="Vertical farm"></div>
+      <div class="i-meta">
+        <span class="i-tag" style="--c:#B5FF3A">D-04 · BIO</span>
+        <h3>Vertical Farm</h3>
+        <p>45 floors of stacked hydroponic crops. The city eats from itself.</p>
+      </div>
+    </article>
+    <article class="i-card g2" style="--delay:0.06">
+      <div class="i-img"><img src="img/infra-elevator.png" alt="Space elevator"></div>
+      <div class="i-meta">
+        <span class="i-tag" style="--c:#FF6BC1">D-07 · ORBIT</span>
+        <h3>Space Elevator</h3>
+        <p>36,000 km cable to the orbit station. Mars shuttles depart twice a day.</p>
+      </div>
+    </article>
+    <article class="i-card g3" style="--delay:0.12">
+      <div class="i-img"><img src="img/infra-energy.png" alt="Energy grid"></div>
+      <div class="i-meta">
+        <span class="i-tag" style="--c:#FFB800">D-05 · POWER</span>
+        <h3>Energy Grid</h3>
+        <p>Solar + fusion. 100% self-sufficient. Surplus exports to Tokyo and Seoul.</p>
+      </div>
+    </article>
+    <article class="i-card g4" style="--delay:0.18">
+      <div class="i-img"><img src="img/infra-vault.png" alt="Memory vault"></div>
+      <div class="i-meta">
+        <span class="i-tag" style="--c:#8B6FFF">D-06 · MEMORY</span>
+        <h3>Memory Vault</h3>
+        <p>1 exabyte of human civilization, archived in quantum crystal.</p>
+      </div>
+    </article>
+  </div>
+  <div class="ch-tag"><span class="num">CH-03</span><span>City's Engines</span></div>
+</section>
+
+<!-- ░░ CH-04 · D-01 PORTAL — zoom-in transition ░░ -->
+<section id="ch-04" class="ch ch-d01">
+  <div class="d01-bg">
+    <img src="img/portal.png" alt="Dimension portal">
+    <div class="d01-rings"><span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span></div>
+  </div>
+  <div class="d01-content reveal-up">
+    <div class="ch-eyebrow light center"><span class="num">04</span><span>D-01 · RESIDENTIAL CORE</span></div>
+    <h2 class="d01-title">Welcome<br>to D-01</h2>
+    <p class="d01-sub">The residential core of LUMIÈRE 2300. Three slim mega-towers, 1,800 chosen residents, one private sky.</p>
+  </div>
+  <div class="ch-tag light"><span class="num">CH-04</span><span>Welcome to D-01</span></div>
+</section>
+
+<!-- ░░ CH-05 · TOWER — split with parallax + 3D rotate ░░ -->
+<section id="ch-05" class="ch ch-tower">
+  <div class="tw-grid">
+    <div class="tw-visual">
+      <div class="tw-frame">
+        <img src="img/mega-tower.png" alt="Mega Tower D-01" id="tw-img">
+        <div class="tw-spec">D-01-A · 47F · 1.8M ㎡</div>
+      </div>
+    </div>
+    <div class="tw-text">
+      <div class="ch-eyebrow"><span class="num">05</span><span>TOWER · D-01-A</span></div>
+      <h2 class="ch-title shift-x">47 Stories<br>of Sky</h2>
+      <ul class="floor-list">
+        <li class="f-item" style="--c:#FFB800"><span class="fno">1F</span><span class="fname">Grand Lobby</span><span class="fmeta">Marble + bronze concierge</span></li>
+        <li class="f-item" style="--c:#4DD0B0"><span class="fno">10F</span><span class="fname">Wellness</span><span class="fmeta">AI gym + holographic spa</span></li>
+        <li class="f-item" style="--c:#00C8E8"><span class="fno">25F</span><span class="fname">Observatory</span><span class="fmeta">Reading + meeting + sky garden</span></li>
+        <li class="f-item" style="--c:#FF6BC1"><span class="fno">35F</span><span class="fname">Sky Lounge</span><span class="fmeta">Dusk over the river</span></li>
+        <li class="f-item" style="--c:#8B6FFF"><span class="fno">47F</span><span class="fname">Penthouse</span><span class="fmeta">Helipad · private orbit dock</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ch-tag"><span class="num">CH-05</span><span>47 Stories of Sky</span></div>
+</section>
+
+<!-- ░░ CH-06 · AMENITY — alternating panels (zigzag) ░░ -->
+<section id="ch-06" class="ch ch-amen">
+  <header class="ch-head reveal-up">
+    <div class="ch-eyebrow"><span class="num">06</span><span>AMENITY</span></div>
+    <h2 class="ch-title">Lifestyle, Reimagined</h2>
+  </header>
+  <div class="am-zigzag">
+    <div class="am-row reveal-up">
+      <div class="am-img"><img src="img/amen-sky.png" alt="Sky lounge"><span class="am-badge">35F · SKY</span></div>
+      <div class="am-meta">
+        <span class="am-no">01</span>
+        <h3>Sky Lounge · 35F</h3>
+        <p>Bronze-framed windows hold the sunset. Holographic table-tops, leather sofas, golden pendants. Where the city dims to your conversation.</p>
+      </div>
+    </div>
+    <div class="am-row reverse reveal-up">
+      <div class="am-img"><img src="img/amen-pool.png" alt="Infinity pool"><span class="am-badge">B1 · WELLNESS</span></div>
+      <div class="am-meta">
+        <span class="am-no">02</span>
+        <h3>Infinity Pool · B1</h3>
+        <p>Long calm water lit by cyan-magenta neon. 25-meter lap. A quiet dawn floor where the only ripple is yours.</p>
+      </div>
+    </div>
+    <div class="am-row reveal-up">
+      <div class="am-img"><img src="img/amen-gym.png" alt="AI studio"><span class="am-badge">10F · ACTIVE</span></div>
+      <div class="am-meta">
+        <span class="am-no">03</span>
+        <h3>AI Studio · 10F</h3>
+        <p>Mirror wall, oak floor, holographic instructor. Pilates, yoga, breathwork. Your body's address in 2300.</p>
+      </div>
+    </div>
+    <div class="am-row reverse reveal-up">
+      <div class="am-img"><img src="img/amen-library.png" alt="Holo library"><span class="am-badge">3F · STUDY</span></div>
+      <div class="am-meta">
+        <span class="am-no">04</span>
+        <h3>Holo Library · 3F</h3>
+        <p>Floating book covers, oak nooks, leather wing chairs. Quiet enough to hear yourself think. Loud enough to remember why.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ch-tag"><span class="num">CH-06</span><span>Lifestyle, Reimagined</span></div>
+</section>
+
+<!-- ░░ CH-07 · INTERIOR — magazine spread vertical, snap reveal ░░ -->
+<section id="ch-07" class="ch ch-int">
+  <header class="ch-head reveal-up">
+    <div class="ch-eyebrow"><span class="num">07</span><span>INTERIOR · UNIT</span></div>
+    <h2 class="ch-title">Inside the Quiet</h2>
+    <p class="ch-body">A 134 ㎡ residence is four rooms. Each one a different way the city looks at you.</p>
+  </header>
+  <div class="int-spread">
+    <article class="int-tile reveal-up i1">
+      <div class="int-img"><img src="img/int-living.png" alt="Living"></div>
+      <div class="int-meta"><span class="tag">LIVING · 134 ㎡</span><h3>Living Room</h3><p>2.7 m ceiling. 7.2 m panoramic glass over flying cyber cars. Marble TV wall, bronze trim, a city as your painting.</p></div>
+    </article>
+    <article class="int-tile reveal-up i2">
+      <div class="int-img"><img src="img/int-kitchen.png" alt="Kitchen"></div>
+      <div class="int-meta"><span class="tag">KITCHEN · BOFFI</span><h3>AI Kitchen</h3><p>4 m Calacatta island with embedded recipe holograms. Robotic chef arm. The island hosts dinners that host you back.</p></div>
+    </article>
+    <article class="int-tile reveal-up i3">
+      <div class="int-img"><img src="img/int-bedroom.png" alt="Bedroom"></div>
+      <div class="int-meta"><span class="tag">MASTER · 23.4 ㎡</span><h3>Master Bedroom</h3><p>Belgian linen headboard. Walnut nightstands, soft amber lamps. The skyline outside dims itself when you do.</p></div>
+    </article>
+    <article class="int-tile reveal-up i4">
+      <div class="int-img"><img src="img/int-bath.png" alt="Bath"></div>
+      <div class="int-meta"><span class="tag">BATH · STONE</span><h3>Marble Spa</h3><p>Full-slab Calacatta walls. Holo mirror reads the weather. Free-standing tub framed by the night skyline.</p></div>
+    </article>
+  </div>
+  <div class="ch-tag"><span class="num">CH-07</span><span>Inside the Quiet</span></div>
+</section>
+
+<!-- ░░ CH-08 · LOOKBOOK — masonry shimmer wall ░░ -->
+<section id="ch-08" class="ch ch-look">
+  <header class="ch-head reveal-up">
+    <div class="ch-eyebrow"><span class="num">08</span><span>LOOKBOOK · MATERIALS</span></div>
+    <h2 class="ch-title">The Touch of Materials</h2>
+    <p class="ch-body">Six future finishes. Glance and the light walks across them.</p>
+  </header>
+  <div class="lb-grid">
+    <div class="lb-tile reveal-up" style="--delay:0">
+      <div class="lb-img"><img src="img/mat-carbon.png" alt="Carbon"></div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="cat">CARBON</span><h4>Etched Carbon</h4><p>Structural panels · cyan circuit etch</p></div>
+    </div>
+    <div class="lb-tile reveal-up" style="--delay:0.05">
+      <div class="lb-img"><img src="img/mat-plasma.png" alt="Plasma"></div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="cat">PLASMA</span><h4>Plasma Glass</h4><p>Living iridescent partitions</p></div>
+    </div>
+    <div class="lb-tile reveal-up" style="--delay:0.10">
+      <div class="lb-img"><img src="img/mat-holo.png" alt="Holo"></div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="cat">HOLO</span><h4>Holographic Crystal</h4><p>Bath partitions · facade highlights</p></div>
+    </div>
+    <div class="lb-tile reveal-up" style="--delay:0.15">
+      <div class="lb-img"><img src="img/mat-neon.png" alt="Neon"></div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="cat">NEON</span><h4>LED Concrete</h4><p>Linear neon embedded in matte concrete</p></div>
+    </div>
+    <div class="lb-tile reveal-up" style="--delay:0.20">
+      <div class="lb-img"><img src="img/mat-nano.png" alt="Nano"></div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="cat">METAL</span><h4>Nano-Alloy Brushed</h4><p>Cabinet & hardware finish</p></div>
+    </div>
+    <div class="lb-tile reveal-up" style="--delay:0.25">
+      <div class="lb-img"><img src="img/mat-moss.png" alt="Bio moss"></div>
+      <span class="sparkle s1"></span><span class="sparkle s2"></span>
+      <div class="lb-info"><span class="cat">LANDSCAPE</span><h4>Bio-Luminescent Moss</h4><p>Korean garden + roof landscape</p></div>
+    </div>
+  </div>
+  <div class="ch-tag"><span class="num">CH-08</span><span>The Touch of Materials</span></div>
+</section>
+
+<!-- ░░ CH-09 · RESERVATION ░░ -->
+<section id="ch-09" class="ch ch-reserve">
+  <div class="reserve-card reveal-up">
+    <div class="ch-eyebrow"><span class="num">09</span><span>RESERVATION</span></div>
+    <h2 class="ch-title shift-x">Your Address<br>in 2300</h2>
+    <p class="ch-body">Holographic show-suite opens 2300.05.20. Sales open 2300.06.10. Concierge replies in your language.</p>
+    <div class="reserve-stats">
+      <div class="stat"><span class="k">SUITE OPEN</span><span class="v">2300.05.20</span></div>
+      <div class="stat"><span class="k">SALES</span><span class="v">2300.06.10</span></div>
+      <div class="stat"><span class="k">CONCIERGE</span><span class="v">1899.0506</span></div>
+    </div>
+    <form class="reserve-form" onsubmit="event.preventDefault(); document.querySelector('.reserve-success').classList.add('on');">
+      <div class="row">
+        <input type="text" placeholder="Your name" required>
+        <input type="text" placeholder="Your contact (email or phone)" required>
+      </div>
+      <select>
+        <option>Unit interest — All</option>
+        <option>59 ㎡</option>
+        <option>74 ㎡</option>
+        <option>84 ㎡</option>
+        <option>110 ㎡</option>
+        <option>134 ㎡</option>
+      </select>
+      <button type="submit"><span>Reserve Your Address →</span></button>
+    </form>
+    <div class="reserve-success">Reservation received. The concierge will reach you within 24 hours.</div>
+  </div>
+</section>
+
+</main>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="foot">
+  <div class="foot-row">
+    <span>© 2300 LUMIÈRE — A City of Light · sample12 (Case W demo)</span>
+    <span class="foot-meta">Developer · LUMIÈRE Holdings · Builder · NEXUS Construction</span>
+  </div>
+  <div class="foot-tech">
+    <span class="t-pill new">Lenis smooth scroll</span>
+    <span class="t-pill new">CSS view-timeline reveal</span>
+    <span class="t-pill new">3D film-roll title</span>
+    <span class="t-pill new">PixiJS hero particles</span>
+    <span class="t-pill new">PixiJS 5-lane sky traffic</span>
+    <span class="t-pill new">Mask reveal images</span>
+    <span class="t-pill new">Magnetic hover</span>
+    <span class="t-pill new">Cinematic chapter floods</span>
+    <span class="t-pill">Light cyberpunk</span>
+    <span class="t-pill">Orbitron + Space Grotesk</span>
+    <span class="t-pill">Photoreal × 23</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/pixi.js@7.4.0/dist/pixi.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

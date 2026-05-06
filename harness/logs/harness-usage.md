@@ -21,3 +21,4 @@
 | 2026-04-30 | W | Avatar Studio (sample010, A→W ×1.2, 6기법+군중16+Canvas confetti) | 100/100 A | [로그](2026-04-30-avatar-studio-caseW.md) |
 | 2026-05-06 | C | 분양 럭셔리 룩앤필 영입 (anadd+herenn, 6JSON+9CSS키프레임+미니어처2+가이드6+COMBINED2) — 3축 만점 두 번째 | 100/100 A | [로그](2026-05-06-bunyang-luxury-caseC.md) |
 | 2026-05-06 | W | LUMIÈRE FUTUR sample011 (C→W ×1.3, 8섹션+제미나이10장+애플 sticky scrollytelling+11 인터랙션) — 3축 만점 세 번째 | 100/100 A | [로그](2026-05-06-lumiere-futur-caseW.md) |
+| 2026-05-06 | B+W | LUMIÈRE 2300 sample12 (B→W ×1.3, 라이트 사이버펑크+도시설계+10 chapter+제미나이23장+PixiJS) — 3축 만점 네 번째 | B 90 + W 100 A | [로그](2026-05-06-lumiere-2300-caseBW.md) |

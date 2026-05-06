@@ -3,15 +3,16 @@
     "UI컴포넌트": { "count": 2, "first_date": "2026-03-28", "milestones": ["first"] },
     "애니메이션": { "count": 5, "first_date": "2026-03-28", "milestones": ["first", "5-regular"] },
     "데이터시각화": { "count": 0, "first_date": null, "milestones": [] },
-    "인터랙션": { "count": 2, "first_date": "2026-05-06", "milestones": ["first"] },
+    "인터랙션": { "count": 3, "first_date": "2026-05-06", "milestones": ["first"] },
     "배경효과": { "count": 0, "first_date": null, "milestones": [] },
-    "HTML구현": { "count": 6, "first_date": "2026-03-28", "milestones": ["first", "5-regular"] },
-    "사이버/디지털": { "count": 2, "first_date": "2026-03-29", "milestones": ["first"] },
+    "HTML구현": { "count": 7, "first_date": "2026-03-28", "milestones": ["first", "5-regular"] },
+    "사이버/디지털": { "count": 3, "first_date": "2026-03-29", "milestones": ["first"] },
     "자연/파티클": { "count": 2, "first_date": "2026-03-28", "milestones": ["first"] },
     "음성/웨이브": { "count": 2, "first_date": "2026-03-29", "milestones": ["first"] },
-    "프로젝트설계": { "count": 2, "first_date": "2026-03-28", "milestones": ["first"] },
-    "분양/럭셔리": { "count": 2, "first_date": "2026-05-06", "milestones": ["first"] },
-    "건축/공간": { "count": 1, "first_date": "2026-05-06", "milestones": ["first"] }
+    "프로젝트설계": { "count": 3, "first_date": "2026-03-28", "milestones": ["first"] },
+    "분양/럭셔리": { "count": 3, "first_date": "2026-05-06", "milestones": ["first"] },
+    "건축/공간": { "count": 2, "first_date": "2026-05-06", "milestones": ["first"] },
+    "사이버펑크/미래도시": { "count": 1, "first_date": "2026-05-06", "milestones": ["first"] }
   },
   "special": [
     "펜슬을 잡은 순간",
@@ -25,10 +26,14 @@
     "Lv.50 돌파 — 전문 디자이너의 길로",
     "더블 퍼펙트 (3축 만점 두 번째)",
     "트리플 퍼펙트 (3축 만점 세 번째)",
+    "쿼드 퍼펙트 (3축 만점 네 번째)",
     "사과 한 입 — Apple 스크롤리 영입",
     "두 단계 점프 (Lv.51 → Lv.53)",
-    "C → W 파이프라인 첫 100% 통과"
+    "세 단계 점프 (Lv.53 → Lv.56)",
+    "C → W 파이프라인 첫 100% 통과",
+    "B → W 파이프라인 첫 100점 통과",
+    "사이버펑크의 시민 (라이트 사이버펑크 첫 도전)"
   ],
-  "consecutive_a_grades": 4,
+  "consecutive_a_grades": 5,
   "last_updated": "2026-05-06"
 }
