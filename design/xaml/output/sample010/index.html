@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avatar Studio — CAT17 Character Animation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient-glow"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">17</span>
+      <span class="brand-text">CHARACTER ANIMATION</span>
+    </div>
+    <nav class="nav">
+      <a href="#hero">Live</a>
+      <a href="#playground">Playground</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#crowd">Crowd</a>
+    </nav>
+    <div class="status-pill">
+      <span class="dot"></span>
+      <span>WPF → Web · 6 techniques</span>
+    </div>
+  </header>
+
+  <!-- 1. HERO — Realistic avatar with all techniques live -->
+  <section id="hero" class="hero">
+    <div class="hero-stage" data-track="cursor">
+      <div class="stage-floor"></div>
+      <svg class="avatar avatar--hero" viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" aria-label="살아있는 아바타">
+        <defs>
+          <radialGradient id="skin" cx="0.5" cy="0.4" r="0.7">
+            <stop offset="0%" stop-color="#FFE4C4"/>
+            <stop offset="55%" stop-color="#F5C9A2"/>
+            <stop offset="100%" stop-color="#C49A78"/>
+          </radialGradient>
+          <radialGradient id="hair" cx="0.4" cy="0.3" r="0.8">
+            <stop offset="0%" stop-color="#5A3826"/>
+            <stop offset="55%" stop-color="#3B2415"/>
+            <stop offset="100%" stop-color="#1F130A"/>
+          </radialGradient>
+          <radialGradient id="shirt" cx="0.5" cy="0.2" r="0.9">
+            <stop offset="0%" stop-color="#3DD9F5"/>
+            <stop offset="60%" stop-color="#22A6C7"/>
+            <stop offset="100%" stop-color="#0E5E72"/>
+          </radialGradient>
+          <radialGradient id="iris" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0%" stop-color="#3F9EFF"/>
+            <stop offset="60%" stop-color="#1E5DAA"/>
+            <stop offset="100%" stop-color="#0B2348"/>
+          </radialGradient>
+          <radialGradient id="cheek" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0%" stop-color="rgba(244,114,182,0.6)"/>
+            <stop offset="100%" stop-color="rgba(244,114,182,0)"/>
+          </radialGradient>
+          <linearGradient id="shadow-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(11,17,32,0)"/>
+            <stop offset="100%" stop-color="rgba(11,17,32,0.6)"/>
+          </linearGradient>
+          <filter id="soft-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- ground shadow -->
+        <ellipse class="floor-shadow" cx="160" cy="448" rx="78" ry="11" fill="rgba(0,0,0,0.45)"/>
+
+        <!-- Body root: receives Squash&Stretch + Idle Breathing -->
+        <g class="char-root">
+          <!-- Body+Arms+Neck integrated -->
+          <g class="char-body">
+            <path class="neck" d="M138 235 Q160 245 182 235 L188 270 Q160 282 132 270 Z" fill="url(#skin)"/>
+            <path class="shirt" d="M88 265 Q160 250 232 265 L252 430 Q160 448 68 430 Z" fill="url(#shirt)"/>
+            <path class="shirt-shadow" d="M88 265 Q160 250 232 265 L252 430 Q160 448 68 430 Z" fill="url(#shadow-grad)" opacity="0.55"/>
+            <!-- Arms -->
+            <g class="arm arm-l">
+              <path d="M88 270 Q70 360 96 420 L120 420 Q104 360 116 280 Z" fill="url(#shirt)"/>
+            </g>
+            <g class="arm arm-r">
+              <path d="M232 270 Q250 360 224 420 L200 420 Q216 360 204 280 Z" fill="url(#shirt)"/>
+            </g>
+          </g>
+
+          <!-- Head -->
+          <g class="char-head">
+            <!-- Hair back -->
+            <path class="hair-back" d="M86 130 Q98 60 160 50 Q222 60 234 130 L234 200 L86 200 Z" fill="url(#hair)"/>
+            <!-- Face -->
+            <ellipse class="face" cx="160" cy="160" rx="74" ry="86" fill="url(#skin)"/>
+            <!-- Hair front -->
+            <path class="hair-front" d="M88 138 Q96 76 160 64 Q224 76 232 138 Q204 124 168 132 Q138 134 116 142 Q100 144 88 138 Z" fill="url(#hair)"/>
+            <!-- Cheeks -->
+            <ellipse class="cheek cheek-l" cx="118" cy="186" rx="14" ry="9" fill="url(#cheek)"/>
+            <ellipse class="cheek cheek-r" cx="202" cy="186" rx="14" ry="9" fill="url(#cheek)"/>
+            <!-- Eyes group: receives blink scaleY + tracking translation -->
+            <g class="eyes">
+              <g class="eye eye-l">
+                <ellipse class="eye-white" cx="134" cy="158" rx="14" ry="11" fill="#ffffff" filter="url(#soft-glow)"/>
+                <g class="iris-wrap">
+                  <circle class="iris" cx="134" cy="158" r="7.5" fill="url(#iris)"/>
+                  <circle class="pupil" cx="134" cy="158" r="3.5" fill="#0A0F1C"/>
+                  <circle class="glint" cx="136" cy="155.5" r="1.6" fill="#ffffff"/>
+                </g>
+                <path class="lid lid-top-l" d="M119 158 Q134 145 149 158" stroke="#1f1208" stroke-width="2" fill="none" stroke-linecap="round"/>
+              </g>
+              <g class="eye eye-r">
+                <ellipse class="eye-white" cx="186" cy="158" rx="14" ry="11" fill="#ffffff" filter="url(#soft-glow)"/>
+                <g class="iris-wrap">
+                  <circle class="iris" cx="186" cy="158" r="7.5" fill="url(#iris)"/>
+                  <circle class="pupil" cx="186" cy="158" r="3.5" fill="#0A0F1C"/>
+                  <circle class="glint" cx="188" cy="155.5" r="1.6" fill="#ffffff"/>
+                </g>
+                <path class="lid lid-top-r" d="M171 158 Q186 145 201 158" stroke="#1f1208" stroke-width="2" fill="none" stroke-linecap="round"/>
+              </g>
+            </g>
+            <!-- Brows -->
+            <path class="brow brow-l" d="M118 138 Q134 130 150 138" stroke="#3B2415" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="brow brow-r" d="M170 138 Q186 130 202 138" stroke="#3B2415" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- Nose -->
+            <path class="nose" d="M158 168 Q156 184 152 196 Q160 200 168 196 Q164 184 162 168 Z" fill="#E8B894" opacity="0.9"/>
+            <!-- Mouth -->
+            <path class="mouth" d="M142 216 Q160 226 178 216" stroke="#9B3A4F" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hero-info">
+      <div class="hero-badge">CAT17 · COMBINED SAMPLE</div>
+      <h1>아바타가 <span class="accent">살아있다</span></h1>
+      <p class="lead">Pixel Hero Animation Suite — 6개 캐릭터 애니메이션 기법이 한 캐릭터에 동시 작동합니다. 마우스를 움직여 시선을 추적하세요.</p>
+      <div class="active-tags">
+        <span class="tag tag--breath">● Idle Breathing</span>
+        <span class="tag tag--blink">● Eye Blink</span>
+        <span class="tag tag--track">● Head Tracking</span>
+        <span class="tag tag--squash">● Squash on Land</span>
+        <span class="tag tag--micro">● Micro Sway</span>
+      </div>
+      <div class="hero-actions">
+        <button id="trigger-jump" class="btn btn-primary">점프 (Squash & Stretch)</button>
+        <button id="trigger-anticipate" class="btn btn-ghost">던지기 (Anticipation)</button>
+      </div>
+      <div class="cursor-readout">
+        <span class="readout-key">cursor</span>
+        <span class="readout-val" id="cursor-readout">· · ·</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PLAYGROUND — 6 isolated technique demos with sliders -->
+  <section id="playground" class="playground">
+    <header class="section-head">
+      <span class="section-num">02</span>
+      <h2>기법 플레이그라운드</h2>
+      <p>각 카드는 한 가지 기법만 분리 적용. 슬라이더로 파라미터를 즉시 조정하세요.</p>
+    </header>
+
+    <div class="play-grid">
+      <!-- 17-1 SPRITE WALK CYCLE -->
+      <article class="play-card" data-tech="walk">
+        <div class="play-head">
+          <span class="play-num">17-1</span>
+          <h3>Sprite Walk Cycle</h3>
+          <span class="play-tech">RectAnimation · 8 frames</span>
+        </div>
+        <div class="play-stage stage-walk">
+          <div class="walk-track"></div>
+          <svg class="mini-avatar mini-walker" viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="ms1" cx="0.5" cy="0.4" r="0.7">
+                <stop offset="0%" stop-color="#FFE4C4"/><stop offset="100%" stop-color="#C49A78"/>
+              </radialGradient>
+              <radialGradient id="mt1" cx="0.5" cy="0.3" r="0.9">
+                <stop offset="0%" stop-color="#3DD9F5"/><stop offset="100%" stop-color="#0E5E72"/>
+              </radialGradient>
+            </defs>
+            <ellipse cx="40" cy="115" rx="22" ry="3" fill="rgba(0,0,0,.4)" class="walk-shadow"/>
+            <g class="walk-body">
+              <ellipse cx="40" cy="32" rx="18" ry="20" fill="url(#ms1)"/>
+              <circle cx="34" cy="32" r="1.6" fill="#0A0F1C"/>
+              <circle cx="46" cy="32" r="1.6" fill="#0A0F1C"/>
+              <path d="M34 40 Q40 44 46 40" stroke="#9B3A4F" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+              <path d="M22 56 Q40 50 58 56 L62 96 Q40 102 18 96 Z" fill="url(#mt1)"/>
+              <g class="leg leg-l"><rect x="28" y="92" width="8" height="22" rx="3" fill="#1f3a52"/></g>
+              <g class="leg leg-r"><rect x="44" y="92" width="8" height="22" rx="3" fill="#1f3a52"/></g>
+              <g class="arm-mini arm-l"><rect x="14" y="58" width="8" height="34" rx="4" fill="url(#mt1)"/></g>
+              <g class="arm-mini arm-r"><rect x="58" y="58" width="8" height="34" rx="4" fill="url(#mt1)"/></g>
+            </g>
+          </svg>
+        </div>
+        <div class="play-controls">
+          <label>Speed
+            <input type="range" id="walk-speed" min="0.4" max="2.0" step="0.1" value="1.0">
+            <output id="walk-speed-out">1.0×</output>
+          </label>
+          <label>Bounce
+            <input type="range" id="walk-bounce" min="0" max="14" step="1" value="6">
+            <output id="walk-bounce-out">6px</output>
+          </label>
+        </div>
+      </article>
+
+      <!-- 17-2 SQUASH & STRETCH -->
+      <article class="play-card" data-tech="squash">
+        <div class="play-head">
+          <span class="play-num">17-2</span>
+          <h3>Squash &amp; Stretch</h3>
+          <span class="play-tech">ScaleTransform · cubic-bezier</span>
+        </div>
+        <div class="play-stage stage-squash">
+          <div class="squash-floor"></div>
+          <div class="ball" id="squash-ball"></div>
+          <div class="ball-shadow" id="squash-shadow"></div>
+        </div>
+        <div class="play-controls">
+          <label>Force
+            <input type="range" id="squash-force" min="0.6" max="1.6" step="0.1" value="1.0">
+            <output id="squash-force-out">1.0×</output>
+          </label>
+          <button id="squash-trigger" class="play-btn">Drop</button>
+        </div>
+      </article>
+
+      <!-- 17-3 IDLE BREATHING -->
+      <article class="play-card" data-tech="breath">
+        <div class="play-head">
+          <span class="play-num">17-3</span>
+          <h3>Idle Breathing</h3>
+          <span class="play-tech">SineEase · AutoReverse</span>
+        </div>
+        <div class="play-stage stage-breath">
+          <svg class="mini-avatar mini-breath" viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="ms2" cx="0.5" cy="0.4" r="0.7"><stop offset="0%" stop-color="#FFE4C4"/><stop offset="100%" stop-color="#C49A78"/></radialGradient>
+              <radialGradient id="mt2" cx="0.5" cy="0.3" r="0.9"><stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#3B1B6A"/></radialGradient>
+            </defs>
+            <ellipse cx="50" cy="135" rx="28" ry="4" fill="rgba(0,0,0,.4)"/>
+            <g class="breath-body">
+              <ellipse cx="50" cy="38" rx="22" ry="24" fill="url(#ms2)"/>
+              <circle cx="42" cy="38" r="2" fill="#0A0F1C"/>
+              <circle cx="58" cy="38" r="2" fill="#0A0F1C"/>
+              <path d="M28 68 Q50 60 72 68 L78 120 Q50 130 22 120 Z" fill="url(#mt2)"/>
+            </g>
+          </svg>
+          <div class="breath-rings"><span></span><span></span><span></span></div>
+        </div>
+        <div class="play-controls">
+          <label>Depth
+            <input type="range" id="breath-depth" min="0.01" max="0.10" step="0.005" value="0.04">
+            <output id="breath-depth-out">4%</output>
+          </label>
+          <label>Tempo
+            <input type="range" id="breath-tempo" min="0.8" max="3.0" step="0.1" value="1.6">
+            <output id="breath-tempo-out">1.6s</output>
+          </label>
+        </div>
+      </article>
+
+      <!-- 17-4 EYE BLINK -->
+      <article class="play-card" data-tech="blink">
+        <div class="play-head">
+          <span class="play-num">17-4</span>
+          <h3>Eye Blink</h3>
+          <span class="play-tech">WAAPI LinearKey · 0.1s</span>
+        </div>
+        <div class="play-stage stage-blink">
+          <svg class="mini-avatar mini-blinker" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="ir1" cx="0.5" cy="0.5" r="0.6"><stop offset="0%" stop-color="#3F9EFF"/><stop offset="100%" stop-color="#0B2348"/></radialGradient>
+              <radialGradient id="bs1" cx="0.5" cy="0.5" r="0.7"><stop offset="0%" stop-color="#FFE4C4"/><stop offset="100%" stop-color="#C49A78"/></radialGradient>
+            </defs>
+            <rect width="200" height="100" rx="14" fill="url(#bs1)" opacity="0.25"/>
+            <g class="blink-eye blink-l">
+              <ellipse cx="60" cy="50" rx="22" ry="18" fill="#ffffff"/>
+              <circle cx="60" cy="50" r="11" fill="url(#ir1)"/>
+              <circle cx="60" cy="50" r="5" fill="#0A0F1C"/>
+              <circle cx="63" cy="46" r="2" fill="#ffffff"/>
+            </g>
+            <g class="blink-eye blink-r">
+              <ellipse cx="140" cy="50" rx="22" ry="18" fill="#ffffff"/>
+              <circle cx="140" cy="50" r="11" fill="url(#ir1)"/>
+              <circle cx="140" cy="50" r="5" fill="#0A0F1C"/>
+              <circle cx="143" cy="46" r="2" fill="#ffffff"/>
+            </g>
+          </svg>
+          <div class="blink-status" id="blink-status">awake</div>
+        </div>
+        <div class="play-controls">
+          <label>Interval
+            <input type="range" id="blink-interval" min="1.5" max="6" step="0.5" value="3.5">
+            <output id="blink-interval-out">3.5s</output>
+          </label>
+          <button id="blink-now" class="play-btn">Blink Now</button>
+        </div>
+      </article>
+
+      <!-- 17-5 HEAD TRACKING -->
+      <article class="play-card" data-tech="track">
+        <div class="play-head">
+          <span class="play-num">17-5</span>
+          <h3>Head Tracking</h3>
+          <span class="play-tech">Atan2 · damped follow</span>
+        </div>
+        <div class="play-stage stage-track" data-track="local">
+          <div class="track-target"></div>
+          <svg class="mini-avatar mini-tracker" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="ms3" cx="0.5" cy="0.4" r="0.7"><stop offset="0%" stop-color="#FFE4C4"/><stop offset="100%" stop-color="#C49A78"/></radialGradient>
+              <radialGradient id="hr3" cx="0.4" cy="0.3" r="0.7"><stop offset="0%" stop-color="#5A3826"/><stop offset="100%" stop-color="#1F130A"/></radialGradient>
+              <radialGradient id="ir3" cx="0.5" cy="0.5" r="0.6"><stop offset="0%" stop-color="#3F9EFF"/><stop offset="100%" stop-color="#0B2348"/></radialGradient>
+            </defs>
+            <g class="track-head" id="track-head">
+              <ellipse cx="100" cy="105" rx="60" ry="68" fill="url(#ms3)"/>
+              <path d="M44 92 Q56 36 100 28 Q144 36 156 92 Q132 78 108 84 Q86 86 70 94 Q56 96 44 92 Z" fill="url(#hr3)"/>
+              <g class="track-eyes" id="track-eyes">
+                <g>
+                  <ellipse cx="78" cy="100" rx="11" ry="8" fill="#ffffff"/>
+                  <circle class="track-pupil" cx="78" cy="100" r="5" fill="url(#ir3)"/>
+                </g>
+                <g>
+                  <ellipse cx="122" cy="100" rx="11" ry="8" fill="#ffffff"/>
+                  <circle class="track-pupil" cx="122" cy="100" r="5" fill="url(#ir3)"/>
+                </g>
+              </g>
+              <path d="M88 138 Q100 146 112 138" stroke="#9B3A4F" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="play-controls">
+          <label>Sensitivity
+            <input type="range" id="track-sense" min="0.05" max="0.4" step="0.05" value="0.18">
+            <output id="track-sense-out">0.18</output>
+          </label>
+          <label>Eye Range
+            <input type="range" id="track-eye" min="2" max="10" step="1" value="6">
+            <output id="track-eye-out">6px</output>
+          </label>
+        </div>
+      </article>
+
+      <!-- 17-6 ANTICIPATION & FOLLOW-THROUGH -->
+      <article class="play-card" data-tech="anti">
+        <div class="play-head">
+          <span class="play-num">17-6</span>
+          <h3>Anticipation &amp; Follow-Through</h3>
+          <span class="play-tech">SplineKey · 4 stages</span>
+        </div>
+        <div class="play-stage stage-anti">
+          <div class="stage-rail"></div>
+          <div class="stage-marks">
+            <span class="mark m-anti">anticipate</span>
+            <span class="mark m-dash">dash</span>
+            <span class="mark m-over">overshoot</span>
+            <span class="mark m-settle">settle</span>
+          </div>
+          <div class="anti-hero" id="anti-hero">
+            <div class="anti-body"></div>
+            <div class="anti-head"></div>
+          </div>
+          <div class="anti-progress">
+            <span class="anti-stage" data-stage="0">●</span>
+            <span class="anti-stage" data-stage="1">●</span>
+            <span class="anti-stage" data-stage="2">●</span>
+            <span class="anti-stage" data-stage="3">●</span>
+          </div>
+        </div>
+        <div class="play-controls">
+          <label>Power
+            <input type="range" id="anti-power" min="0.6" max="1.6" step="0.1" value="1.0">
+            <output id="anti-power-out">1.0×</output>
+          </label>
+          <button id="anti-trigger" class="play-btn">Run Sequence</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 3. PIPELINE — Stage performance with full sequence -->
+  <section id="pipeline" class="pipeline">
+    <header class="section-head">
+      <span class="section-num">03</span>
+      <h2>퍼포먼스 파이프라인</h2>
+      <p>한 시퀀스에서 6기법이 어떻게 협주하는지 — 진입 → 각오 → 점프 → 착지 → 환호.</p>
+    </header>
+    <div class="pipeline-stage">
+      <div class="pl-floor"></div>
+      <div class="pl-spotlight"></div>
+      <svg class="pl-avatar" id="pl-avatar" viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="pls" cx="0.5" cy="0.4" r="0.7">
+            <stop offset="0%" stop-color="#FFE4C4"/><stop offset="100%" stop-color="#C49A78"/>
+          </radialGradient>
+          <radialGradient id="plh" cx="0.4" cy="0.3" r="0.7">
+            <stop offset="0%" stop-color="#5A3826"/><stop offset="100%" stop-color="#1F130A"/>
+          </radialGradient>
+          <radialGradient id="plt" cx="0.5" cy="0.3" r="0.9">
+            <stop offset="0%" stop-color="#FBA94B"/><stop offset="100%" stop-color="#7A2D0E"/>
+          </radialGradient>
+        </defs>
+        <ellipse class="pl-shadow" cx="160" cy="448" rx="78" ry="11" fill="rgba(0,0,0,0.45)"/>
+        <g class="pl-root">
+          <g class="pl-body">
+            <path d="M138 235 Q160 245 182 235 L188 270 Q160 282 132 270 Z" fill="url(#pls)"/>
+            <path d="M88 265 Q160 250 232 265 L252 430 Q160 448 68 430 Z" fill="url(#plt)"/>
+            <path d="M88 270 Q70 360 96 420 L120 420 Q104 360 116 280 Z" fill="url(#plt)"/>
+            <path d="M232 270 Q250 360 224 420 L200 420 Q216 360 204 280 Z" fill="url(#plt)"/>
+          </g>
+          <g class="pl-head">
+            <path d="M86 130 Q98 60 160 50 Q222 60 234 130 L234 200 L86 200 Z" fill="url(#plh)"/>
+            <ellipse cx="160" cy="160" rx="74" ry="86" fill="url(#pls)"/>
+            <path d="M88 138 Q96 76 160 64 Q224 76 232 138 Q204 124 168 132 Q138 134 116 142 Q100 144 88 138 Z" fill="url(#plh)"/>
+            <g class="pl-eyes">
+              <g><ellipse cx="134" cy="158" rx="12" ry="10" fill="#fff"/><circle cx="134" cy="158" r="6" fill="#1E5DAA"/><circle cx="134" cy="158" r="3" fill="#0A0F1C"/></g>
+              <g><ellipse cx="186" cy="158" rx="12" ry="10" fill="#fff"/><circle cx="186" cy="158" r="6" fill="#1E5DAA"/><circle cx="186" cy="158" r="3" fill="#0A0F1C"/></g>
+            </g>
+            <path class="pl-mouth" d="M142 216 Q160 226 178 216" stroke="#9B3A4F" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </g>
+        </g>
+      </svg>
+      <canvas id="confetti" class="confetti"></canvas>
+    </div>
+    <div class="pipeline-controls">
+      <button id="pl-run" class="btn btn-primary">시퀀스 실행</button>
+      <div class="pl-stages">
+        <span class="pl-step" data-step="0">1. 진입</span>
+        <span class="pl-step" data-step="1">2. 호흡</span>
+        <span class="pl-step" data-step="2">3. 각오 (Anticipation)</span>
+        <span class="pl-step" data-step="3">4. 점프 (Stretch)</span>
+        <span class="pl-step" data-step="4">5. 착지 (Squash)</span>
+        <span class="pl-step" data-step="5">6. 환호</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CROWD — Multiple breathing characters -->
+  <section id="crowd" class="crowd">
+    <header class="section-head">
+      <span class="section-num">04</span>
+      <h2>관객의 숨결</h2>
+      <p>각자 다른 호흡 주기 + 깜빡임 타이밍. stagger BeginTime이 군중에 어떻게 작용하는지 살펴보세요.</p>
+    </header>
+    <div class="crowd-stage" id="crowd-stage"></div>
+  </section>
+
+  <footer class="foot">
+    <div class="foot-inner">
+      <span>CAT17 · Character Animation</span>
+      <span>References: <code>design/wpf-animation.pen</code> · <code>design/xaml/sample/39~44.xaml</code></span>
+      <span>Mapping: WPF Storyboard → CSS @keyframes + WAAPI</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
