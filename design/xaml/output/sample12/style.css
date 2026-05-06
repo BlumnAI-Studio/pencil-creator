@@ -965,7 +965,51 @@ img, svg { display: block; max-width: 100%; }
   line-height: 1.7;
 }
 
-/* ═════════ CH-04 · D-01 Portal ═════════ */
+/* ═════════ CH-04 · Pixel City — pure pixel art future ═════════ */
+.ch-pixel {
+  position: relative;
+  background: linear-gradient(180deg, #1A0B3D 0%, #3D1B5C 40%, #FF6BC1 80%, #FFB85C 100%);
+  color: #FFF;
+  min-height: 100vh;
+  padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.pixel-stage {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  z-index: 1;
+}
+.pixel-veil {
+  position: absolute; inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(to bottom, rgba(26, 11, 61, 0.4) 0%, rgba(26, 11, 61, 0) 22%),
+    linear-gradient(to top, rgba(26, 11, 61, 0.55) 0%, rgba(26, 11, 61, 0) 35%);
+  pointer-events: none;
+}
+.pixel-content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  max-width: 760px;
+  padding: 0 32px;
+}
+.pixel-meta {
+  margin-top: 20px;
+  display: inline-flex; gap: 14px;
+  font-family: var(--f-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2.4px;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(10, 14, 30, 0.6);
+}
+.pixel-meta .dot-sep { color: var(--cyan); }
+
+/* legacy d01 keep for d01-title/sub reuse */
 .ch-d01 {
   position: relative;
   background: #0F1424;
@@ -1028,34 +1072,91 @@ img, svg { display: block; max-width: 100%; }
   line-height: 1.6;
 }
 
-/* ═════════ CH-05 · Tower — split with 3D ═════════ */
-.ch-tower { background: var(--bg-soft); padding: 140px 0 120px; }
+/* ═════════ CH-05 · Tower — Three.js 3D interactive ═════════ */
+.ch-tower {
+  background: linear-gradient(180deg, var(--bg-soft) 0%, #E6E1D6 60%, var(--bg) 100%);
+  padding: 140px 0 120px;
+}
 .tw-grid {
   max-width: 1380px;
   margin: 0 auto;
   padding: 0 56px;
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
+  grid-template-columns: 1fr 1.05fr;
   gap: 70px;
   align-items: center;
 }
-.tw-visual {
-  perspective: 1400px;
-}
-.tw-frame {
+.tw-visual { perspective: 1400px; }
+.tw-3d-frame {
   position: relative;
   border-radius: var(--r-xl);
   overflow: hidden;
+  background: radial-gradient(ellipse at 50% 70%, #FFE9D6 0%, #DDC8E0 60%, #C9B0E8 100%);
   box-shadow: var(--shadow-card);
-  aspect-ratio: 9/16;
-  max-height: 80vh;
+  aspect-ratio: 9/14;
+  max-height: 82vh;
   margin: 0 auto;
-  transform-style: preserve-3d;
+  cursor: grab;
 }
-#tw-img {
+.tw-3d-frame:active { cursor: grabbing; }
+.tower-3d {
   width: 100%; height: 100%;
-  object-fit: cover;
-  will-change: transform;
+  display: block;
+  touch-action: none;
+}
+.tw-floor-tag {
+  position: absolute;
+  top: 22px; right: 22px;
+  z-index: 6;
+  padding: 8px 14px;
+  background: rgba(26, 31, 46, 0.92);
+  color: #FFF;
+  border-radius: 12px;
+  font-family: var(--f-mono);
+  display: flex; flex-direction: column; gap: 2px;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.4s var(--easing), transform 0.4s var(--easing);
+}
+.tw-floor-tag.on {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fno-3d {
+  font-family: var(--f-display);
+  font-size: 16px; font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.04em;
+}
+.fname-3d {
+  font-family: var(--f-cyber);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 1.4px;
+  color: #FFF;
+}
+.tw-3d-hint {
+  position: absolute;
+  bottom: 22px; right: 22px;
+  z-index: 6;
+  padding: 6px 14px;
+  background: rgba(26, 31, 46, 0.78);
+  color: rgba(255, 255, 255, 0.92);
+  border-radius: 999px;
+  font-family: var(--f-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.4px;
+  display: flex; align-items: center; gap: 8px;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+.dot-3d {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pulse 1.6s ease-in-out infinite;
 }
 .tw-spec {
   position: absolute;
@@ -1068,6 +1169,14 @@ img, svg { display: block; max-width: 100%; }
   font-size: 10px; font-weight: 700;
   letter-spacing: 1.4px;
   backdrop-filter: blur(8px);
+}
+.f-item.hot {
+  background: var(--bg-card);
+  border-top-color: rgba(0, 200, 232, 0.4) !important;
+  border-right-color: rgba(0, 200, 232, 0.4) !important;
+  border-bottom-color: rgba(0, 200, 232, 0.4) !important;
+  transform: translateX(8px);
+  box-shadow: var(--shadow-soft);
 }
 .floor-list {
   list-style: none;

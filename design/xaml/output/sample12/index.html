@@ -185,42 +185,53 @@
   <div class="ch-tag"><span class="num">CH-03</span><span>City's Engines</span></div>
 </section>
 
-<!-- ░░ CH-04 · D-01 PORTAL — zoom-in transition ░░ -->
-<section id="ch-04" class="ch ch-d01">
-  <div class="d01-bg">
-    <img src="img/portal.png" alt="Dimension portal">
-    <div class="d01-rings"><span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span></div>
-  </div>
-  <div class="d01-content reveal-up">
-    <div class="ch-eyebrow light center"><span class="num">04</span><span>D-01 · RESIDENTIAL CORE</span></div>
+<!-- ░░ CH-04 · PIXEL CITY — pure pixel-art future skyline ░░ -->
+<section id="ch-04" class="ch ch-pixel">
+  <canvas id="pixel-stage" class="pixel-stage" aria-hidden="true"></canvas>
+  <div class="pixel-veil"></div>
+  <div class="pixel-content reveal-up">
+    <div class="ch-eyebrow light center"><span class="num">04</span><span>PIXEL CITY · 8-BIT TOMORROW</span></div>
     <h2 class="d01-title">Welcome<br>to D-01</h2>
-    <p class="d01-sub">The residential core of LUMIÈRE 2300. Three slim mega-towers, 1,800 chosen residents, one private sky.</p>
+    <p class="d01-sub">The residential core of LUMIÈRE 2300, rendered as the future remembers itself — pixel by pixel.</p>
+    <div class="pixel-meta">
+      <span>16×16 PIXEL ART</span>
+      <span class="dot-sep">·</span>
+      <span>PIXIJS GRAPHICS</span>
+      <span class="dot-sep">·</span>
+      <span>30 FPS LOOP</span>
+    </div>
   </div>
-  <div class="ch-tag light"><span class="num">CH-04</span><span>Welcome to D-01</span></div>
+  <div class="ch-tag light"><span class="num">CH-04</span><span>Pixel City</span></div>
 </section>
 
-<!-- ░░ CH-05 · TOWER — split with parallax + 3D rotate ░░ -->
+<!-- ░░ CH-05 · TOWER — Three.js interactive 3D mega-tower ░░ -->
 <section id="ch-05" class="ch ch-tower">
   <div class="tw-grid">
     <div class="tw-visual">
-      <div class="tw-frame">
-        <img src="img/mega-tower.png" alt="Mega Tower D-01" id="tw-img">
-        <div class="tw-spec">D-01-A · 47F · 1.8M ㎡</div>
+      <div class="tw-3d-frame">
+        <canvas id="tower-3d" class="tower-3d" aria-label="Interactive 3D Mega-Tower"></canvas>
+        <div class="tw-floor-tag" id="tw-floor-tag"><span class="fno-3d" id="tw-fno">47F</span><span class="fname-3d" id="tw-fname">Penthouse</span></div>
+        <div class="tw-3d-hint">
+          <span class="dot-3d"></span>
+          <span>DRAG TO ROTATE · HOVER A FLOOR</span>
+        </div>
+        <div class="tw-spec">D-01-A · 47F · 1.8M ㎡ · LIVE 3D</div>
       </div>
     </div>
     <div class="tw-text">
-      <div class="ch-eyebrow"><span class="num">05</span><span>TOWER · D-01-A</span></div>
+      <div class="ch-eyebrow"><span class="num">05</span><span>TOWER · D-01-A · LIVE 3D</span></div>
       <h2 class="ch-title shift-x">47 Stories<br>of Sky</h2>
+      <p class="ch-body">Drag the tower. The architecture turns to meet you. Each floor lights up the moment you ask its name.</p>
       <ul class="floor-list">
-        <li class="f-item" style="--c:#FFB800"><span class="fno">1F</span><span class="fname">Grand Lobby</span><span class="fmeta">Marble + bronze concierge</span></li>
-        <li class="f-item" style="--c:#4DD0B0"><span class="fno">10F</span><span class="fname">Wellness</span><span class="fmeta">AI gym + holographic spa</span></li>
-        <li class="f-item" style="--c:#00C8E8"><span class="fno">25F</span><span class="fname">Observatory</span><span class="fmeta">Reading + meeting + sky garden</span></li>
-        <li class="f-item" style="--c:#FF6BC1"><span class="fno">35F</span><span class="fname">Sky Lounge</span><span class="fmeta">Dusk over the river</span></li>
-        <li class="f-item" style="--c:#8B6FFF"><span class="fno">47F</span><span class="fname">Penthouse</span><span class="fmeta">Helipad · private orbit dock</span></li>
+        <li class="f-item" data-floor="1" style="--c:#FFB800"><span class="fno">1F</span><span class="fname">Grand Lobby</span><span class="fmeta">Marble + bronze concierge</span></li>
+        <li class="f-item" data-floor="10" style="--c:#4DD0B0"><span class="fno">10F</span><span class="fname">Wellness</span><span class="fmeta">AI gym + holographic spa</span></li>
+        <li class="f-item" data-floor="25" style="--c:#00C8E8"><span class="fno">25F</span><span class="fname">Observatory</span><span class="fmeta">Reading + meeting + sky garden</span></li>
+        <li class="f-item" data-floor="35" style="--c:#FF6BC1"><span class="fno">35F</span><span class="fname">Sky Lounge</span><span class="fmeta">Dusk over the river</span></li>
+        <li class="f-item" data-floor="47" style="--c:#8B6FFF"><span class="fno">47F</span><span class="fname">Penthouse</span><span class="fmeta">Helipad · private orbit dock</span></li>
       </ul>
     </div>
   </div>
-  <div class="ch-tag"><span class="num">CH-05</span><span>47 Stories of Sky</span></div>
+  <div class="ch-tag"><span class="num">CH-05</span><span>47 Stories of Sky · Live 3D</span></div>
 </section>
 
 <!-- ░░ CH-06 · AMENITY — alternating panels (zigzag) ░░ -->
@@ -390,6 +401,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.4.0/dist/pixi.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="main.js"></script>
 </body>
