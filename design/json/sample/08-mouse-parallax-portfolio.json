@@ -1,0 +1,35 @@
+{
+  "technique": "Mouse Parallax Card Portfolio",
+  "name_ko": "마우스 패럴랙스 카드 포트폴리오",
+  "source": "https://www.herenn.co.kr/ — 분양홍보 에이전시 메인 (jquery.mouse.parallax.js + Swiper + GSAP TweenMax + ScrollMagic)",
+  "description": "마우스 커서 위치에 따라 카드/이미지 레이어가 데이터 속성(data-depth)별로 다른 강도로 따라 움직이며, 동시에 Swiper 슬라이더로 좌우 스와이프 가능한 포트폴리오 카드 섹션. 각 카드는 호버 시 컨테이너 줌인 + 라벨 슬라이드 업 + 빨강(#D6232F) CTA 등장 3-stage 인터랙션을 가진다.",
+  "rendering": "JS (jquery.mouse.parallax + Swiper + TweenMax) + CSS transition",
+  "structure": {
+    "swiperRoot": ".swiper-container.portfolio",
+    "card": ".swiper-slide.project_card",
+    "layers": [
+      "data-depth='0.05' .bg-image",
+      "data-depth='0.10' .center-thumb",
+      "data-depth='0.15' .floating-label"
+    ],
+    "hoverStates": ["default", "hover (zoom + label slide)", "active (CTA reveal)"],
+    "accentColor": "#D6232F (빨강 — 분양홍보 시그니처)",
+    "darkPalette": ["#000000", "#101010", "#393939", "#666666", "#aaaaaa", "#f0f0f0"]
+  },
+  "animationDetails": {
+    "mouseParallax": "마우스 좌표 (x,y)에서 화면 중앙까지의 거리 × data-depth = translateX/Y 적용",
+    "parallaxEasing": "TweenMax.to(el, 0.6, { x, y, ease: Power2.easeOut })",
+    "cardHover": "transform: scale(1.04) + 라벨 translateY(20px → 0) + opacity 0 → 1, 0.6s cubic-bezier(0.25,1,0.5,1)",
+    "ctaReveal": "빨강 #D6232F 원형 CTA scale(0) → scale(1), 0.4s 0.2s cubic-bezier(1,1,1,1)",
+    "swiperSlide": "transition: transform 0.8s ease",
+    "scrollMagicTrigger": "ScrollMagic Scene으로 섹션 진입 시 카드들 stagger fade-in"
+  },
+  "cssImplementation": {
+    "card": ".project_card { position: relative; overflow: hidden; transition: transform 0.6s cubic-bezier(0.25,1,0.5,1); }",
+    "layer": ".parallax-layer { will-change: transform; transition: transform 0.4s ease-out; }",
+    "hoverScale": ".project_card:hover { transform: scale(1.04); }",
+    "label": ".project_card .label { transform: translateY(20px); opacity: 0; transition: 0.5s 0.1s cubic-bezier(0.25,1,0.5,1); } .project_card:hover .label { transform: translateY(0); opacity: 1; }",
+    "cta": ".project_card .cta { background: #D6232F; transform: scale(0); transition: transform 0.4s 0.2s cubic-bezier(0.34,1.56,0.64,1); } .project_card:hover .cta { transform: scale(1); }",
+    "jsParallax": "document.addEventListener('mousemove', e => { document.querySelectorAll('[data-depth]').forEach(el => { const d = parseFloat(el.dataset.depth); const x = (e.clientX - innerWidth/2) * d; const y = (e.clientY - innerHeight/2) * d; el.style.transform = `translate(${x}px, ${y}px)`; }); });"
+  }
+}

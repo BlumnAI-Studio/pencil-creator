@@ -1,0 +1,27 @@
+{
+  "technique": "Infinite Background Pan Loop (Soso Style)",
+  "name_ko": "소소담원 무한 배경 패닝 루프",
+  "source": "https://anadd.co.kr/apt/ — '소소담원, 이야기가 머무는 뜰' 섹션 배경 (animation: soso_bg 9.0s infinite)",
+  "description": "섹션 배경 이미지가 9초 주기로 좌→우(또는 위→아래)로 천천히 패닝하면서 미묘하게 줌도 변화시키는 무한 루프. 정원·자연·풍경 같은 정적 콘텐츠에 시간성을 부여한다. 한국적 '뜰'의 정서를 미세한 카메라 워킹으로 시각화.",
+  "rendering": "CSS @keyframes (background-position + scale) infinite",
+  "structure": {
+    "section": ".soso_wrap",
+    "bgLayer": ".soso_bg (background-image: url('soso_bg.jpg'))",
+    "size": "background-size: cover (또는 110% 110%)",
+    "overlayText": ".soso_tit (Nanum Myeongjo, letter-spacing: 1rem)"
+  },
+  "animationDetails": {
+    "duration": "9.0s",
+    "iteration": "infinite",
+    "direction": "alternate (자연스러운 왕복) 또는 normal (한 방향 후 점프)",
+    "easing": "ease-in-out",
+    "panRange": "background-position 0% 50% → 100% 50% (또는 좌→우 -3%)",
+    "scaleRange": "scale(1.0) ↔ scale(1.05) 미세 줌"
+  },
+  "cssImplementation": {
+    "keyframes": "@keyframes soso_bg { 0% { background-position: 0% 50%; transform: scale(1); } 50% { background-position: 100% 50%; transform: scale(1.05); } 100% { background-position: 0% 50%; transform: scale(1); } }",
+    "applyRule": ".soso_bg { background-image: url('/img/soso_bg.jpg'); background-size: 110% auto; background-repeat: no-repeat; animation: soso_bg 9s ease-in-out infinite; }",
+    "alternativeTransform": "@keyframes soso_pan { 0% { transform: translateX(0) scale(1.05); } 100% { transform: translateX(-3%) scale(1.05); } } /* alternate, 9s */",
+    "letterSpacingHover": ".soso_tit { font-family: 'Nanum Myeongjo', serif; letter-spacing: 1rem; transition: letter-spacing 0.6s ease; } .soso_wrap.active .soso_tit { letter-spacing: 1.5rem; }"
+  }
+}

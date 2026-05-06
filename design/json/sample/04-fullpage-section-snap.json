@@ -1,0 +1,27 @@
+{
+  "technique": "Fullpage Section Snap Scroll",
+  "name_ko": "풀스크린 섹션 스냅 스크롤",
+  "source": "https://anadd.co.kr/apt/ — 어나드 범어 분양 홈페이지 전체 섹션 전환 방식",
+  "description": "viewport 100vh × 100vw 풀스크린 섹션을 스크롤 한번에 한 섹션씩 스냅 전환한다. 휠 이벤트를 가로채 transform: translateY()로 컨테이너를 -100vh씩 이동시키며, 각 섹션 진입 시 .active 클래스가 추가되어 내부 모션이 트리거된다. 럭셔리 분양 사이트의 시그니처 인터랙션.",
+  "rendering": "JS (jquery.fullPage + jquery.mousewheel) + CSS transform",
+  "structure": {
+    "container": ".all_wrap > #fullpage > .section.fp-section",
+    "perSection": "100vw × 100vh",
+    "stateClasses": [".active", ".active2", ".active3", ".intro", ".intro2", ".intro3", ".on", ".on2", ".on3", ".on4"],
+    "transform": "translateY(-N * 100vh)",
+    "transition": "transform 1s cubic-bezier(0.25, 1, 0.5, 1)"
+  },
+  "animationDetails": {
+    "duration": "1s ~ 1.2s",
+    "easing": "cubic-bezier(0.25, 1, 0.5, 1) (quart out)",
+    "trigger": "wheel / touch / fullpage api moveTo",
+    "perSectionMotion": "섹션 도달 시 .active 추가 → 자식 요소가 .on, .on2, .on3 순으로 staggered 활성화 (delay 0.1s/0.2s/0.3s)",
+    "lockDuringTransition": "스크롤 잠금 + 진행 중 휠 이벤트 무시 (afterLoad 이후 해제)"
+  },
+  "cssImplementation": {
+    "section": ".section { width:100vw; height:100vh; position:relative; overflow:hidden; }",
+    "fullpage": "#fullpage { transition: transform 1s cubic-bezier(0.25,1,0.5,1); will-change: transform; }",
+    "stagger": ".motion { transition: all 0.3s ease-out; opacity:0; transform:translateY(20px); } .motion.on { opacity:1; transform:translateY(0); } .delay1{transition-delay:0.1s} .delay2{transition-delay:0.2s} .delay3{transition-delay:0.3s}",
+    "alternativeNative": "html { scroll-snap-type: y mandatory; } .section { scroll-snap-align: start; height:100vh; }"
+  }
+}

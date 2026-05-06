@@ -1,15 +1,16 @@
 {
   "categories": {
     "UI컴포넌트": { "count": 2, "first_date": "2026-03-28", "milestones": ["first"] },
-    "애니메이션": { "count": 3, "first_date": "2026-03-28", "milestones": ["first"] },
+    "애니메이션": { "count": 5, "first_date": "2026-03-28", "milestones": ["first", "5-regular"] },
     "데이터시각화": { "count": 0, "first_date": null, "milestones": [] },
-    "인터랙션": { "count": 0, "first_date": null, "milestones": [] },
+    "인터랙션": { "count": 1, "first_date": "2026-05-06", "milestones": ["first"] },
     "배경효과": { "count": 0, "first_date": null, "milestones": [] },
     "HTML구현": { "count": 5, "first_date": "2026-03-28", "milestones": ["first", "5-regular"] },
     "사이버/디지털": { "count": 2, "first_date": "2026-03-29", "milestones": ["first"] },
     "자연/파티클": { "count": 2, "first_date": "2026-03-28", "milestones": ["first"] },
     "음성/웨이브": { "count": 2, "first_date": "2026-03-29", "milestones": ["first"] },
-    "프로젝트설계": { "count": 2, "first_date": "2026-03-28", "milestones": ["first"] }
+    "프로젝트설계": { "count": 2, "first_date": "2026-03-28", "milestones": ["first"] },
+    "분양/럭셔리": { "count": 1, "first_date": "2026-05-06", "milestones": ["first"] }
   },
   "special": [
     "펜슬을 잡은 순간",
@@ -17,8 +18,12 @@
     "콤보 개시!",
     "유혹을 이겨낸 자",
     "A는 멈추지 않아",
-    "합체 로봇"
+    "합체 로봇",
+    "가슴이 웅장해진다",
+    "애니메이션의 단골손님",
+    "Lv.50 돌파 — 전문 디자이너의 길로",
+    "더블 퍼펙트 (3축 만점 두 번째)"
   ],
-  "consecutive_a_grades": 8,
-  "last_updated": "2026-04-16"
+  "consecutive_a_grades": 3,
+  "last_updated": "2026-05-06"
 }

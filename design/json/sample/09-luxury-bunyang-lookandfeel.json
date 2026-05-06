@@ -1,0 +1,75 @@
+{
+  "technique": "Korean Luxury Bunyang Look-and-Feel System",
+  "name_ko": "한국 럭셔리 분양 홈페이지 룩앤필 시스템",
+  "source": "복합 분석 — anadd.co.kr/apt (어나드 범어) + herenn.co.kr (분양홍보 에이전시 포트폴리오)",
+  "description": "한국 하이엔드 분양/오피스텔 홈페이지의 시각 시스템: (a) 화이트 럭셔리 베이스 + 어두운 도시 풍경 풀블리드 비주얼, (b) Trajan/Copperplate 영문 세리프 + Nanum Myeongjo 한글 명조 페어링, (c) 베이지/브론즈 + 시안 악센트, (d) 영문 슬로건 → 한글 부제 → 본문 카피 3단 위계. 다크 어센트 변형은 분양홍보 에이전시(herenn) 같은 메타 사이트에서 사용.",
+  "rendering": "디자인 토큰 + 타이포 시스템 + 레이아웃 그리드",
+  "structure": {
+    "tokensLight": {
+      "bg": "#FFFFFF",
+      "bgSoft": "#DCD8CF",
+      "ink": "#000000",
+      "inkMid": "#231815",
+      "inkSoft": "#585858",
+      "neutral": "#737373",
+      "accentBronze": "#B0927A",
+      "accentDeepBrown": "#98674C",
+      "accentClay": "#A97D64",
+      "accentBurgundy": "#2E2127",
+      "accentTeal": "#009CAC",
+      "accentLapis": "#004E71"
+    },
+    "tokensDark": {
+      "bg": "#000000",
+      "bgPanel": "#101010",
+      "bgElevated": "#393939",
+      "ink": "#FFFFFF",
+      "inkSoft": "#AAAAAA",
+      "inkMid": "#666666",
+      "divider": "#555555",
+      "accentRed": "#D6232F",
+      "bgWash": "#F0F0F0"
+    },
+    "typeScale": {
+      "displayEN": "5.125rem ~ 6.6875rem | trajan / copperplate, weight 100, letter-spacing 0.05em",
+      "displayKO": "2.5rem ~ 3.75rem | Nanum Myeongjo, weight 400-700",
+      "h1KO": "1.75rem ~ 2.25rem | Noto Sans KR, weight 500-600",
+      "bodyKO": "0.9375rem ~ 1rem | Noto Sans KR, weight 400, line-height 1.7",
+      "label": "0.75rem ~ 0.875rem | trajan, weight 600, letter-spacing 0.15em, uppercase",
+      "spec": "Lexend / Poppins / Futura PT, weight 300-500, tabular-nums"
+    },
+    "layoutPrinciples": [
+      "Section 100vh — fullPage.js 풀스크린 스냅",
+      "16/12 그리드 + 좌측 영문 라벨 + 우측 한글 본문",
+      "여백이 곧 럭셔리 — 콘텐츠 너비 60~70%, 좌우 마진 풍부",
+      "히어로 = 어두운 도시/조감도 + 흰색 또는 골드 텍스트",
+      "오버뷰/스펙 = 흰 배경 + 검정 텍스트 + 베이지 라인",
+      "어메니티 = 검정 배경 비디오 + 흰 텍스트, opacity 0.5~0.9"
+    ],
+    "imageStyle": [
+      "단지 조감도 (어둑한 새벽/저녁 시간대 — 황금조명 강조)",
+      "라운지/인테리어 (대리석, 우드, 따뜻한 간접조명)",
+      "조경/정원 (한국적 정원, 자연 텍스처)",
+      "시그니처 마감재 (클로즈업, 재질 강조)"
+    ]
+  },
+  "animationDetails": {
+    "globalEasing": "cubic-bezier(0.25, 1, 0.5, 1) — quart out (모든 트랜지션 표준)",
+    "globalDuration": "1.0s ~ 1.2s (섹션 단위), 0.3s ~ 0.6s (UI), 6s ~ 9s (앰비언트 루프)",
+    "signaturePatterns": [
+      "Section snap (fullPage.js, 1s)",
+      "Trajan stack fade (translateY -40 → 0, stagger 0.18s)",
+      "Ken-Burns hero (scale 1.1 → 1, 1.5s 진입 / 9s 루프)",
+      "Soso bg pan loop (9s infinite alternate)",
+      "Building popup (image scale 0.95 → 1 + text translateY 10 → 0)",
+      "Mouse parallax (data-depth × cursor offset, 다크 메타 사이트)"
+    ]
+  },
+  "cssImplementation": {
+    "rootTokensLight": ":root { --bg: #fff; --bg-soft: #dcd8cf; --ink: #000; --ink-soft: #585858; --bronze: #b0927a; --clay: #a97d64; --burgundy: #2e2127; --teal: #009cac; }",
+    "rootTokensDark": ":root.dark { --bg: #000; --bg-panel: #101010; --bg-elev: #393939; --ink: #fff; --ink-soft: #aaa; --accent-red: #d6232f; }",
+    "typeImports": "@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@100..900&display=swap');",
+    "fontStack": "body { font-family: 'Noto Sans KR', sans-serif; color: var(--ink); background: var(--bg); } .display-en { font-family: 'Cormorant Garamond', 'Trajan Pro', serif; font-weight: 300; letter-spacing: 0.06em; text-transform: uppercase; } .display-ko { font-family: 'Nanum Myeongjo', serif; font-weight: 400; letter-spacing: 0.04em; }",
+    "transitionToken": "* { transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1); }"
+  }
+}

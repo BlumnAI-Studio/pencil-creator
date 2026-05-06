@@ -1,0 +1,27 @@
+{
+  "technique": "Ken-Burns Hero Image with Fade",
+  "name_ko": "켄번스 히어로 이미지 (스케일 인 + 페이드)",
+  "source": "https://anadd.co.kr/apt/ — 메인 도시 풍경 배경, .main_img / .visual-bg / 어메니티 슬라이드 이미지",
+  "description": "히어로 또는 섹션 배경 이미지가 scale(1.1~1.2)에서 시작해 6~9초에 걸쳐 천천히 scale(1.0)으로 줄어들면서 동시에 opacity 0→1로 페이드 인한다. 정적 이미지에 미세한 살아있는 호흡감을 부여하는 영화적 기법. 분양 사이트의 단지 조감도, 라운지 인테리어, 어메니티 시설 사진에서 표준.",
+  "rendering": "CSS @keyframes + transform-origin 조정",
+  "structure": {
+    "container": ".main_img / .visual-bg / .amenity_vd_box",
+    "imageEl": "<img> 또는 background-image",
+    "transformOrigin": "center center (또는 사진 주제에 맞춰 30% 60% 등)",
+    "overflow": "hidden (parent)"
+  },
+  "animationDetails": {
+    "scaleIn": "scale(1.1) → scale(1.0) (또는 1.2 → 1.05 천천히)",
+    "fadeIn": "opacity 0 → 1",
+    "duration": "1.5s (히어로 등장) ~ 9s (느린 호흡)",
+    "easing": "cubic-bezier(0.25, 1, 0.5, 1) (quart out) — 처음 빠르게, 끝에 천천히",
+    "loop": "히어로는 단발, 어메니티 슬라이드는 active 상태 동안 무한 반복 (alternate)"
+  },
+  "cssImplementation": {
+    "keyframes": "@keyframes visual-bg { 0% { transform: scale(1.1); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }",
+    "kenBurnsLoop": "@keyframes ken-burns-loop { 0% { transform: scale(1) translate(0,0); } 50% { transform: scale(1.08) translate(-2%, -1%); } 100% { transform: scale(1) translate(0,0); } }",
+    "applyOnActive": ".section.active .visual-bg { animation: visual-bg 1.5s cubic-bezier(0.25,1,0.5,1) forwards; }",
+    "loopApply": ".amenity_vd_box.active img { animation: ken-burns-loop 9s ease-in-out infinite; }",
+    "exit": "@keyframes vr-hide { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.1); opacity: 0; } }"
+  }
+}

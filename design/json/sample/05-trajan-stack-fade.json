@@ -1,0 +1,35 @@
+{
+  "technique": "Trajan Stacked Title with Translate Fade",
+  "name_ko": "트라잔 대문자 스택드 타이틀 페이드 인",
+  "source": "https://anadd.co.kr/apt/ — 메인 비주얼 'THE / GREATEST / ONE' 3행 스택드 슬로건",
+  "description": "Trajan 세리프 대문자를 한 단어씩 행을 쪼개 수직 스택으로 배치하고, 섹션 진입 시 위에서 -40px 떨어진 상태에서 순차적으로 내려오며 페이드 인한다. 한글 부제(나눔명조)는 영문 슬로건 뒤 200~300ms 지연되어 등장. 럭셔리·서사적 톤을 만든다.",
+  "rendering": "CSS @keyframes + 클래스 스태거 (또는 WAAPI)",
+  "structure": {
+    "wrapper": ".main_tit",
+    "lines": [
+      "<h2 class='line motion delay1'>THE</h2>",
+      "<h4 class='line motion delay2'>GREATEST</h4>",
+      "<h2 class='line motion delay3'>ONE</h2>"
+    ],
+    "subtitleKo": "<p class='sub motion delay4'>유일무이, 시대의 가치가 되다</p>",
+    "fontStack": {
+      "primary": "'trajan', 'copperplate', 'Nanum Myeongjo', serif",
+      "weight": 100,
+      "letterSpacing": "0.05em ~ 0.1em",
+      "size": "5.125rem ~ 6.6875rem"
+    }
+  },
+  "animationDetails": {
+    "keyframe": "@keyframes visual-obj { 0% { transform: translateY(-40px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }",
+    "duration": "1.2s",
+    "easing": "cubic-bezier(0.25, 1, 0.5, 1)",
+    "stagger": "각 line별 0.15s ~ 0.2s 누적 delay",
+    "subtitleDelay": "0.6s ~ 0.8s 후 등장 (영문 마지막 라인보다 한 박자 느리게)"
+  },
+  "cssImplementation": {
+    "keyframes": "@keyframes visual-obj { from { transform: translateY(-40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }",
+    "lineRule": ".main_tit .line { font-family: 'trajan', serif; font-weight: 100; opacity: 0; transform: translateY(-40px); transition: transform 1.2s cubic-bezier(0.25,1,0.5,1), opacity 1.2s cubic-bezier(0.25,1,0.5,1); }",
+    "active": ".main_tit.on .line { opacity: 1; transform: translateY(0); }",
+    "stagger": ".line:nth-child(1){transition-delay:0s} .line:nth-child(2){transition-delay:0.18s} .line:nth-child(3){transition-delay:0.36s} .sub{transition-delay:0.6s}"
+  }
+}

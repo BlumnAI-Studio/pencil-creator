@@ -17,3 +17,6 @@
 | 2026-03-31 | W | 요르단의 반지 RPG 퍼즐 랜딩 (8CAT+3D반지+퍼즐게임+크라우드펀딩) | 94/100 A | [로그](2026-03-31-ring-of-jordan-caseW.md) |
 | 2026-04-16 | W | 블룸 AI 디자인 시스템 소개 랜딩 (Three.js orbit+3축하네스+터미널+커스텀스크롤) | 93/100 A | [로그](2026-04-16-blumnai-intro-caseW.md) |
 | 2026-04-17 | D | Verdana Health 디자인 시스템 영입 (TOKENS 5+COMPONENTS 8+README, 첫 Case D) | 76/100 B | [로그](2026-04-17-verdana-health-caseD.md) |
+| 2026-04-30 | A | 캐릭터 애니메이션 (CAT17 신규, 6카드+6XAML+COMBINED) — 3축 만점 첫 달성 | 100/100 A | [로그](2026-04-30-character-animation-caseA.md) |
+| 2026-04-30 | W | Avatar Studio (sample010, A→W ×1.2, 6기법+군중16+Canvas confetti) | 100/100 A | [로그](2026-04-30-avatar-studio-caseW.md) |
+| 2026-05-06 | C | 분양 럭셔리 룩앤필 영입 (anadd+herenn, 6JSON+9CSS키프레임+미니어처2+가이드6+COMBINED2) — 3축 만점 두 번째 | 100/100 A | [로그](2026-05-06-bunyang-luxury-caseC.md) |
