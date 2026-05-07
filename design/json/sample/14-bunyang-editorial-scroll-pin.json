@@ -1,0 +1,29 @@
+{
+  "technique": "Editorial Scroll Pin — sticky headline + push pages",
+  "name_ko": "에디토리얼 스크롤 핀 — 헤딩 sticky + 다음 섹션 push",
+  "source": "saem.space (s1 → s2 섹션 전환) · 르엘 리버파크 센텀",
+  "description": "큰 헤드라인 컬럼이 position:sticky로 고정된 상태에서 스크롤 진행도에 따라 점차 축소(scale 1→0.82)·페이드(opacity 1→0.35)되고, 우측 컬럼에는 챕터 페이지가 translateY 100% → 0으로 push-up 되며 차례로 등장. 분양 사이트 본문 챕터 전환의 럭셔리 표준.",
+  "rendering": "CSS sticky + IntersectionObserver scrub + transform-driven push",
+  "structure": {
+    "viewport": ".pin-viewport (grid 1fr 1fr, height 460px overflow:hidden)",
+    "leftPin": ".pin-headline (sticky pin, scaled by progress)",
+    "rightStack": ".pin-pages (positioned pages translateY 100% → 0 on .show)"
+  },
+  "animationDetails": {
+    "headline": {
+      "transform": "scale(1) → scale(1 - progress * 0.18)",
+      "opacity": "1 → max(0.35, 1 - progress * 0.7)",
+      "transition": "transform 1100ms cubic-bezier(0.7, 0, 0.3, 1), opacity 1100ms ease"
+    },
+    "pages": {
+      "from": { "translateY": "100%" },
+      "to":   { "translateY": "0" },
+      "duration": "600ms",
+      "easing": "cubic-bezier(0.7, 0, 0.3, 1)",
+      "dwellPerPage": "1100ms / speed"
+    }
+  },
+  "cssImplementation": ".pin-headline { position:sticky; top:0; height:100vh; transform-origin:center; }\n.pin-page { position:absolute; inset:0; transform:translateY(100%);\n  transition: transform 600ms cubic-bezier(.7,0,.3,1); }\n.pin-page.show { transform:translateY(0); }",
+  "playgroundParams": ["speed (0.3-3×)", "scrub style (snap / smooth)"],
+  "useCases": ["챕터 전환", "본문 핀 헤딩", "단지 컨셉 → 디테일 전환"]
+}

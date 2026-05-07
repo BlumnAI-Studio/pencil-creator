@@ -1,0 +1,44 @@
+{
+  "site": "www.ssyapt.com (분양 단지 서브 페이지 패턴)",
+  "name_ko": "더 플래티넘 — 단지 / 평면 / 모델하우스 서브",
+  "tagline": "단지별 디테일 페이지 표준",
+  "lookFeel": "Information-rich Sub Page · Tab-driven · Floor-plan",
+  "palette": {
+    "bg": "#FFFFFF",
+    "ink": "#1A1A1A",
+    "accentSlate": "#3A4A5C"
+  },
+  "fonts": {
+    "displayEN": "Inter / Playfair Display",
+    "displayKO": "Pretendard / 나눔고딕",
+    "body": "Noto Sans KR"
+  },
+  "assets": [
+    "단지 외관 렌더링 이미지",
+    "조감도 / 위치도",
+    "평면도 (84/112/142 등)",
+    "모델하우스 사진 갤러리",
+    "단지 시설 아이콘"
+  ],
+  "effectsInventory": [
+    { "id": "SSB-01", "category": "transition", "name": "메인 → 단지 페이지 전환 fade", "detail": "라우터 변경 시 200ms fade + 다음 페이지 fade-in" },
+    { "id": "SSB-02", "category": "menu", "name": "탭 전환 (단지소개/조감도/평면/시설/위치)", "detail": "active 탭 underline draw + 콘텐츠 영역 crossfade" },
+    { "id": "SSB-03", "category": "scroll", "name": "서브 페이지 sticky 사이드 nav", "detail": "스크롤 진행도에 따라 active 섹션 표시" },
+    { "id": "SSB-04", "category": "scroll", "name": "Anchor scroll smooth", "detail": "Lenis 또는 native scroll-behavior:smooth" },
+    { "id": "SSB-05", "category": "image", "name": "단지 외관 Ken Burns + 자동 슬라이더", "detail": "다중 외관 컷 crossfade 6s loop" },
+    { "id": "SSB-06", "category": "image", "name": "조감도 panning + zoom on hover", "detail": "큰 조감도 호버 시 영역 줌" },
+    { "id": "SSB-07", "category": "image", "name": "평면도 인터랙티브 (방 hover → 정보 라벨)", "detail": "SVG 평면도 + room hover → 정보 박스 등장" },
+    { "id": "SSB-08", "category": "slider", "name": "모델하우스 갤러리 (Swiper)", "detail": "10~20장 사진 슬라이더 + 페이지네이션 + 자동재생" },
+    { "id": "SSB-09", "category": "slider", "name": "갤러리 fullscreen 모달 (라이트박스)", "detail": "이미지 클릭 → 풀스크린 + 좌우 키보드 / swipe" },
+    { "id": "SSB-10", "category": "modal", "name": "평면도 PDF 다운로드 / 모달 뷰어", "detail": "PDF 인라인 viewer 또는 파일 다운로드" },
+    { "id": "SSB-11", "category": "text", "name": "스펙 카운터 (세대수/면적/주차수) 0 → 최종값", "detail": "스크롤 진입 시 1.5s 카운트업, easeOut" },
+    { "id": "SSB-12", "category": "text", "name": "조건 비교 표 (평형별)", "detail": "행 hover highlight + select active row" },
+    { "id": "SSB-13", "category": "hover", "name": "시설 아이콘 hover - 라벨 fade-up", "detail": "헬스장/수영장/라운지 아이콘 호버 시 설명 텍스트 등장" },
+    { "id": "SSB-14", "category": "menu", "name": "위치도 - 지도 임베드 + 인근 시설 핀", "detail": "Naver / Kakao Map embed + 핀 클릭 → 정보창" },
+    { "id": "SSB-15", "category": "transition", "name": "탭 변경 시 콘텐츠 fade swap", "detail": "기존 탭 fade out 200ms + 새 탭 fade in 300ms" },
+    { "id": "SSB-16", "category": "footer", "name": "분양 문의 sticky CTA", "detail": "하단 또는 우측 sticky 버튼" },
+    { "id": "SSB-17", "category": "responsive", "name": "모바일 sub-nav drawer + 콘텐츠 sticky 헤더", "detail": "모바일에서 탭이 horizontal scroll" }
+  ],
+  "librarySuspects": ["Swiper (갤러리)", "jQuery (탭 핸들러)", "Naver/Kakao Map API", "PDF.js (인라인 평면 뷰어)"],
+  "signature": "단지 sub 페이지 표준: 탭 + 조감도 + 평면 인터랙션 + 모델하우스 슬라이더 + 위치 지도"
+}

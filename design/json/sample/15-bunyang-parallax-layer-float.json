@@ -1,0 +1,27 @@
+{
+  "technique": "Parallax Layer Float — base + lines + ball + shadow",
+  "name_ko": "패럴랙스 레이어 부유 — 4-layer 분리 이동",
+  "source": "르엘 리버파크 센텀 (vis-base / vis-line1·2 / ball / ball-shadow)",
+  "description": "히어로 영역을 4계층으로 분리(배경·라인1·라인2·볼+그림자) 후 마우스 위치에 비례한 translation(0.3~1.4×)과 sin 곡선 자체 부유(±8px, 3.5s)를 동시 적용. 그림자는 볼 Y에 따라 scaleX·opacity로 깊이감 연출. 럭셔리 분양 히어로의 시그니처.",
+  "rendering": "requestAnimationFrame + per-layer translation matrix",
+  "structure": {
+    "stage": ".par-stage (relative, aspect-ratio 16/9, overflow:hidden)",
+    "layers": [
+      ".par-base (gradient + pinstripe pattern, ratio 0.3)",
+      ".par-line.l1 (gold thin, ratio 0.6)",
+      ".par-line.l2 (offwhite faint, ratio 0.4)",
+      ".par-ball (radial-gradient sphere with glow, ratio 1.4)",
+      ".par-shadow (radial ellipse, scaleX driven by ball Y)"
+    ]
+  },
+  "animationDetails": {
+    "tickFn": "translate(mx*ratio*mAmp, my*ratio*mAmp + sin(phase)*amp)",
+    "ballSelfFloat": { "amp": "8px", "period": "3.5s", "fn": "sin" },
+    "shadow": "scaleX(1 - |yFloat|/amp * 0.25), opacity 0.6 + sFloat/amp * 0.2",
+    "easing": "linear via rAF",
+    "perfHints": ["transform: translate3d(...)", "will-change: transform"]
+  },
+  "cssImplementation": ".par-ball { will-change: transform; }\n.par-shadow { will-change: transform, opacity; }\n/* JS: ball.style.transform = `translate3d(${mx*1.4*mAmp}px, ${my*1.4*mAmp + Math.sin(phase)*amp}px, 0)` */",
+  "playgroundParams": ["float distance (2-40px)", "period (1-8s)", "mouse parallax (0-40px)"],
+  "useCases": ["히어로 다층 패럴랙스", "키비주얼 볼/오브젝트 부유", "스크롤 인디케이터"]
+}

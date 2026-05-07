@@ -1,0 +1,30 @@
+{
+  "technique": "Gold Accent Underline — left-to-right line draw on hover",
+  "name_ko": "골드 액센트 언더라인 — 호버 좌→우 라인 드로잉",
+  "source": "anadd.co.kr · 르엘 리버파크 (CTA 인터랙션)",
+  "description": "텍스트 링크/CTA 하단에 ::after 의사요소로 골드 라인을 두고, 평소에는 transform:scaleX(0) origin:left 으로 숨겨두다가 hover 시 scaleX(1)으로 좌→우 그려지는 럭셔리 분양 사이트의 표준 미세 인터랙션. 자동 cycle 모드도 지원.",
+  "rendering": "CSS pseudo-element + transform transition + JS cycle timer (optional)",
+  "structure": {
+    "link": ".under-link (display:inline-block, padding:6px 0)",
+    "after": ".under-link::after { position:absolute; left:0; right:0; bottom:0; height:var(--ut); background:var(--uc); transform:scaleX(0); transform-origin:left; }",
+    "trigger": ".under-link:hover::after, .under-link.cycle::after { transform:scaleX(1); }",
+    "variants": [
+      ".under-link (영문 600, uppercase, letter-spacing 0.18em)",
+      ".under-link.big (한글 명조 700, 22px)"
+    ]
+  },
+  "animationDetails": {
+    "line": {
+      "from": { "scaleX": 0 },
+      "to":   { "scaleX": 1 },
+      "transformOrigin": "left",
+      "duration": "600ms",
+      "easing": "cubic-bezier(0.7, 0, 0.3, 1)"
+    },
+    "autoCycle": "setInterval 3000ms — toggle .cycle class round-robin",
+    "colorOptions": ["#B89968 gold-warm", "#C5A572 gold-light", "#98674C bronze", "#1E3A5F summit-blue"]
+  },
+  "cssImplementation": ".under-link { position:relative; }\n.under-link::after {\n  content:''; position:absolute; left:0; right:0; bottom:0;\n  height: var(--ut, 2px); background: var(--uc, gold);\n  transform: scaleX(0); transform-origin: left;\n  transition: transform var(--ud, 600ms) cubic-bezier(.7,0,.3,1);\n}\n.under-link:hover::after, .under-link.cycle::after { transform: scaleX(1); }",
+  "playgroundParams": ["duration (200-1500ms)", "color (gold-warm / gold-light / bronze / summit-blue)", "thickness (1-6px)"],
+  "useCases": ["네비게이션 링크 hover", "CTA 강조", "갤러리 항목 라벨", "자동 cycle 갤러리"]
+}

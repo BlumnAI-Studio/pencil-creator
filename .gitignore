@@ -2,3 +2,4 @@
 /.playwright-mcp
 /tmp/
 .secret/gemini.json
+*.stackdump

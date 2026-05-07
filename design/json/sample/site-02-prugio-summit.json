@@ -1,0 +1,54 @@
+{
+  "site": "prugio.com/summit/limited/",
+  "name_ko": "푸르지오 써밋 리미티드 남천 (SUMMIT LIMITED NAMCHEON)",
+  "tagline": "頂點 · 固有 · 超越 — 시간을 초월해 기억될 헤리티지",
+  "lookFeel": "Heritage Luxury · Architectural · Hanja-driven",
+  "palette": {
+    "bg": "#FFFFFF",
+    "ink": "#1A1A1A",
+    "accentBlue": "#1E3A5F",
+    "accentLapis": "#004E71",
+    "accentGold": "#B89968"
+  },
+  "fonts": {
+    "displayHanja": "Nanum Myeongjo (700, letter-spacing 0.4em)",
+    "displayKO": "Nanum Myeongjo / Noto Serif KR",
+    "displayEN": "Cormorant / Trajan",
+    "body": "Noto Sans KR"
+  },
+  "assets": [
+    "popup/pop0401_01~12.jpg (12-frame brand reveal popup)",
+    "popup/pop0923, pop0908, pop0731 (날짜별 시리즈)",
+    "img/ht_per01~04.jpg (4 architects portraits)",
+    "img/ht_img01~04(a/b/c).jpg (12장 architect studio works)",
+    "img/play.png · ach_arrow01~04.png",
+    "data/84a.pdf · 112a.pdf · 142a.pdf (평면도 PDF)",
+    "unit.asp · unit2.asp · unit3.asp · unit4.asp (4 평면 페이지)"
+  ],
+  "effectsInventory": [
+    { "id": "PRG-01", "category": "intro", "name": "Brand reveal popup (12-frame sequence)", "detail": "pop0401_01~12.jpg 순차 스토리텔링, 각 프레임 hold + crossfade. 모달 박스에서 closeWin2() X 버튼" },
+    { "id": "PRG-02", "category": "intro", "name": "DRAG / CLICK / skip 인터랙션 가이드", "detail": "사용자에게 다음 인터랙션 지시 텍스트 노출, 시간 후 페이드아웃" },
+    { "id": "PRG-03", "category": "hero", "name": "頂點 → 固有 → 超越 한자 카드 스태거", "detail": "3개 한자 가치 카드 300ms 간격 fade-up + 한글 부제 등장" },
+    { "id": "PRG-04", "category": "hero", "name": "한자 위계: 한자 96pt + 한글 42pt + 영문 caption 11pt 동시 reveal", "detail": "각 줄 stagger 80ms" },
+    { "id": "PRG-05", "category": "scroll", "name": "한자 섹션 순환 sticky", "detail": "頂點/固有/超越 3단계가 스크롤 진행도에 따라 순차 표시, sticky pin" },
+    { "id": "PRG-06", "category": "scroll", "name": "ach_arrow 세로 스크롤 가이드 (4단계)", "detail": "ach_arrow01 → 04 화살표 스크롤 진행도 표시 (top fixed)" },
+    { "id": "PRG-07", "category": "text", "name": "Editorial 영문 헤드라인 mask reveal", "detail": "Timeless Archive in SUMMIT LIMITED NAMCHEON 줄 단위 clip-path" },
+    { "id": "PRG-08", "category": "image", "name": "건축가 4명 갤러리 (ht_per01~04 + ht_img × 12)", "detail": "Swiper 가능. 클릭 시 작품 이미지로 확장" },
+    { "id": "PRG-09", "category": "image", "name": "갤러리 hover zoom + caption fade-in", "detail": "썸네일 호버 시 scale 1.04 + 텍스트 캡션 등장" },
+    { "id": "PRG-10", "category": "modal", "name": "PDF 평면도 모달 (84a / 112a / 142a)", "detail": "PDF 인라인 뷰어 또는 다운로드 링크. 모달 fade in + ESC 닫기" },
+    { "id": "PRG-11", "category": "modal", "name": "팝업 갤러리 (closeWin2)", "detail": "JS 함수 호출 → 팝업 fade out, 제거" },
+    { "id": "PRG-12", "category": "slider", "name": "Architecture 섹션 Swiper #01 #02 #03", "detail": "ARTISTIC LANDMARK / Infinity Loop / Pilotis Structure 3-슬라이드" },
+    { "id": "PRG-13", "category": "menu", "name": "메뉴 토글 (summary, summit, location, PARTNERS, design)", "detail": "javascript:void(0) → 자체 핸들러 fade transition" },
+    { "id": "PRG-14", "category": "hover", "name": "건축가 portrait hover 전환 (per ↔ img)", "detail": "마우스 호버 시 ht_per → ht_img(작품) 이미지 swap with crossfade" },
+    { "id": "PRG-15", "category": "hover", "name": "메뉴 링크 underline 좌→우 draw", "detail": "scaleX 0→1, gold accent line" },
+    { "id": "PRG-16", "category": "counter", "name": "분양 일정 카운트다운 (08.11~09.03)", "detail": "달력 단계별 active step 강조, 진행 단계 highlight" },
+    { "id": "PRG-17", "category": "video", "name": "영상 플레이 버튼 (img/play.png)", "detail": "클릭 시 비디오 모달 + autoplay" },
+    { "id": "PRG-18", "category": "tel", "name": "tel:1599-3121 클릭 호출", "detail": "모바일에서 즉시 다이얼" },
+    { "id": "PRG-19", "category": "transition", "name": "메뉴 페이지 전환 fade", "detail": "summary → summit → location 페이지 전환 시 페이드" },
+    { "id": "PRG-20", "category": "footer", "name": "VIP 고객등록 버튼 (guest.asp 링크 hover)", "detail": "골드 underline + scale 1.02" },
+    { "id": "PRG-21", "category": "noise", "name": "[추정] 인쇄 텍스처 오버레이", "detail": "헤리티지 인상을 위한 미세 grain" },
+    { "id": "PRG-22", "category": "responsive", "name": "모바일 전용 햄버거 + 풀스크린 메뉴", "detail": "한자 + 한글 위계 모바일에서 축약" }
+  ],
+  "librarySuspects": ["jQuery (closeWin2 핸들러)", "Swiper (Architecture 슬라이더)", "Custom popup 시스템 (.asp 백엔드)", "ScrollMagic 또는 IntersectionObserver"],
+  "signature": "頂點/固有/超越 한자 트리플 위계 + 12-frame brand reveal + 건축가 4명 갤러리"
+}

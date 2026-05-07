@@ -1,0 +1,26 @@
+{
+  "technique": "Word Mask Reveal — line-level clip-path rise",
+  "name_ko": "줄 단위 클립패스 마스크 상승",
+  "source": "saem.space · theblanz.co.kr (에디토리얼 헤딩)",
+  "description": "한 줄씩 overflow:hidden 마스크 박스에 감싸고, 내부 텍스트를 translateY 110%에서 0으로 올려 마치 종이 아래에서 글자가 솟아오르는 듯한 럭셔리 reveal 효과. 줄 단위 stagger로 차곡차곡 쌓인다.",
+  "rendering": "CSS transition + nested span (line-mask > span)",
+  "structure": {
+    "outer": ".line-mask { overflow:hidden; display:block; }",
+    "inner": ".line-mask > span { display:block; transform:translateY(110%); }",
+    "trigger": ".line-mask.in > span { transform:translateY(0); }",
+    "fontFamily": "Playfair Display (italic 보조 강조)",
+    "fontWeight": 300
+  },
+  "animationDetails": {
+    "perLine": {
+      "from": { "transformY": "110%" },
+      "to":   { "transformY": "0%" },
+      "duration": "1000ms",
+      "easing": "cubic-bezier(0.7, 0, 0.3, 1)",
+      "stagger": "120ms"
+    }
+  },
+  "cssImplementation": ".line-mask { overflow:hidden; display:block; }\n.line-mask > span {\n  display:block; transform:translateY(110%);\n  transition: transform var(--d) var(--e) var(--delay);\n}\n.line-mask.in > span { transform:translateY(0); }",
+  "playgroundParams": ["line stagger (40-300ms)", "duration (400-2000ms)", "easing (smooth / expo-out / ease-out)"],
+  "useCases": ["에디토리얼 인트로 카피", "섹션 헤딩 reveal", "단지 컨셉 슬로건"]
+}

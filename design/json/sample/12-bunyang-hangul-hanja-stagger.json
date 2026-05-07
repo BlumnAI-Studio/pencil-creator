@@ -1,0 +1,28 @@
+{
+  "technique": "Hangul · Hanja Stagger — heritage ladder",
+  "name_ko": "한자 타이틀 + 한글 부제 순차 등장 (헤리티지 사다리)",
+  "source": "prugio.com/summit/limited (頂點/固有/超越 3가치)",
+  "description": "고급 분양 사이트의 정체성 카드(頂點·固有·超越 처럼 3개의 한자 가치 + 한글 부제 + 영문 설명)를 항목 단위 300ms 간격으로 등장시키는 헤리티지 사다리 패턴. 큰 한자 → 한글 부제 → 영문 라벨 3단 위계가 동시에 등장.",
+  "rendering": "CSS animation + per-item stagger via inline custom properties",
+  "structure": {
+    "container": ".hanja-grid (3-column grid)",
+    "item": ".hj-item { display:flex; flex-direction:column; align-items:center; }",
+    "children": [
+      ".hanja (Nanum Myeongjo, 700, 92px, letter-spacing 0.08em)",
+      ".hangeul (Nanum Myeongjo, 400, 22px, gold accent, letter-spacing 0.4em)",
+      ".meta (Mono, 10px, uppercase, neutral)"
+    ]
+  },
+  "animationDetails": {
+    "perItem": {
+      "from": { "translateY": "12px", "opacity": 0 },
+      "to":   { "translateY": "0",    "opacity": 1 },
+      "duration": "900ms",
+      "easing": "cubic-bezier(0.45, 0, 0.15, 1)",
+      "stagger": "300ms"
+    }
+  },
+  "cssImplementation": ".hj-item { opacity:0; transform:translateY(12px); }\n.hj-item.in { animation: hanjaIn var(--d) cubic-bezier(.45,0,.15,1) var(--delay) forwards; }\n@keyframes hanjaIn { to { opacity:1; transform:translateY(0); } }",
+  "playgroundParams": ["stagger (100-600ms)", "duration (400-1500ms)", "y offset (0-40px)"],
+  "useCases": ["분양 핵심 가치 3카드", "한자 슬로건 카드", "프리미엄 라인업 소개"]
+}

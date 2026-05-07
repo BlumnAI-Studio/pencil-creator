@@ -1,0 +1,53 @@
+{
+  "site": "xn--2w2b2dy4gc4grygkwrplbc1g.com (르엘 리버파크 센텀)",
+  "name_ko": "르엘 리버파크 센텀 (LE-EL RIVER PARK CENTUM)",
+  "tagline": "A NEW LEVEL OF LIVING",
+  "lookFeel": "Editorial Luxury · Architectural Diagram · Multi-layer Parallax",
+  "palette": {
+    "bg": "#FAF8F4",
+    "bgPure": "#FFFFFF",
+    "ink": "#1A1A1A",
+    "accentBlue": "#1E3A5F",
+    "accentGold": "#C5A572",
+    "accentBronze": "#98674C"
+  },
+  "fonts": {
+    "displayEN": "Playfair Display / Modern Serif",
+    "displayKO": "Nanum Myeongjo / 본명조",
+    "body": "Pretendard / Noto Sans KR"
+  },
+  "assets": [
+    "vis-base.png (배경 베이스)",
+    "vis-line1/vis-line2 (분리 라인 SVG)",
+    "ball.png + ball-shadow.png (히어로 볼 + 그림자)",
+    "architecture-net1~4.svg (구조 네트워크)",
+    "architecture-fig1-1/2 · 2-1/2 · 3-1/2.svg (개념 다이어그램)",
+    "gallery-icon · instagram-icon · 지도 아이콘"
+  ],
+  "effectsInventory": [
+    { "id": "LRP-01", "category": "intro", "name": "히어로 다층 패럴랙스 진입", "detail": "vis-base + vis-line1 + vis-line2 + ball + ball-shadow 동시 fade-in (각 0.2s 간격)" },
+    { "id": "LRP-02", "category": "hero", "name": "A NEW LEVEL — 글자 reveal", "detail": "Playfair 300 weight, char stagger fade-up + italic OF LIVING 강조" },
+    { "id": "LRP-03", "category": "hero", "name": "ball 자체 부유 (sin 8px ±)", "detail": "rAF ball.style.transform translateY = sin(t) * 8, period 3.5s" },
+    { "id": "LRP-04", "category": "hero", "name": "ball-shadow 동적 scaleX + opacity", "detail": "ball Y에 따라 shadow 압축 (1 - |y|/amp * 0.25), opacity 0.4 ↔ 0.7" },
+    { "id": "LRP-05", "category": "mouse", "name": "마우스 위치 4-layer 패럴랙스", "detail": "vis-base (0.3×) / line (0.6×, 0.4×) / ball (1.4×) translateXY × mouse offset" },
+    { "id": "LRP-06", "category": "mouse", "name": "전체 페이지 커서 halo (옅은 골드)", "detail": "fixed pointer-events:none gradient 따라다님" },
+    { "id": "LRP-07", "category": "scroll", "name": "Editorial Scroll Pin — A NEW LEVEL sticky", "detail": "큰 헤딩 sticky, 다음 섹션이 위로 push" },
+    { "id": "LRP-08", "category": "scroll", "name": "Architecture diagram 스크롤 reveal", "detail": "architecture-net1~4 SVG path stroke-dasharray draw on enter" },
+    { "id": "LRP-09", "category": "scroll", "name": "architecture-fig 다이어그램 stagger", "detail": "fig1-1 → fig1-2 → fig2-1 → fig2-2 → fig3-1 → fig3-2 순차 등장" },
+    { "id": "LRP-10", "category": "svg", "name": "SVG path drawing — architecture 라인", "detail": "stroke-dasharray + stroke-dashoffset 0 → length, 1.2s ease-out" },
+    { "id": "LRP-11", "category": "svg", "name": "물·바람·땅 개념 다이어그램", "detail": "3개 컨셉이 sequential draw + 키워드 등장" },
+    { "id": "LRP-12", "category": "text", "name": "italic 강조 + 골드 컬러 토글", "detail": "본문 키워드 ::after gold underline draw" },
+    { "id": "LRP-13", "category": "image", "name": "갤러리 아이콘 hover glow", "detail": "gallery-icon hover 시 box-shadow + scale 1.05" },
+    { "id": "LRP-14", "category": "menu", "name": "메인 메뉴 토글 + 서브메뉴 fade", "detail": "한글/영문 듀얼 표기 메뉴" },
+    { "id": "LRP-15", "category": "menu", "name": "오늘 하루동안 보지 않기 팝업", "detail": "쿠키 기반 dismissal, fade out 후 미노출" },
+    { "id": "LRP-16", "category": "modal", "name": "지도 모달 (Naver / Kakao)", "detail": "지도 아이콘 클릭 → 외부 지도 새창 또는 임베드 모달" },
+    { "id": "LRP-17", "category": "modal", "name": "갤러리 라이트박스", "detail": "단지 이미지 풀스크린 모달 + 좌우 화살표" },
+    { "id": "LRP-18", "category": "hover", "name": "Instagram 아이콘 + SNS hover 컬러 fill", "detail": "stroke → fill transition" },
+    { "id": "LRP-19", "category": "transition", "name": "섹션 fade-in on entry", "detail": "translateY 40 + opacity 0 → 0, 800ms expo-out" },
+    { "id": "LRP-20", "category": "noise", "name": "[추정] 인쇄 텍스처 오버레이", "detail": "에디토리얼 럭셔리 표준 미세 grain" },
+    { "id": "LRP-21", "category": "footer", "name": "골드 라인 underline CTA", "detail": "분양 럭셔리 표준 패턴" },
+    { "id": "LRP-22", "category": "responsive", "name": "모바일 패럴랙스 단순화 (gyroscope 가능)", "detail": "DeviceOrientationEvent 사용 가능" }
+  ],
+  "librarySuspects": ["GSAP + ScrollTrigger (강하게 추정 — fig 다이어그램 stagger draw)", "Lenis (smooth scroll)", "IntersectionObserver", "커스텀 rAF (ball float + 마우스 패럴랙스)"],
+  "signature": "vis-base + vis-line + ball + shadow 4-layer 패럴랙스 + architecture-net/fig SVG path drawing + A NEW LEVEL OF LIVING 시그니처"
+}

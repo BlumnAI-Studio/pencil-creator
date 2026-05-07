@@ -1,0 +1,27 @@
+{
+  "technique": "Sequence Image Crossfade — Ken Burns chain",
+  "name_ko": "이미지 시퀀스 페이드 체인 (켄 번스 줌)",
+  "source": "theblanz.co.kr (intro-figure 1~4) · prugio summit (pop0401_01~12)",
+  "description": "히어로 배경에 4~12장의 분위기 컷을 hold(2s) → fade(0.4s) 사이클로 순환시키며 각 프레임 내부에서 scale 1→1.05 켄번스 줌으로 정적 이미지에 살아있는 호흡을 부여. 분양 사이트의 표준 히어로 패턴.",
+  "rendering": "absolute-stacked figures + opacity transition + Promise async chain",
+  "structure": {
+    "stack": ".seq-stack (position:relative, aspect-ratio 16/9)",
+    "frames": ".seq-frame (position:absolute inset:0, opacity:0)",
+    "active": ".seq-frame.in { opacity:1; transform:scale(var(--k)); }",
+    "tagsRow": ".seq-tags (current frame indicator pills)"
+  },
+  "animationDetails": {
+    "perFrame": {
+      "hold": "2.0s",
+      "fade": "0.4s",
+      "kenBurnsScale": "1.0 → 1.05",
+      "kenBurnsDuration": "(hold + fade) * 1.2",
+      "easing": "ease (opacity), linear (scale)"
+    },
+    "totalLoop": "frames.length × (hold + fade)",
+    "control": "async function chain() { for(let i=0;i<frames.length;i++){ show(i); await wait(hold); } }"
+  },
+  "cssImplementation": ".seq-frame { position:absolute; inset:0; opacity:0; transform:scale(1);\n  transition: opacity var(--f) ease, transform 6s linear; }\n.seq-frame.in { opacity:1; transform:scale(var(--k)); }",
+  "playgroundParams": ["hold (0.5-5s)", "crossfade (0.1-2s)", "ken burns scale (1.0-1.2)"],
+  "useCases": ["히어로 배경 이미지 순환", "갤러리 자동 슬라이드", "단지 컷 시퀀스"]
+}

@@ -22,3 +22,8 @@
 | 2026-05-06 | C | 분양 럭셔리 룩앤필 영입 (anadd+herenn, 6JSON+9CSS키프레임+미니어처2+가이드6+COMBINED2) — 3축 만점 두 번째 | 100/100 A | [로그](2026-05-06-bunyang-luxury-caseC.md) |
 | 2026-05-06 | W | LUMIÈRE FUTUR sample011 (C→W ×1.3, 8섹션+제미나이10장+애플 sticky scrollytelling+11 인터랙션) — 3축 만점 세 번째 | 100/100 A | [로그](2026-05-06-lumiere-futur-caseW.md) |
 | 2026-05-06 | B+W | LUMIÈRE 2300 sample12 (B→W ×1.3, 라이트 사이버펑크+도시설계+10 chapter+제미나이23장+PixiJS) — 3축 만점 네 번째 | B 90 + W 100 A | [로그](2026-05-06-lumiere-2300-caseBW.md) |
+| 2026-05-07 | C | 분양25 TOP 8 룩앤필+애니 영입 (6사이트 분석, 8JSON+화이트 베이스 펜슬+8카드+COMBINED) | 88/100 A | [로그](2026-05-07-bunyang25-top8-caseC.md) |
+| 2026-05-07 | W | sample13 분양25 TOP 8 PlayGround (C→W ×1.3, 8기법 옵션 슬라이더+SVG hero mock+전역 노이즈 토글) | 92/100 A | [로그](2026-05-07-bunyang25-top8-caseW.md) |
+| 2026-05-07 | C+W ext | [확장] 8개 사이트 전체 이펙트 인벤토리 (164 effects + 9 keyframes 직접추출, 펜슬 CAT6 신설+sample13 11카드 확장) | C 96 + W 96 A | [로그](2026-05-07-bunyang25-top8-extension.md) |
+| 2026-05-07 | W ext-2 | [+인사이트] sample13 SITE INSIGHT 섹션 (8 사이트 별점 10점 평가 + 5축 비교 차트 + 강점/약점/시그니처 + 정렬 탭) | 99/100 A | [로그](2026-05-07-bunyang25-top8-extension.md) |
+| 2026-05-07 | W ext-3 | [+FINALE] sample13 50평형 럭셔리 모델하우스 (Three.js 1인칭+8 분양사이트 액자+14광원+8PBR재질+캔버스 동적텍스처+'분양홈페이지를 분석하다 …' 마무리) — 5번째 만점 | 100/100 A | [로그](2026-05-07-bunyang25-top8-extension.md) |

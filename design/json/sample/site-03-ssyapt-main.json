@@ -1,0 +1,41 @@
+{
+  "site": "www.ssyapt.com (메인)",
+  "name_ko": "더 플래티넘 (THE PLATINUM)",
+  "tagline": "ONE & ONLY THE PLATINUM · Fine Tuned Life Space",
+  "lookFeel": "Premium Modern · Marketing-friendly · Slider-centric",
+  "palette": {
+    "bg": "#FFFFFF",
+    "ink": "#1A1A1A",
+    "accentSlate": "#3A4A5C",
+    "accentBronze": "#98674C"
+  },
+  "fonts": {
+    "displayEN": "Playfair Display / Inter Display",
+    "displayKO": "나눔고딕 / Pretendard",
+    "body": "Noto Sans KR"
+  },
+  "assets": [
+    "main_brand_play_btn.svg (브랜드 영상 트리거)",
+    "/upload/complex/* (단지별 이미지)",
+    "마케팅 배너 슬라이더 이미지 다수"
+  ],
+  "effectsInventory": [
+    { "id": "SSY-01", "category": "intro", "name": "이메일 무단수집 거부 모달", "detail": "사이트 진입 시 모달 팝업 fade-in + 닫기" },
+    { "id": "SSY-02", "category": "hero", "name": "ONE & ONLY THE PLATINUM 헤드라인 reveal", "detail": "영문 디스플레이 fade-up + char stagger" },
+    { "id": "SSY-03", "category": "hero", "name": "Fine Tuned Life Space 서브 카피 mask reveal", "detail": "줄 단위 clip-path 상승" },
+    { "id": "SSY-04", "category": "hero", "name": "브랜드 비디오 trigger (main_brand_play_btn.svg)", "detail": "SVG play 버튼 hover scale + click → 비디오 모달 열림" },
+    { "id": "SSY-05", "category": "slider", "name": "마케팅 배너 슬라이더 (prev/next)", "detail": "메인 히어로 캐러셀, 자동재생 + 수동 네비게이션" },
+    { "id": "SSY-06", "category": "slider", "name": "단지 카드 슬라이더 (/upload/complex 기반)", "detail": "단지별 카드 horizontal scroll 또는 Swiper" },
+    { "id": "SSY-07", "category": "menu", "name": "메뉴 열기/닫기 (햄버거)", "detail": "사이드 드로어 또는 풀스크린 오버레이" },
+    { "id": "SSY-08", "category": "modal", "name": "비디오 모달 (브랜드 영상 재생)", "detail": "play 버튼 클릭 → 모달 fade + iframe 로드" },
+    { "id": "SSY-09", "category": "scroll", "name": "스크롤 페이드 인 (섹션 진입)", "detail": "단지 정보/혜택/CTA 섹션 IntersectionObserver fade-up" },
+    { "id": "SSY-10", "category": "image", "name": "단지 카드 hover zoom + 정보 오버레이", "detail": "이미지 위 다크 그라디언트 + 텍스트 등장" },
+    { "id": "SSY-11", "category": "hover", "name": "CTA 버튼 (분양홈페이지 / 자주묻는질문) 호버", "detail": "background invert 또는 underline draw" },
+    { "id": "SSY-12", "category": "text", "name": "단지 정보 카운터 (세대수/평형 등)", "detail": "스크롤 진입 시 0 → 최종값 카운트업" },
+    { "id": "SSY-13", "category": "transition", "name": "단지 페이지 전환 fade", "detail": "단지 카드 클릭 → 상세 페이지 페이드" },
+    { "id": "SSY-14", "category": "footer", "name": "푸터 SNS 아이콘 hover scale", "detail": "fb/insta/blog 아이콘 hover scale 1.1" },
+    { "id": "SSY-15", "category": "responsive", "name": "모바일 카드 grid → 1-col stack", "detail": "단지 카드 반응형 재배치" }
+  ],
+  "librarySuspects": ["Swiper (배너 + 단지 슬라이더)", "jQuery (모달 + 메뉴)", "AOS 또는 IntersectionObserver (fade-in)"],
+  "signature": "마케팅 배너 슬라이더 + 단지 카드 그리드 + 브랜드 영상 모달"
+}

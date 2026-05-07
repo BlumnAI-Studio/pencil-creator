@@ -1,0 +1,53 @@
+{
+  "site": "saem.space",
+  "name_ko": "샘 (Saem) — 만년필바 & 헤리티지 공간",
+  "tagline": "Do nothing. Sit and drift away with",
+  "lookFeel": "Minimal · Contemplative · Heritage Editorial",
+  "palette": {
+    "bg": "#F5F1EA",
+    "bgSoft": "#FFFFFF",
+    "ink": "#1A1A1A",
+    "inkSoft": "#585858",
+    "accentWarm": "#B89968"
+  },
+  "fonts": {
+    "displayEN": "Playfair Display italic + serif",
+    "displayKO": "Nanum Myeongjo / Noto Serif KR",
+    "body": "Noto Sans KR / Pretendard"
+  },
+  "assets": [
+    "s1_video.jpg (히어로 비디오 첫 프레임)",
+    "s2_noise1.png · s2_noise2.png · s3_noise2.png (필름 노이즈)",
+    "s2_right01~02.jpg (사이드 이미지)",
+    "s3_obj1~3.jpg (오브제)",
+    "s4_img1~8 (Photo Wall 8장)",
+    "QR 코드 다수 (The Herit 공간 내 위치 안내)",
+    "Google Play / App Store 다운로드 배지"
+  ],
+  "effectsInventory": [
+    { "id": "SAM-01", "category": "intro", "name": "비디오 BG 오토플레이 (s1_video)", "detail": "muted autoplay loop, 첫 프레임 s1_video.jpg poster" },
+    { "id": "SAM-02", "category": "intro", "name": "초기 페이드인 (검은 → 비디오)", "detail": "히어로 진입 800ms ease-out fade" },
+    { "id": "SAM-03", "category": "hero", "name": "Do nothing. Sit and drift away with — mask reveal", "detail": "줄 단위 clip-path inset 100% → 0%, italic 강조" },
+    { "id": "SAM-04", "category": "hero", "name": "헤드라인 italic 강조 + 한글 부제 stagger", "detail": "Playfair italic + 명조 한글 ladder" },
+    { "id": "SAM-05", "category": "noise", "name": "feTurbulence 또는 PNG 노이즈 오버레이", "detail": "s2_noise1/s2_noise2/s3_noise2 — opacity 0.05~0.10 mix-blend overlay" },
+    { "id": "SAM-06", "category": "noise", "name": "섹션별 다른 노이즈 텍스처", "detail": "s1, s2, s3 섹션마다 다른 noise 이미지 — 깊이 차별화" },
+    { "id": "SAM-07", "category": "scroll", "name": "Editorial Scroll Pin (sticky 헤딩 + push 페이지)", "detail": "큰 헤딩이 sticky로 유지, 우측 콘텐츠가 push-up" },
+    { "id": "SAM-08", "category": "scroll", "name": "섹션 진입 fade-up (translateY 40 → 0)", "detail": "각 섹션 IntersectionObserver, threshold 0.3" },
+    { "id": "SAM-09", "category": "image", "name": "Photo Wall 8장 캐러셀", "detail": "s4_img1~8 horizontal scroll 또는 자동 panning 슬라이더" },
+    { "id": "SAM-10", "category": "image", "name": "Photo Wall 1954 헤리티지 타임라인", "detail": "각 사진에 연도+사연 캡션, hover 시 등장" },
+    { "id": "SAM-11", "category": "image", "name": "오브제 (s3_obj1~3) hover scale + 정보", "detail": "만년필 오브제 호버 → 스펙 caption" },
+    { "id": "SAM-12", "category": "menu", "name": "Multi-level navigation (Space / Objet / Price / Contact)", "detail": "서브메뉴 드롭다운 fade + slide-down" },
+    { "id": "SAM-13", "category": "menu", "name": "Floor 기반 공간 네비 (공간/좌석/펜트리/만년필바)", "detail": "층별 탭 인터랙션 + active 상태 underline" },
+    { "id": "SAM-14", "category": "menu", "name": "데스크톱/모바일 듀얼 네비", "detail": "반응형 두 종류 네비 시스템 분리" },
+    { "id": "SAM-15", "category": "modal", "name": "QR 코드 모달 (위치별 사연 reveal)", "detail": "The Herit 공간 내 QR 스캔 → 모바일에 사연 노출" },
+    { "id": "SAM-16", "category": "modal", "name": "좌석 예약 인터페이스 (Solo Seat / Drift Seat / Solo Room)", "detail": "예약 모달 fade + 좌석 select" },
+    { "id": "SAM-17", "category": "transition", "name": "과거의 유산 → 멈춤은 또다른 시작 transition", "detail": "헤리티지 타임라인 → 명상 카피 섹션 페이드" },
+    { "id": "SAM-18", "category": "hover", "name": "이미지 hover noise 강화", "detail": "마우스 위에서 노이즈 opacity 0.08 → 0.15" },
+    { "id": "SAM-19", "category": "hover", "name": "App Store 배지 hover scale 1.05", "detail": "Google Play / Apple 배지 미세 확대" },
+    { "id": "SAM-20", "category": "footer", "name": "SNS 아이콘 + 푸터 메뉴 hover underline", "detail": "표준 underline draw" },
+    { "id": "SAM-21", "category": "responsive", "name": "비디오 BG → 모바일에서는 정적 이미지로 fallback", "detail": "성능 최적화" },
+    { "id": "SAM-22", "category": "responsive", "name": "Photo Wall 모바일 swipe 가능", "detail": "터치 horizontal swipe" }
+  ],
+  "librarySuspects": ["IntersectionObserver", "Swiper (Photo Wall)", "Custom video player", "Vimeo / native HTML5 video"],
+  "signature": "비디오 BG + Do nothing italic 헤드라인 + 노이즈 multi-section (s1·s2·s3) + Photo Wall 8장 헤리티지"
+}

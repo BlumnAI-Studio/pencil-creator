@@ -1,0 +1,49 @@
+{
+  "site": "theblanz.co.kr",
+  "name_ko": "더블란츠 한강 (THE BLANZ)",
+  "tagline": "POETIC CLASS · 13세대만의 시그니처",
+  "lookFeel": "Luxury · Minimal · Poetic · Editorial",
+  "palette": {
+    "bg": "#FAF8F4",
+    "ink": "#1A1A1A",
+    "accentGold": "#C5A572",
+    "accentDeep": "#1E3A5F"
+  },
+  "fonts": {
+    "displayEN": "Playfair Display / Cormorant Garamond (300, wide letter-spacing)",
+    "displayKO": "Nanum Myeongjo / Noto Serif KR",
+    "body": "Pretendard / Noto Sans KR"
+  },
+  "assets": [
+    "logo-bl.svg / logo-wh.svg (테마별 로고)",
+    "intro-figure1.png ~ intro-figure4-1.png (4-frame intro sequence)",
+    "intro-txt.png (텍스트 오버레이 PNG)",
+    "?ver=2 캐싱 버전 관리"
+  ],
+  "effectsInventory": [
+    { "id": "TBZ-01", "category": "intro", "name": "프롤로그 시퀀스 (skip 가능)", "detail": "SKIP 버튼 노출, 인트로 끝나기 전 사용자가 건너뛸 수 있음. CSS opacity transition + skipBtn click handler" },
+    { "id": "TBZ-02", "category": "intro", "name": "intro-figure 4-frame 슬라이드", "detail": "intro-figure1~4 fade chain, 각 프레임 hold 후 다음 프레임으로 crossfade" },
+    { "id": "TBZ-03", "category": "intro", "name": "로딩 페이드 (logo-bl reveal)", "detail": "초기 검은/흰 배경 + 로고 fade-up 후 사라짐" },
+    { "id": "TBZ-04", "category": "hero", "name": "Hero Split Reveal — _POETIC CLASS_", "detail": "underscore 강조 텍스트 글자별 stagger fade-up (60ms × N글자, expo-out)" },
+    { "id": "TBZ-05", "category": "hero", "name": "A H O U S E I S N O T A H O M E 글자 분리 reveal", "detail": "넓은 letter-spacing + 글자별 등장. Cormorant Garamond italic" },
+    { "id": "TBZ-06", "category": "hero", "name": "13세대만 카피 mask reveal", "detail": "줄 단위 clip-path inset 100% → 0%" },
+    { "id": "TBZ-07", "category": "scroll", "name": "수직 이미지 스택 fade-in", "detail": "intro-figure 4장이 스크롤에 따라 차례 등장, IntersectionObserver" },
+    { "id": "TBZ-08", "category": "scroll", "name": "Section reveal (translateY 40 → 0 + opacity)", "detail": "각 섹션 진입 시 위로 떠오르는 표준 페이드" },
+    { "id": "TBZ-09", "category": "text", "name": "Editorial italic 강조", "detail": "본문 키워드 이탤릭 + 골드 컬러 토글" },
+    { "id": "TBZ-10", "category": "image", "name": "Ken Burns 줌 (1.0 → 1.05, 6s linear)", "detail": "intro 이미지 내 정적 줌 — 살아있는 호흡" },
+    { "id": "TBZ-11", "category": "image", "name": "이미지 hover scale 1.02", "detail": "갤러리 썸네일 호버 마이크로 확대" },
+    { "id": "TBZ-12", "category": "hover", "name": "메뉴 링크 골드 underline 좌→우 draw", "detail": "scaleX 0→1, transform-origin left, 0.6s ease(.7,0,.3,1)" },
+    { "id": "TBZ-13", "category": "hover", "name": "CTA 버튼 호버 invert (검정 ↔ 흰색)", "detail": "background + color cross-transition 240ms" },
+    { "id": "TBZ-14", "category": "menu", "name": "Hamburger → 풀스크린 오버레이 메뉴", "detail": "drawer fade + scale, 메뉴 항목 stagger 등장" },
+    { "id": "TBZ-15", "category": "modal", "name": "갤러리 라이트박스 (이미지 클릭 → 풀화면)", "detail": "fade in + 키보드 화살표 네비게이션" },
+    { "id": "TBZ-16", "category": "slider", "name": "Multi-image 갤러리 슬라이더", "detail": "intro-figure / 룸 갤러리 좌우 페이지네이션" },
+    { "id": "TBZ-17", "category": "mouse", "name": "[추정] 커서 magnet on CTA", "detail": "마우스 가까이 가면 버튼이 살짝 끌려옴 (translate proportional to distance)" },
+    { "id": "TBZ-18", "category": "svg", "name": "logo SVG path animation", "detail": "stroke-dasharray draw on enter / fill toggle on theme" },
+    { "id": "TBZ-19", "category": "footer", "name": "골드 라인 ::after underline (CTA)", "detail": "Card 08 표준 패턴 재사용" },
+    { "id": "TBZ-20", "category": "transition", "name": "페이지 간 fade transition", "detail": "라우터 변경 시 200ms 페이드 아웃 후 다음 페이지 fade in" },
+    { "id": "TBZ-21", "category": "noise", "name": "[추정] 노이즈 그레인 오버레이", "detail": "럭셔리 분양 표준 - feTurbulence 또는 PNG 노이즈, opacity 0.05~0.08" },
+    { "id": "TBZ-22", "category": "responsive", "name": "모바일 전용 단순화", "detail": "데스크톱 인트로 시퀀스 → 모바일에서는 정적 hero로 축약" }
+  ],
+  "librarySuspects": ["GSAP (ScrollTrigger 추정)", "Lenis (smooth scroll 추정)", "Swiper / 커스텀 라이트박스", "Webflow 또는 커스텀 빌드"],
+  "signature": "_POETIC CLASS_ underscore highlight + 4-frame fade chain + 13세대 마이크로 카피"
+}

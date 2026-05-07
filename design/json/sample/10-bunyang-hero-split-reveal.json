@@ -1,0 +1,33 @@
+{
+  "technique": "Hero Split Reveal — letter stagger fade-up",
+  "name_ko": "히어로 글자 단위 스태거 페이드업",
+  "source": "theblanz.co.kr · 르엘 리버파크 센텀 (히어로 헤드라인)",
+  "description": "히어로 영문 세리프 헤드라인을 글자 단위로 분리한 뒤 60ms 간격으로 순차 등장시키는 럭셔리 분양 사이트의 시그니처 진입 연출. 글자별로 24px 위에서 떨어지며 opacity 0→1, expo-out 이징으로 무게감 있게 안착한다.",
+  "rendering": "WAAPI (Web Animations API) + per-letter span split",
+  "structure": {
+    "wrapperSelector": ".split-text",
+    "letterTag": "span.inline-block",
+    "subSelector": ".split-sub (delayed by total stagger)",
+    "fontFamily": "Playfair Display | Cormorant Garamond",
+    "fontWeight": 300,
+    "letterSpacing": "0.06em"
+  },
+  "animationDetails": {
+    "perLetter": {
+      "from": { "translateY": "24px", "opacity": 0 },
+      "to":   { "translateY": "0",    "opacity": 1 },
+      "duration": "800ms",
+      "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "stagger": "60ms",
+      "fill": "forwards"
+    },
+    "subCopy": {
+      "delay": "letterCount * stagger",
+      "duration": "700ms",
+      "easing": "ease-out"
+    }
+  },
+  "cssImplementation": ".split-text span { display:inline-block; opacity:0; transform:translateY(24px); }\n.split-text span.in { animation: splitIn var(--d) var(--e) var(--delay) forwards; }\n@keyframes splitIn { to { opacity:1; transform:translateY(0); } }",
+  "playgroundParams": ["stagger (20-200ms)", "duration (300-1500ms)", "easing (expo-out / smooth / ease-out / back-out)"],
+  "useCases": ["분양 히어로 헤드라인", "프로젝트명 인트로", "키비주얼 캡션"]
+}

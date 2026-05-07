@@ -1,0 +1,43 @@
+{
+  "site": "anadd.co.kr (메인 게이트)",
+  "name_ko": "어나드 (ANADD — 게이트)",
+  "tagline": "유일무이, 시대의 가치가 되다",
+  "lookFeel": "Editorial Premium Gate · Status-driven",
+  "palette": {
+    "bg": "#FFFFFF",
+    "bgSoft": "#F5F1EA",
+    "ink": "#231815",
+    "accentBronze": "#B0927A",
+    "accentDeep": "#98674C",
+    "statusActive": "#009CAC"
+  },
+  "fonts": {
+    "displayEN": "Trajan / Copperplate (100 weight)",
+    "displayKO": "Nanum Myeongjo (400-700)",
+    "body": "Noto Sans KR (400, 1.7 line-height)"
+  },
+  "assets": [
+    "두 게이트 카드: 아파트 / 오피스텔",
+    "상태 뱃지: 선착순 / 동호지정 / 계약중",
+    "CTA: 바로가기"
+  ],
+  "effectsInventory": [
+    { "id": "AND-01", "category": "intro", "name": "사이트 진입 fade + closeWin2 팝업", "detail": "방문자 알림 팝업 fade in + 닫기 (closeWin2 함수 참조)" },
+    { "id": "AND-02", "category": "hero", "name": "유일무이/시대의 가치 슬로건 reveal", "detail": "Trajan 디스플레이 + Nanum Myeongjo 한글 stagger fade-up" },
+    { "id": "AND-03", "category": "hero", "name": "두 게이트 카드 stagger 등장", "detail": "아파트 카드 → 오피스텔 카드 200ms 간격 translateY 24 → 0 + opacity" },
+    { "id": "AND-04", "category": "image", "name": "게이트 카드 hover - 이미지 ken burns scale 1.05", "detail": "마우스 호버 시 6s linear scale" },
+    { "id": "AND-05", "category": "hover", "name": "게이트 카드 hover - 다크 오버레이 + 정보 등장", "detail": "linear-gradient overlay 0.4 → 0.7 + 텍스트 fade-up" },
+    { "id": "AND-06", "category": "status", "name": "상태 뱃지 펄스 (계약중)", "detail": "active 상태 점 #009CAC pulse 1.5s infinite" },
+    { "id": "AND-07", "category": "status", "name": "선착순/동호지정/계약중 라벨 컬러 코딩", "detail": "각 상태에 다른 색상 + uppercase letter-spacing" },
+    { "id": "AND-08", "category": "hover", "name": "바로가기 CTA 호버 - 화살표 translateX", "detail": "→ 화살표가 우측으로 8px 이동, 240ms ease" },
+    { "id": "AND-09", "category": "scroll", "name": "alert('준비중입니다') 미구현 메뉴", "detail": "일부 링크는 alert 핸들러로 처리됨" },
+    { "id": "AND-10", "category": "transition", "name": "게이트 → 분양 페이지 전환 fade", "detail": "카드 클릭 → 페이드 아웃 → /apt/ 또는 /off/ 로딩" },
+    { "id": "AND-11", "category": "tel", "name": "tel:1555-0604 즉시 다이얼", "detail": "모바일 클릭" },
+    { "id": "AND-12", "category": "menu", "name": "skip 다중 배치", "detail": "내부 앵커 스킵 링크" },
+    { "id": "AND-13", "category": "footer", "name": "푸터 라인 + 골드 underline hover", "detail": "표준 분양 럭셔리 푸터" },
+    { "id": "AND-14", "category": "noise", "name": "Soso 정원 클래스 (배경 분위기)", "detail": "soso_bg 클래스명 — 배경 분위기 또는 추가 텍스처" },
+    { "id": "AND-15", "category": "responsive", "name": "모바일 카드 1-col stack + sticky CTA", "detail": "모바일에서 두 카드 세로 + 하단 고정 CTA" }
+  ],
+  "librarySuspects": ["jQuery (closeWin2, alert 핸들러)", "AOS 또는 ScrollTrigger", "Swiper 가능성"],
+  "signature": "두 게이트 카드 (아파트/오피스텔) + 상태 뱃지 (선착순/동호지정/계약중) + Trajan/명조 페어링"
+}
