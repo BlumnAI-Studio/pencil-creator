@@ -102,6 +102,13 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
     t.anisotropy = renderer.capabilities.getMaxAnisotropy();
     return t;
   }
+  function loadPhoto(url) {
+    const t = tl.load(url);
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return t;
+  }
 
   const TEX = {
     floor:    loadTex('img/marble-floor.png', [4, 3]),
@@ -112,6 +119,11 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
     kitchen:  loadTex('img/kitchen-stone.png', [2, 1]),
     bath:     loadTex('img/bath-stone.png', [2, 1]),
     holo:     loadTex('img/holo-glass.png', [1, 1]),
+    living12:  loadPhoto('../sample12/img/int-living.png'),
+    kitchen12: loadPhoto('../sample12/img/int-kitchen.png'),
+    nano12:    loadTex('../sample12/img/mat-nano.png', [2, 1]),
+    holo12:    loadTex('../sample12/img/mat-holo.png', [2, 1]),
+    moss12:    loadTex('../sample12/img/mat-moss.png', [2, 1]),
   };
 
   /* ───── Floor ───── */
@@ -216,24 +228,236 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
   });
 
   /* ───── Window glass on West wall ───── */
-  const windowMat = new THREE.MeshStandardMaterial({
-    map: TEX.window, roughness: 0.18, metalness: 0.45, color: 0xFFFFFF,
-    emissive: 0x9EBBCE, emissiveIntensity: 0.34, transparent: true, opacity: 0.98,
-  });
+  const windowMat = new THREE.MeshBasicMaterial({ map: TEX.window, toneMapped: false });
+  const windowTrimMat = new THREE.MeshStandardMaterial({ color: 0xD7B67A, metalness: 0.64, roughness: 0.24 });
   const winGeo = new THREE.PlaneGeometry(2.6, 1.8);
   for (let i = -1; i <= 1; i++) {
     const win = new THREE.Mesh(winGeo, windowMat);
-    win.position.set(-HALF_W + 0.06, 1.6, i * 3);
+    win.position.set(-HALF_W + 0.18, 1.6, i * 3);
     win.rotation.y = Math.PI / 2;
     scene.add(win);
     // window frame golden
-    const frm = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.86, 2.66), coveMat);
-    frm.position.set(-HALF_W + 0.04, 1.6, i * 3);
+    const frm = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.92, 2.72), windowTrimMat);
+    frm.position.set(-HALF_W + 0.13, 1.6, i * 3);
     scene.add(frm);
-    const glow = new THREE.PointLight(0xBFDFFF, 0.75, 4.2, 1.6);
-    glow.position.set(-HALF_W + 0.35, 1.65, i * 3);
+    const glow = new THREE.PointLight(0xBFDFFF, 0.42, 3.6, 1.8);
+    glow.position.set(-HALF_W + 0.48, 1.65, i * 3);
     scene.add(glow);
   }
+
+  /* ───── Photoreal sample12 interior panels ───── */
+  const photoFrameMat = new THREE.MeshStandardMaterial({ color: 0xC8AA72, metalness: 0.66, roughness: 0.26 });
+  const photoBackMat = new THREE.MeshStandardMaterial({ color: 0x17130F, roughness: 0.58 });
+  function addPhotoPanel({ tex, position, rotationY, size = [2.35, 1.34], title }) {
+    const [w, h] = size;
+    const back = new THREE.Mesh(new THREE.BoxGeometry(w + 0.14, h + 0.14, 0.035), photoBackMat);
+    back.position.copy(position);
+    back.rotation.y = rotationY;
+    back.receiveShadow = true;
+    scene.add(back);
+
+    const photo = new THREE.Mesh(
+      new THREE.PlaneGeometry(w, h),
+      new THREE.MeshBasicMaterial({ map: tex, toneMapped: false })
+    );
+    photo.position.copy(position);
+    const outward = new THREE.Vector3(Math.sin(rotationY), 0, Math.cos(rotationY));
+    photo.position.addScaledVector(outward, 0.03);
+    photo.rotation.y = rotationY;
+    photo.userData.title = title;
+    scene.add(photo);
+
+    const top = new THREE.Mesh(new THREE.BoxGeometry(w + 0.22, 0.045, 0.055), photoFrameMat);
+    const bottom = top.clone();
+    top.position.copy(position); bottom.position.copy(position);
+    top.position.y += h / 2 + 0.06; bottom.position.y -= h / 2 + 0.06;
+    top.rotation.y = bottom.rotation.y = rotationY;
+    scene.add(top, bottom);
+
+    const left = new THREE.Mesh(new THREE.BoxGeometry(0.045, h + 0.13, 0.055), photoFrameMat);
+    const right = left.clone();
+    const side = new THREE.Vector3(Math.cos(rotationY), 0, -Math.sin(rotationY));
+    left.position.copy(position).addScaledVector(side, -w / 2 - 0.06);
+    right.position.copy(position).addScaledVector(side, w / 2 + 0.06);
+    left.rotation.y = right.rotation.y = rotationY;
+    scene.add(left, right);
+  }
+
+  addPhotoPanel({
+    tex: TEX.living12,
+    position: new THREE.Vector3(-1.9, 1.62, HALF_D - 0.14),
+    rotationY: Math.PI,
+    title: 'sample12 living room reference',
+  });
+  addPhotoPanel({
+    tex: TEX.kitchen12,
+    position: new THREE.Vector3(2.2, 1.62, HALF_D - 0.14),
+    rotationY: Math.PI,
+    title: 'sample12 kitchen reference',
+  });
+
+  /* ───── Wall TV Aquarium Canvas ───── */
+  const aquariumCanvas = document.createElement('canvas');
+  aquariumCanvas.width = 1024;
+  aquariumCanvas.height = 512;
+  const aq = aquariumCanvas.getContext('2d');
+  const aquariumTex = new THREE.CanvasTexture(aquariumCanvas);
+  aquariumTex.colorSpace = THREE.SRGBColorSpace;
+  aquariumTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  aquariumTex.needsUpdate = true;
+  const aquariumFish = Array.from({ length: 12 }, (_, i) => ({
+    x: Math.random() * aquariumCanvas.width,
+    y: 105 + Math.random() * 290,
+    size: 15 + Math.random() * 22,
+    speed: 14 + Math.random() * 34,
+    dir: i % 3 === 0 ? -1 : 1,
+    hue: i % 4,
+    drift: Math.random() * Math.PI * 2,
+  }));
+  const aquariumBubbles = Array.from({ length: 44 }, () => ({
+    x: Math.random() * aquariumCanvas.width,
+    y: Math.random() * aquariumCanvas.height,
+    r: 1.2 + Math.random() * 3.5,
+    speed: 12 + Math.random() * 30,
+  }));
+  function drawAquarium(time) {
+    const w = aquariumCanvas.width, h = aquariumCanvas.height;
+    const t = time * 0.001;
+    const bg = aq.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, '#0A3850');
+    bg.addColorStop(0.45, '#06243A');
+    bg.addColorStop(1, '#03111F');
+    aq.fillStyle = bg;
+    aq.fillRect(0, 0, w, h);
+
+    aq.save();
+    aq.globalCompositeOperation = 'screen';
+    for (let i = 0; i < 9; i++) {
+      const y = 34 + i * 42;
+      const offset = Math.sin(t * 0.7 + i) * 36;
+      aq.strokeStyle = `rgba(117, 221, 255, ${0.045 + i * 0.004})`;
+      aq.lineWidth = 1.4;
+      aq.beginPath();
+      for (let x = -80; x <= w + 80; x += 24) {
+        const yy = y + Math.sin(x * 0.018 + t * 1.8 + i) * 11;
+        if (x === -80) aq.moveTo(x + offset, yy);
+        else aq.lineTo(x + offset, yy);
+      }
+      aq.stroke();
+    }
+    aq.restore();
+
+    aq.fillStyle = 'rgba(28, 84, 69, 0.55)';
+    for (let i = 0; i < 18; i++) {
+      const baseX = 26 + i * 58;
+      const baseH = 76 + (i % 5) * 15;
+      aq.beginPath();
+      aq.moveTo(baseX, h);
+      aq.quadraticCurveTo(baseX + Math.sin(t + i) * 12, h - baseH * 0.55, baseX + Math.sin(t * 1.2 + i) * 18, h - baseH);
+      aq.lineTo(baseX + 8, h);
+      aq.closePath();
+      aq.fill();
+    }
+
+    aquariumFish.forEach((fish, i) => {
+      fish.x += fish.dir * fish.speed * 0.016;
+      if (fish.dir > 0 && fish.x > w + 50) fish.x = -50;
+      if (fish.dir < 0 && fish.x < -50) fish.x = w + 50;
+      const y = fish.y + Math.sin(t * 1.6 + fish.drift) * 12;
+      const palette = [
+        ['#F8C471', '#A8561F'],
+        ['#8DE5FF', '#176B8A'],
+        ['#F7A5C2', '#8E3355'],
+        ['#C7F7A8', '#3E7D42'],
+      ][fish.hue];
+      aq.save();
+      aq.translate(fish.x, y);
+      aq.scale(fish.dir, 1);
+      const body = aq.createRadialGradient(-fish.size * 0.25, -fish.size * 0.25, 2, 0, 0, fish.size);
+      body.addColorStop(0, '#FFFFFF');
+      body.addColorStop(0.42, palette[0]);
+      body.addColorStop(1, palette[1]);
+      aq.fillStyle = body;
+      aq.beginPath();
+      aq.ellipse(0, 0, fish.size * 1.35, fish.size * 0.62, 0, 0, Math.PI * 2);
+      aq.fill();
+      aq.fillStyle = palette[1];
+      aq.beginPath();
+      aq.moveTo(-fish.size * 1.25, 0);
+      aq.lineTo(-fish.size * 2.0, -fish.size * 0.55);
+      aq.lineTo(-fish.size * 1.85, fish.size * 0.55);
+      aq.closePath();
+      aq.fill();
+      aq.fillStyle = '#06111A';
+      aq.beginPath();
+      aq.arc(fish.size * 0.78, -fish.size * 0.12, Math.max(1.6, fish.size * 0.08), 0, Math.PI * 2);
+      aq.fill();
+      aq.restore();
+    });
+
+    aq.strokeStyle = 'rgba(198, 244, 255, 0.5)';
+    aquariumBubbles.forEach(b => {
+      b.y -= b.speed * 0.016;
+      b.x += Math.sin(t * 1.8 + b.y * 0.03) * 0.35;
+      if (b.y < -10) { b.y = h + 8; b.x = Math.random() * w; }
+      aq.lineWidth = 1;
+      aq.beginPath();
+      aq.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      aq.stroke();
+    });
+
+    const glass = aq.createLinearGradient(0, 0, w, h);
+    glass.addColorStop(0, 'rgba(255,255,255,0.18)');
+    glass.addColorStop(0.22, 'rgba(255,255,255,0.02)');
+    glass.addColorStop(0.52, 'rgba(255,255,255,0.08)');
+    glass.addColorStop(1, 'rgba(255,255,255,0)');
+    aq.fillStyle = glass;
+    aq.fillRect(0, 0, w, h);
+    aquariumTex.needsUpdate = true;
+  }
+  drawAquarium(0);
+
+  const tvGroup = new THREE.Group();
+  tvGroup.position.set(0, 1.78, -HALF_D + 0.11);
+  tvGroup.rotation.y = 0;
+  scene.add(tvGroup);
+
+  const tvFrameMat = new THREE.MeshStandardMaterial({ color: 0x060607, roughness: 0.24, metalness: 0.45 });
+  const tvBack = new THREE.Mesh(new THREE.BoxGeometry(5.2, 2.72, 0.08), tvFrameMat);
+  tvBack.position.z = 0.02;
+  tvBack.castShadow = true;
+  tvBack.receiveShadow = true;
+  tvGroup.add(tvBack);
+
+  const tvScreen = new THREE.Mesh(
+    new THREE.PlaneGeometry(4.92, 2.46),
+    new THREE.MeshBasicMaterial({ map: aquariumTex, toneMapped: false, side: THREE.DoubleSide })
+  );
+  tvScreen.position.z = 0.075;
+  tvGroup.add(tvScreen);
+
+  const tvBezelTop = new THREE.Mesh(new THREE.BoxGeometry(5.35, 0.08, 0.11), tvFrameMat);
+  const tvBezelBottom = tvBezelTop.clone();
+  tvBezelTop.position.set(0, 1.4, 0.09);
+  tvBezelBottom.position.set(0, -1.4, 0.09);
+  tvGroup.add(tvBezelTop, tvBezelBottom);
+  const tvBezelSide = new THREE.Mesh(new THREE.BoxGeometry(0.08, 2.75, 0.11), tvFrameMat);
+  const tvBezelLeft = tvBezelSide.clone();
+  const tvBezelRight = tvBezelSide.clone();
+  tvBezelLeft.position.set(-2.66, 0, 0.09);
+  tvBezelRight.position.set(2.66, 0, 0.09);
+  tvGroup.add(tvBezelLeft, tvBezelRight);
+
+  const aquariumGlow = new THREE.PointLight(0x46C7FF, 0.72, 4.8, 1.55);
+  aquariumGlow.position.set(0, 1.62, -HALF_D + 1.05);
+  scene.add(aquariumGlow);
+  const aquariumFloorGlow = new THREE.Mesh(
+    new THREE.PlaneGeometry(4.8, 1.6),
+    new THREE.MeshBasicMaterial({ color: 0x1E9ED0, transparent: true, opacity: 0.14, depthWrite: false })
+  );
+  aquariumFloorGlow.rotation.x = -Math.PI / 2;
+  aquariumFloorGlow.position.set(0, 0.012, -HALF_D + 1.1);
+  scene.add(aquariumFloorGlow);
 
   /* ───── 8 Site Frames on East wall ───── */
   function makeSiteCanvas(site, w = 768, h = 1024) {
@@ -425,13 +649,6 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
     roughness: 0.2,
   });
   const frameBackMat = new THREE.MeshStandardMaterial({ color: 0x15110E, roughness: 0.55, metalness: 0.04 });
-  const highlightMat = new THREE.MeshBasicMaterial({
-    color: 0xFFFFFF,
-    transparent: true,
-    opacity: 0.18,
-    depthWrite: false,
-    side: THREE.DoubleSide,
-  });
   SITES.forEach((site, i) => {
     // place along east wall, evenly distributed in z
     const z = -HALF_D + 1.2 + i * ((ROOM.D - 2.4) / (SITES.length - 1));
@@ -446,7 +663,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 
     const rail = 0.09;
     const frameX = wallEx - 0.16;
-    const paintingX = wallEx - 0.235;
+    const paintingX = wallEx - 0.28;
     const back = new THREE.Mesh(new THREE.BoxGeometry(0.045, FRAME_H + rail * 2.3, FRAME_W + rail * 2.3), frameBackMat);
     back.position.set(wallEx - 0.095, FRAME_Y, z);
     back.receiveShadow = true;
@@ -465,28 +682,16 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
     });
 
     // canvas painting
-    const mat = new THREE.MeshStandardMaterial({
+    const mat = new THREE.MeshBasicMaterial({
       map: tex,
-      emissiveMap: tex,
-      emissive: 0xFFFFFF,
-      emissiveIntensity: 0.08,
-      roughness: 0.32,
-      metalness: 0.02,
-      polygonOffset: true,
-      polygonOffsetFactor: -2,
-      polygonOffsetUnits: -2,
+      toneMapped: false,
+      side: THREE.FrontSide,
     });
     const plane = new THREE.Mesh(new THREE.PlaneGeometry(FRAME_W, FRAME_H), mat);
     plane.position.set(paintingX, FRAME_Y, z);
     plane.rotation.y = -Math.PI / 2;
     plane.userData.site = site;
     scene.add(plane);
-
-    const shine = new THREE.Mesh(new THREE.PlaneGeometry(0.18, FRAME_H * 0.86), highlightMat);
-    shine.position.set(paintingX - 0.004, FRAME_Y + 0.05, z - FRAME_W * 0.22);
-    shine.rotation.y = -Math.PI / 2;
-    shine.rotation.z = -0.18;
-    scene.add(shine);
 
     // No shadow on per-frame lights: clearer posters, no flickering, much cheaper.
     const sp = new THREE.SpotLight(0xFFE7C2, 1.28, 4.8, Math.PI / 4.7, 0.46, 1.2);
@@ -613,11 +818,29 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
   scene.add(islandTop);
   const islandBase = new THREE.Mesh(
     new THREE.BoxGeometry(3.2, 0.88, 1.0),
-    new THREE.MeshStandardMaterial({ map: TEX.wall, bumpMap: TEX.wall, bumpScale: 0.02, color: 0x3A2A20, roughness: 0.48, metalness: 0.1 })
+    new THREE.MeshStandardMaterial({ map: TEX.nano12, bumpMap: TEX.nano12, bumpScale: 0.018, color: 0x3A342E, roughness: 0.42, metalness: 0.12 })
   );
   islandBase.position.set(-5.5, 0.44, -3.5);
   islandBase.castShadow = true; islandBase.receiveShadow = true;
   scene.add(islandBase);
+
+  const finishMats = [
+    new THREE.MeshStandardMaterial({ map: TEX.holo12, bumpMap: TEX.holo12, bumpScale: 0.018, color: 0xE8EEF2, roughness: 0.24, metalness: 0.2 }),
+    new THREE.MeshStandardMaterial({ map: TEX.nano12, bumpMap: TEX.nano12, bumpScale: 0.02, color: 0xECE6D8, roughness: 0.3, metalness: 0.14 }),
+    new THREE.MeshStandardMaterial({ map: TEX.moss12, bumpMap: TEX.moss12, bumpScale: 0.026, color: 0xD8D2C0, roughness: 0.52, metalness: 0.04 }),
+  ];
+  finishMats.forEach((mat, i) => {
+    const slab = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.04, 0.72), mat);
+    slab.position.set(-4.95 + i * 0.56, 0.985, -3.16);
+    slab.rotation.y = 0.08;
+    slab.castShadow = true;
+    slab.receiveShadow = true;
+    scene.add(slab);
+  });
+
+  const counterLight = new THREE.PointLight(0xFFF0C8, 0.32, 2.6, 1.7);
+  counterLight.position.set(-5.5, 1.25, -3.5);
+  scene.add(counterLight);
   // pendant light
   const pendantMat = new THREE.MeshStandardMaterial({ color: 0xC5A572, emissive: 0xfddc8a, emissiveIntensity: 0.7, metalness: 0.6, roughness: 0.3 });
   for (let i = -1; i <= 1; i++) {
@@ -748,6 +971,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
     const t = performance.now();
     const dt = Math.min(0.05, (t - prev) / 1000);
     prev = t;
+    drawAquarium(t);
 
     if (controls.isLocked) {
       direction.set(0, 0, 0);
@@ -761,7 +985,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
       const fwd = new THREE.Vector3();
       camera.getWorldDirection(fwd);
       fwd.y = 0; fwd.normalize();
-      const right = new THREE.Vector3(fwd.z, 0, -fwd.x);
+      const right = new THREE.Vector3(-fwd.z, 0, fwd.x);
       const move = new THREE.Vector3()
         .addScaledVector(fwd, -direction.z)
         .addScaledVector(right, direction.x)
