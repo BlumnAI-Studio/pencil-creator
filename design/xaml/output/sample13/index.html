@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BUNYANG 25 — TOP 8 PLAYGROUND</title>
+<meta name="description" content="분양 25 TOP 8 — 럭셔리 분양 홈페이지 룩앤필 & 애니메이션 8종 PlayGround">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Nanum+Myeongjo:wght@400;700;800&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─── NOISE VEIL (Card 7 — global toggle) ─── -->
+<svg class="veil-defs" aria-hidden="true">
+  <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0"/></filter>
+</svg>
+<div class="veil" aria-hidden="true"></div>
+
+<!-- ─── TOP NAV ─── -->
+<header class="topbar">
+  <a class="brand" href="#hero">
+    <span class="brand-mark">B</span>
+    <span class="brand-text">
+      <span class="en">BUNYANG · 25</span>
+      <span class="sub">11 LUXURY ANIMATIONS · 8 SITE CATALOG</span>
+    </span>
+  </a>
+  <nav class="nav">
+    <a href="#a01">01 Split</a>
+    <a href="#a02">02 Mask</a>
+    <a href="#a03">03 Hanja</a>
+    <a href="#a04">04 Seq</a>
+    <a href="#a05">05 Pin</a>
+    <a href="#a06">06 Parallax</a>
+    <a href="#a07">07 Noise</a>
+    <a href="#a08">08 Underline</a>
+    <a href="#a09">09 Status</a>
+    <a href="#a10">10 Counter</a>
+    <a href="#a11">11 Soso</a>
+    <a href="#insight" class="nav-insight">★ Insight</a>
+    <a href="#finale" class="nav-finale">★ Gallery</a>
+  </nav>
+  <button class="veil-toggle" id="veilToggle" aria-pressed="false">
+    <span class="vt-dot"></span> Noise Veil
+  </button>
+</header>
+
+<main class="stage">
+
+<!-- ░░ HERO ░░ -->
+<section id="hero" class="hero">
+  <div class="hero-bg">
+    <svg class="hero-mock" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="skyG" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#1E3A5F"/>
+          <stop offset="0.55" stop-color="#2B4870"/>
+          <stop offset="1" stop-color="#0E1E36"/>
+        </linearGradient>
+        <linearGradient id="archG" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#FAF8F4" stop-opacity="0.92"/>
+          <stop offset="1" stop-color="#FAF8F4" stop-opacity="0.7"/>
+        </linearGradient>
+      </defs>
+      <rect width="1600" height="900" fill="url(#skyG)"/>
+      <!-- distant skyline -->
+      <g opacity="0.45">
+        <rect x="60"  y="540" width="120" height="320" fill="#0E1E36"/>
+        <rect x="200" y="500" width="100" height="360" fill="#0A1A2E"/>
+        <rect x="320" y="560" width="80"  height="300" fill="#0E1E36"/>
+        <rect x="420" y="520" width="140" height="340" fill="#091828"/>
+        <rect x="580" y="555" width="110" height="305" fill="#0E1E36"/>
+        <rect x="710" y="510" width="90"  height="350" fill="#0A1A2E"/>
+        <rect x="820" y="540" width="120" height="320" fill="#0E1E36"/>
+        <rect x="960" y="525" width="160" height="335" fill="#091828"/>
+        <rect x="1140" y="555" width="130" height="305" fill="#0E1E36"/>
+        <rect x="1290" y="510" width="180" height="350" fill="#0A1A2E"/>
+        <rect x="1490" y="545" width="80"  height="315" fill="#0E1E36"/>
+      </g>
+      <!-- foreground tower (curtainwall) -->
+      <g>
+        <rect x="640" y="150" width="320" height="710" fill="url(#archG)" opacity="0.92"/>
+        <g stroke="#1E3A5F" stroke-width="0.6" opacity="0.55">
+          <line x1="640" y1="150" x2="640" y2="860"/>
+          <line x1="720" y1="150" x2="720" y2="860"/>
+          <line x1="800" y1="150" x2="800" y2="860"/>
+          <line x1="880" y1="150" x2="880" y2="860"/>
+          <line x1="960" y1="150" x2="960" y2="860"/>
+        </g>
+        <g fill="#1E3A5F" opacity="0.18">
+          <!-- row stripes -->
+          <rect x="640" y="200" width="320" height="14"/>
+          <rect x="640" y="260" width="320" height="14"/>
+          <rect x="640" y="320" width="320" height="14"/>
+          <rect x="640" y="380" width="320" height="14"/>
+          <rect x="640" y="440" width="320" height="14"/>
+          <rect x="640" y="500" width="320" height="14"/>
+          <rect x="640" y="560" width="320" height="14"/>
+          <rect x="640" y="620" width="320" height="14"/>
+          <rect x="640" y="680" width="320" height="14"/>
+          <rect x="640" y="740" width="320" height="14"/>
+          <rect x="640" y="800" width="320" height="14"/>
+        </g>
+        <!-- crown -->
+        <polygon points="640,150 800,80 960,150" fill="#FAF8F4" opacity="0.95"/>
+      </g>
+      <!-- moon -->
+      <circle cx="220" cy="180" r="56" fill="#FAF8F4" opacity="0.85"/>
+      <circle cx="232" cy="172" r="56" fill="#1E3A5F"/>
+    </svg>
+    <div class="hero-veil"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="bar"></span><span>POETIC CLASS · 2025 LUXURY</span></div>
+    <h1 class="hero-title">
+      <span class="line"><span>분양</span> <em>25</em></span>
+      <span class="line ko-myeongjo">頂 點 · 固 有 · 超 越</span>
+    </h1>
+    <p class="hero-sub">한국 럭셔리 분양 사이트 6곳을 분석한 8가지 핵심 룩앤필 & 애니메이션 — 옵션화된 PlayGround</p>
+    <div class="hero-meta">
+      <span>theblanz</span><span class="sep">·</span>
+      <span>prugio summit</span><span class="sep">·</span>
+      <span>ssyapt</span><span class="sep">·</span>
+      <span>anadd</span><span class="sep">·</span>
+      <span>saem.space</span><span class="sep">·</span>
+      <span>르엘 리버파크</span>
+    </div>
+    <a class="scroll-cue" href="#a01"><span>SCROLL</span><span class="line"></span></a>
+  </div>
+</section>
+
+<!-- ░░ 01 — HERO SPLIT REVEAL ░░ -->
+<section id="a01" class="card" data-anim="split">
+  <header class="card-h">
+    <span class="num">01</span>
+    <div>
+      <span class="kicker">HERO SPLIT REVEAL</span>
+      <h2>글자별 Stagger Fade-Up</h2>
+    </div>
+    <span class="src">theblanz.co.kr · 르엘 리버파크</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area" data-stage="01">
+      <h3 class="split-text" data-text="A HOUSE IS NOT A HOME"></h3>
+      <p class="split-sub">시간을 초월해 기억될 단 13세대만의 시그니처</p>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="01">▶ Replay</button>
+      <label>Stagger <output id="o01s">60</output>ms
+        <input type="range" id="i01s" min="20" max="200" value="60">
+      </label>
+      <label>Duration <output id="o01d">800</output>ms
+        <input type="range" id="i01d" min="300" max="1500" value="800">
+      </label>
+      <label>Easing
+        <select id="i01e">
+          <option value="cubic-bezier(0.22, 1, 0.36, 1)">expo-out</option>
+          <option value="cubic-bezier(0.7, 0, 0.3, 1)">smooth</option>
+          <option value="ease-out">ease-out</option>
+          <option value="cubic-bezier(0.34, 1.56, 0.64, 1)">back-out</option>
+        </select>
+      </label>
+      <pre class="snip">letter.animate(
+  [{translateY:24,opacity:0},
+   {translateY:0,opacity:1}],
+  { duration, easing, delay: i*stagger, fill:'forwards' }
+)</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 02 — WORD MASK REVEAL ░░ -->
+<section id="a02" class="card" data-anim="mask">
+  <header class="card-h">
+    <span class="num">02</span>
+    <div>
+      <span class="kicker">WORD MASK REVEAL</span>
+      <h2>줄 단위 Clip-Path 상승</h2>
+    </div>
+    <span class="src">saem.space · theblanz</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area" data-stage="02">
+      <h3 class="mask-text">
+        <span class="line-mask"><span>Do nothing.</span></span>
+        <span class="line-mask"><span><i>Sit and drift away.</i></span></span>
+        <span class="line-mask"><span>Find your own quiet.</span></span>
+      </h3>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="02">▶ Replay</button>
+      <label>Line stagger <output id="o02s">120</output>ms
+        <input type="range" id="i02s" min="40" max="300" value="120">
+      </label>
+      <label>Duration <output id="o02d">1000</output>ms
+        <input type="range" id="i02d" min="400" max="2000" value="1000">
+      </label>
+      <label>Easing
+        <select id="i02e">
+          <option value="cubic-bezier(0.7, 0, 0.3, 1)">smooth</option>
+          <option value="cubic-bezier(0.22, 1, 0.36, 1)">expo-out</option>
+          <option value="ease-out">ease-out</option>
+        </select>
+      </label>
+      <pre class="snip">.line-mask span {
+  display:block; transform:translateY(110%);
+}
+.line-mask span.in {
+  transform:translateY(0);
+  transition: transform var(--d) var(--e);
+}</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 03 — HANGUL · HANJA STAGGER ░░ -->
+<section id="a03" class="card" data-anim="hanja">
+  <header class="card-h">
+    <span class="num">03</span>
+    <div>
+      <span class="kicker">HANGUL · HANJA STAGGER</span>
+      <h2>한자 타이틀 + 한글 부제 순차 등장</h2>
+    </div>
+    <span class="src">prugio.com/summit/limited</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area dark" data-stage="03">
+      <div class="hanja-grid">
+        <div class="hj-item">
+          <span class="hanja">頂點</span>
+          <span class="hangeul">정점</span>
+          <span class="meta">눈부신 위상</span>
+        </div>
+        <div class="hj-item">
+          <span class="hanja">固有</span>
+          <span class="hangeul">고유</span>
+          <span class="meta">시대의 기억</span>
+        </div>
+        <div class="hj-item">
+          <span class="hanja">超越</span>
+          <span class="hangeul">초월</span>
+          <span class="meta">거장의 만남</span>
+        </div>
+      </div>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="03">▶ Replay</button>
+      <label>Item stagger <output id="o03s">300</output>ms
+        <input type="range" id="i03s" min="100" max="600" value="300">
+      </label>
+      <label>Duration <output id="o03d">900</output>ms
+        <input type="range" id="i03d" min="400" max="1500" value="900">
+      </label>
+      <label>Y offset <output id="o03y">12</output>px
+        <input type="range" id="i03y" min="0" max="40" value="12">
+      </label>
+      <pre class="snip">items.forEach((el,i) => el.animate(
+  [{translateY: yOff, opacity:0},
+   {translateY:0, opacity:1}],
+  { duration, easing:'cubic-bezier(.45,0,.15,1)',
+    delay:i*stagger, fill:'forwards' }
+))</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 04 — SEQUENCE IMAGE CROSSFADE ░░ -->
+<section id="a04" class="card" data-anim="seq">
+  <header class="card-h">
+    <span class="num">04</span>
+    <div>
+      <span class="kicker">SEQUENCE CROSSFADE</span>
+      <h2>이미지 시퀀스 페이드 체인 (Ken Burns)</h2>
+    </div>
+    <span class="src">theblanz intro-figure 1~4 · prugio summit</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area no-pad" data-stage="04">
+      <div class="seq-stack">
+        <figure class="seq-frame f1" aria-label="frame 1">
+          <svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+            <rect width="800" height="450" fill="#1E3A5F"/>
+            <rect x="240" y="80" width="180" height="370" fill="#FAF8F4" opacity="0.92"/>
+            <rect x="450" y="60" width="220" height="390" fill="#FAF8F4" opacity="0.85"/>
+            <text x="40" y="60" font-family="Playfair Display" font-size="22" fill="#FAF8F4" letter-spacing="3">FRAME 01 · TOWER</text>
+          </svg>
+        </figure>
+        <figure class="seq-frame f2" aria-label="frame 2">
+          <svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+            <rect width="800" height="450" fill="#98674C"/>
+            <rect x="100" y="240" width="600" height="3" fill="#FAF8F4" opacity="0.8"/>
+            <circle cx="400" cy="180" r="100" fill="#FAF8F4" opacity="0.92"/>
+            <text x="40" y="60" font-family="Playfair Display" font-size="22" fill="#FAF8F4" letter-spacing="3">FRAME 02 · LOBBY</text>
+          </svg>
+        </figure>
+        <figure class="seq-frame f3" aria-label="frame 3">
+          <svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+            <rect width="800" height="450" fill="#B89968"/>
+            <g fill="#FFFFFF" opacity="0.7">
+              <rect x="80" y="120" width="160" height="220"/>
+              <rect x="280" y="80" width="160" height="260"/>
+              <rect x="480" y="140" width="160" height="200"/>
+            </g>
+            <text x="40" y="60" font-family="Playfair Display" font-size="22" fill="#1A1A1A" letter-spacing="3">FRAME 03 · INTERIOR</text>
+          </svg>
+        </figure>
+        <figure class="seq-frame f4" aria-label="frame 4">
+          <svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+            <rect width="800" height="450" fill="#2E2127"/>
+            <g stroke="#C5A572" stroke-width="0.8" fill="none" opacity="0.85">
+              <path d="M0,300 L800,250"/>
+              <path d="M0,330 L800,280"/>
+              <path d="M0,360 L800,310"/>
+            </g>
+            <circle cx="600" cy="170" r="80" fill="#C5A572" opacity="0.95"/>
+            <text x="40" y="60" font-family="Playfair Display" font-size="22" fill="#FAF8F4" letter-spacing="3">FRAME 04 · NIGHT</text>
+          </svg>
+        </figure>
+      </div>
+      <div class="seq-tags">
+        <span class="seq-tag" data-i="0">01</span>
+        <span class="seq-tag" data-i="1">02</span>
+        <span class="seq-tag" data-i="2">03</span>
+        <span class="seq-tag" data-i="3">04</span>
+      </div>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="04">▶ Replay</button>
+      <label>Hold <output id="o04h">2.0</output>s
+        <input type="range" id="i04h" min="0.5" max="5" value="2" step="0.1">
+      </label>
+      <label>Crossfade <output id="o04f">0.4</output>s
+        <input type="range" id="i04f" min="0.1" max="2" value="0.4" step="0.1">
+      </label>
+      <label>Ken Burns scale <output id="o04k">1.05</output>
+        <input type="range" id="i04k" min="1" max="1.2" value="1.05" step="0.01">
+      </label>
+      <pre class="snip">async function chain(){
+  for(let i=0;i<frames.length;i++){
+    show(i);
+    await wait(hold + fade);
+  }
+}</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 05 — EDITORIAL SCROLL PIN ░░ -->
+<section id="a05" class="card" data-anim="pin">
+  <header class="card-h">
+    <span class="num">05</span>
+    <div>
+      <span class="kicker">EDITORIAL SCROLL PIN</span>
+      <h2>큰 헤딩 Sticky + Push 전환</h2>
+    </div>
+    <span class="src">saem.space · 르엘 리버파크 센텀</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area no-pad" data-stage="05">
+      <div class="pin-viewport">
+        <div class="pin-headline">
+          <span class="pin-eyebrow">SCROLL THIS BOX ↓</span>
+          <span class="pin-l1">A NEW LEVEL</span>
+          <span class="pin-l2">OF LIVING</span>
+        </div>
+        <div class="pin-pages">
+          <div class="pin-page p1"><span class="t">CHAPTER 01 · ARCHITECTURE</span><span class="d">우리는 단지를 짓지 않는다, 시간을 짓는다.</span></div>
+          <div class="pin-page p2"><span class="t">CHAPTER 02 · THE NET</span><span class="d">물·바람·땅의 관계가 입면을 결정한다.</span></div>
+          <div class="pin-page p3"><span class="t">CHAPTER 03 · THE CROWN</span><span class="d">하늘과 만나는 끝, 도시의 정점이 된다.</span></div>
+          <div class="pin-page p4"><span class="t">CHAPTER 04 · YOU</span><span class="d">단 13세대만이 이 풍경의 주인이 된다.</span></div>
+        </div>
+      </div>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="05">▶ Auto Scroll</button>
+      <label>Speed <output id="o05s">1.0</output>×
+        <input type="range" id="i05s" min="0.3" max="3" value="1" step="0.1">
+      </label>
+      <label>Scrub style
+        <select id="i05m">
+          <option value="snap">snap</option>
+          <option value="smooth">smooth</option>
+        </select>
+      </label>
+      <pre class="snip">/* sticky technique */
+.pin-headline { position: sticky; top: 0; height: 100vh; }
+io.observe(viewport,(p)=>{
+  scale = lerp(1, .6, p);
+  opacity = 1 - p;
+})</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 06 — PARALLAX LAYER FLOAT ░░ -->
+<section id="a06" class="card" data-anim="parallax">
+  <header class="card-h">
+    <span class="num">06</span>
+    <div>
+      <span class="kicker">PARALLAX LAYER FLOAT</span>
+      <h2>배경 + 라인 + 오브젝트 분리 부유</h2>
+    </div>
+    <span class="src">르엘 리버파크 (vis-base / vis-line / ball)</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area no-pad" data-stage="06">
+      <div class="par-stage">
+        <div class="par-base"></div>
+        <svg class="par-line l1" viewBox="0 0 800 50" preserveAspectRatio="none"><path d="M0,30 L800,12" stroke="#C5A572" stroke-width="1" fill="none"/></svg>
+        <svg class="par-line l2" viewBox="0 0 800 50" preserveAspectRatio="none"><path d="M0,30 L800,46" stroke="#FAF8F4" stroke-width="0.8" stroke-opacity="0.4" fill="none"/></svg>
+        <div class="par-ball"></div>
+        <div class="par-shadow"></div>
+        <span class="par-eyebrow">A NEW LEVEL OF LIVING · 르엘 리버파크</span>
+      </div>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="06">▶ Float</button>
+      <label>Float distance <output id="o06d">8</output>px
+        <input type="range" id="i06d" min="2" max="40" value="8">
+      </label>
+      <label>Period <output id="o06p">3.5</output>s
+        <input type="range" id="i06p" min="1" max="8" value="3.5" step="0.1">
+      </label>
+      <label>Mouse parallax <output id="o06m">12</output>px
+        <input type="range" id="i06m" min="0" max="40" value="12">
+      </label>
+      <pre class="snip">layer.style.transform =
+  `translate(${dx*ratio}px, ${dy*ratio + sin(t)*amp}px)`</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 07 — NOISE GRAIN VEIL ░░ -->
+<section id="a07" class="card" data-anim="noise">
+  <header class="card-h">
+    <span class="num">07</span>
+    <div>
+      <span class="kicker">NOISE GRAIN VEIL</span>
+      <h2>필름 노이즈 텍스처 오버레이</h2>
+    </div>
+    <span class="src">saem.space (s2_noise1 · s3_noise2)</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area" data-stage="07">
+      <div class="noise-stage">
+        <h3>Sit and drift away.</h3>
+        <p>한 사람이 한 잔을 마시는 동안, 빛은 종이를 어루만진다.</p>
+        <span class="ng-badge">NOISE × <em id="ngOut">8</em>%</span>
+      </div>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="07">▶ Toggle</button>
+      <label>Opacity <output id="o07o">8</output>%
+        <input type="range" id="i07o" min="0" max="30" value="8">
+      </label>
+      <label>BaseFreq <output id="o07f">0.9</output>
+        <input type="range" id="i07f" min="0.3" max="2" value="0.9" step="0.05">
+      </label>
+      <label>Blend
+        <select id="i07b">
+          <option value="overlay">overlay</option>
+          <option value="multiply">multiply</option>
+          <option value="screen">screen</option>
+          <option value="normal">normal</option>
+        </select>
+      </label>
+      <pre class="snip">&lt;feTurbulence baseFrequency="0.9"
+  numOctaves="2" stitchTiles="stitch"/&gt;
+.veil { opacity:.08; mix-blend-mode:overlay; }</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 08 — GOLD ACCENT UNDERLINE ░░ -->
+<section id="a08" class="card" data-anim="under">
+  <header class="card-h">
+    <span class="num">08</span>
+    <div>
+      <span class="kicker">GOLD ACCENT UNDERLINE</span>
+      <h2>호버 시 좌→우 라인 드로잉</h2>
+    </div>
+    <span class="src">anadd.co.kr · 르엘 리버파크 (CTA)</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area" data-stage="08">
+      <div class="under-grid">
+        <a class="under-link" href="#" data-text="VIEW DETAILS">VIEW DETAILS</a>
+        <a class="under-link big" href="#" data-text="단지 안내">단지 안내</a>
+        <a class="under-link" href="#" data-text="RESERVE A VISIT">RESERVE A VISIT</a>
+        <a class="under-link big" href="#" data-text="모델하우스">모델하우스</a>
+      </div>
+      <p class="under-hint">↑ Hover the links · Auto-cycles every <em id="auEvery">3</em>s</p>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="08">▶ Auto Cycle</button>
+      <label>Duration <output id="o08d">600</output>ms
+        <input type="range" id="i08d" min="200" max="1500" value="600">
+      </label>
+      <label>Color
+        <select id="i08c">
+          <option value="#B89968">Gold Warm</option>
+          <option value="#C5A572">Gold Light</option>
+          <option value="#98674C">Bronze</option>
+          <option value="#1E3A5F">Summit Blue</option>
+        </select>
+      </label>
+      <label>Thickness <output id="o08t">2</output>px
+        <input type="range" id="i08t" min="1" max="6" value="2">
+      </label>
+      <pre class="snip">.under-link::after {
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--d) cubic-bezier(.7,0,.3,1);
+}
+.under-link:hover::after { transform: scaleX(1); }</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 09 — STATUS BADGE PULSE (anadd 게이트) ░░ -->
+<section id="a09" class="card" data-anim="status">
+  <header class="card-h">
+    <span class="num">09</span>
+    <div>
+      <span class="kicker">STATUS BADGE PULSE</span>
+      <h2>분양 상태 뱃지 — 선착순 / 동호지정 / 계약중</h2>
+    </div>
+    <span class="src">anadd.co.kr (게이트 카드 상태 표시)</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area" data-stage="09">
+      <div class="status-grid">
+        <article class="status-card" data-status="active">
+          <div class="sc-img sc-img-1"></div>
+          <span class="sc-badge"><span class="dot"></span> 계약중</span>
+          <h4 class="sc-name">아파트 84A</h4>
+          <span class="sc-meta">전용 84.97㎡ · 134세대</span>
+        </article>
+        <article class="status-card" data-status="ho">
+          <div class="sc-img sc-img-2"></div>
+          <span class="sc-badge ho"><span class="dot"></span> 동호지정</span>
+          <h4 class="sc-name">아파트 112B</h4>
+          <span class="sc-meta">전용 112.45㎡ · 56세대</span>
+        </article>
+        <article class="status-card" data-status="first">
+          <div class="sc-img sc-img-3"></div>
+          <span class="sc-badge first"><span class="dot"></span> 선착순</span>
+          <h4 class="sc-name">오피스텔 32O</h4>
+          <span class="sc-meta">전용 32.18㎡ · 142세대</span>
+        </article>
+      </div>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="09">▶ Re-stagger</button>
+      <label>Pulse period <output id="o09p">1.5</output>s
+        <input type="range" id="i09p" min="0.5" max="4" value="1.5" step="0.1">
+      </label>
+      <label>Pulse scale <output id="o09s">1.6</output>×
+        <input type="range" id="i09s" min="1.1" max="2.5" value="1.6" step="0.1">
+      </label>
+      <label>Card stagger <output id="o09c">120</output>ms
+        <input type="range" id="i09c" min="40" max="400" value="120">
+      </label>
+      <pre class="snip">@keyframes pulse {
+  0%   { transform: scale(1);   opacity: 1; }
+  100% { transform: scale(var(--ps));
+         opacity: 0; }
+}
+.dot { animation: pulse var(--pp) ease-out infinite; }</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 10 — COUNTER UP (스펙 카운터) ░░ -->
+<section id="a10" class="card" data-anim="counter">
+  <header class="card-h">
+    <span class="num">10</span>
+    <div>
+      <span class="kicker">COUNTER UP ANIMATION</span>
+      <h2>스펙 카운트업 (세대수 · 평형 · 주차)</h2>
+    </div>
+    <span class="src">ssyapt 단지 페이지 · anadd/apt 스펙 섹션</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area" data-stage="10">
+      <div class="counter-grid">
+        <div class="cu-item">
+          <span class="cu-label">TOTAL HOUSEHOLD</span>
+          <span class="cu-num" data-target="332">0</span>
+          <span class="cu-unit">세대</span>
+        </div>
+        <div class="cu-item">
+          <span class="cu-label">TOWER COUNT</span>
+          <span class="cu-num" data-target="3">0</span>
+          <span class="cu-unit">개동</span>
+        </div>
+        <div class="cu-item">
+          <span class="cu-label">PARKING</span>
+          <span class="cu-num" data-target="498">0</span>
+          <span class="cu-unit">대</span>
+        </div>
+        <div class="cu-item">
+          <span class="cu-label">MAX FLOOR</span>
+          <span class="cu-num" data-target="49">0</span>
+          <span class="cu-unit">층</span>
+        </div>
+      </div>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="10">▶ Replay</button>
+      <label>Duration <output id="o10d">1.8</output>s
+        <input type="range" id="i10d" min="0.4" max="4" value="1.8" step="0.1">
+      </label>
+      <label>Easing
+        <select id="i10e">
+          <option value="easeOutCubic">easeOut cubic</option>
+          <option value="easeOutExpo">easeOut expo</option>
+          <option value="easeInOut">ease in-out</option>
+          <option value="linear">linear</option>
+        </select>
+      </label>
+      <pre class="snip">function tick(t){
+  const k = ease(min(t/dur, 1));
+  el.textContent = Math.round(target * k);
+  if (t < dur) raf(tick);
+}</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ 11 — SOSO BG INFINITE PAN (anadd/apt) ░░ -->
+<section id="a11" class="card" data-anim="soso">
+  <header class="card-h">
+    <span class="num">11</span>
+    <div>
+      <span class="kicker">SOSO BG INFINITE PAN</span>
+      <h2>9s 무한 배경 패닝 — 정원 분위기</h2>
+    </div>
+    <span class="src">anadd.co.kr/apt (motion.css @soso_bg keyframe)</span>
+  </header>
+  <div class="card-body">
+    <div class="stage-area no-pad" data-stage="11">
+      <div class="soso-stage">
+        <div class="soso-bg"></div>
+        <div class="soso-overlay">
+          <span class="soso-eyebrow">SOSO GARDEN · 작은 정원</span>
+          <h3>유일무이, 시대의 가치가 되다</h3>
+          <p>걸음마다 풍경이 따라온다 — 9초 주기의 무한한 호흡.</p>
+        </div>
+      </div>
+    </div>
+    <aside class="ctrl">
+      <button class="play" data-play="11">▶ Toggle</button>
+      <label>Period <output id="o11p">9</output>s
+        <input type="range" id="i11p" min="3" max="20" value="9" step="0.5">
+      </label>
+      <label>Direction
+        <select id="i11d">
+          <option value="normal">→ left to right</option>
+          <option value="reverse">← right to left</option>
+        </select>
+      </label>
+      <label>Easing
+        <select id="i11e">
+          <option value="linear">linear</option>
+          <option value="ease-in-out">ease in-out</option>
+          <option value="cubic-bezier(0.45, 0, 0.55, 1)">smooth sine</option>
+        </select>
+      </label>
+      <pre class="snip">@keyframes soso_bg {
+  0%   { background-position:   0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+.soso-bg { animation: soso_bg 9s linear infinite; }</pre>
+    </aside>
+  </div>
+</section>
+
+<!-- ░░ INSIGHT — 8개 사이트 비교 분석 ░░ -->
+<section id="insight" class="insight">
+  <header class="insight-h">
+    <span class="insight-eyebrow">★  COMPARATIVE INSIGHT  ★</span>
+    <h2 class="insight-title">8개 사이트 비교 분석 · 별점 10점 만점</h2>
+    <p class="insight-sub">5개 축(룩앤필 / 애니메이션 / 타이포 / 인터랙션 / 풍부성)으로 평가한 분양 럭셔리 사이트 인사이트</p>
+    <div class="insight-tabs">
+      <button class="i-tab active" data-sort="rank">★ 종합 순위</button>
+      <button class="i-tab" data-sort="lookFeel">룩앤필</button>
+      <button class="i-tab" data-sort="animation">애니메이션</button>
+      <button class="i-tab" data-sort="typography">타이포</button>
+      <button class="i-tab" data-sort="interaction">인터랙션</button>
+      <button class="i-tab" data-sort="richness">풍부성</button>
+    </div>
+  </header>
+
+  <!-- 종합 인사이트 박스 -->
+  <div class="insight-summary">
+    <article class="ins-box">
+      <span class="ib-tag">🏆 Best Overall</span>
+      <strong>anadd.co.kr/apt</strong>
+      <span class="ib-score">9.8 / 10</span>
+      <p>fullPage.js 풀스크린 + 9개 키프레임 직접 추출 + Trajan/명조 페어링 — 분양 럭셔리의 모범 사례</p>
+    </article>
+    <article class="ins-box">
+      <span class="ib-tag">💎 Best Look &amp; Feel</span>
+      <strong>르엘 리버파크</strong>
+      <span class="ib-score">10 / 10</span>
+      <p>Editorial Luxury + Architectural Diagram + Multi-layer Parallax — 정적 우아함과 동적 세련됨의 균형</p>
+    </article>
+    <article class="ins-box">
+      <span class="ib-tag">📝 Best Typography</span>
+      <strong>prugio summit · anadd/apt</strong>
+      <span class="ib-score">10 / 10</span>
+      <p>한자 + 한글 명조 + 영문 세리프 트리플 위계 / Trajan 100 weight + Nanum Myeongjo 페어링</p>
+    </article>
+    <article class="ins-box">
+      <span class="ib-tag">🎬 Most Animations</span>
+      <strong>anadd.co.kr/apt</strong>
+      <span class="ib-score">29 effects</span>
+      <p>9개 CSS 키프레임 직접 추출 + fullPage 스냅 + Swiper 4.4.6 + ScrollTrigger 1.0.5 + Vimeo 통합</p>
+    </article>
+    <article class="ins-box">
+      <span class="ib-tag">🎯 Best Signature</span>
+      <strong>theblanz · 르엘</strong>
+      <span class="ib-score">9 / 10</span>
+      <p>_POETIC CLASS_ 시그니처 카피 / vis-base+line+ball+shadow 4-layer 패럴랙스 — 사이트 정체성 명확</p>
+    </article>
+    <article class="ins-box neutral">
+      <span class="ib-tag">⚠ 가장 평이</span>
+      <strong>ssyapt.com 메인</strong>
+      <span class="ib-score">6.0 / 10</span>
+      <p>마케팅 배너 슬라이더 중심 — 럭셔리 차별화 요소 부족, 평이한 슬라이드 패턴</p>
+    </article>
+  </div>
+
+  <!-- 8개 사이트 카드 -->
+  <div class="rank-grid" id="rankGrid">
+
+    <article class="rank-card" data-id="anadd-apt"
+      data-rank="1" data-overall="9.8"
+      data-lookfeel="10" data-animation="10" data-typography="10" data-interaction="9" data-richness="10"
+      data-effects="29">
+      <header class="rc-h">
+        <span class="rc-rank">#1</span>
+        <div class="rc-meta">
+          <span class="rc-url">anadd.co.kr/apt</span>
+          <h3>어나드 범어 · ANADD APT</h3>
+        </div>
+        <span class="rc-stars" data-score="9.8"></span>
+      </header>
+      <div class="rc-bars">
+        <div class="rc-bar"><span class="bk">룩앤필</span><span class="bf"><i style="--w:100%"></i></span><span class="bv">10</span></div>
+        <div class="rc-bar"><span class="bk">애니메이션</span><span class="bf"><i style="--w:100%"></i></span><span class="bv">10</span></div>
+        <div class="rc-bar"><span class="bk">타이포</span><span class="bf"><i style="--w:100%"></i></span><span class="bv">10</span></div>
+        <div class="rc-bar"><span class="bk">인터랙션</span><span class="bf"><i style="--w:90%"></i></span><span class="bv">9</span></div>
+        <div class="rc-bar"><span class="bk">풍부성</span><span class="bf"><i style="--w:100%"></i></span><span class="bv">10</span></div>
+      </div>
+      <div class="rc-pros-cons">
+        <div class="rc-pros">
+          <span class="pc-h">✅ 강점</span>
+          <ul><li>9개 CSS 키프레임 직접 추출 (motion.css)</li><li>fullPage.js 풀스크린 스냅 안정적</li><li>Trajan + Nanum Myeongjo + Lexend 4중 폰트</li><li>soso_bg 9s 무한 패닝의 헤리티지 호흡</li><li>Swiper 4.4.6 + ScrollTrigger 1.0.5 풀 통합</li></ul>
+        </div>
+        <div class="rc-cons">
+          <span class="pc-h">⚠ 약점</span>
+          <ul><li>fullPage 의존도 → 모바일 성능 트레이드오프</li><li>iOS Safari mousewheel 핸들링 호환성</li></ul>
+        </div>
+      </div>
+      <p class="rc-sig">SIGNATURE · fullPage + Trajan 페어링 + Ken Burns + soso_bg 9s 패닝 + 9 keyframes</p>
+    </article>
+
+    <article class="rank-card" data-id="le-el"
+      data-rank="2" data-overall="9.4"
+      data-lookfeel="10" data-animation="10" data-typography="9" data-interaction="9" data-richness="9"
+      data-effects="22">
+      <header class="rc-h">
+        <span class="rc-rank">#2</span>
+        <div class="rc-meta">
+          <span class="rc-url">르엘 리버파크 (한글도메인)</span>
+          <h3>LE-EL RIVER PARK CENTUM</h3>
+        </div>
+        <span class="rc-stars" data-score="9.4"></span>
+      </header>
+      <div class="rc-bars">
+        <div class="rc-bar"><span class="bk">룩앤필</span><span class="bf"><i style="--w:100%"></i></span><span class="bv">10</span></div>
+        <div class="rc-bar"><span class="bk">애니메이션</span><span class="bf"><i style="--w:100%"></i></span><span class="bv">10</span></div>
+        <div class="rc-bar"><span class="bk">타이포</span><span class="bf"><i style="--w:90%"></i></span><span class="bv">9</span></div>
+        <div class="rc-bar"><span class="bk">인터랙션</span><span class="bf"><i style="--w:90%"></i></span><span class="bv">9</span></div>
+        <div class="rc-bar"><span class="bk">풍부성</span><span class="bf"><i style="--w:90%"></i></span><span class="bv">9</span></div>
+      </div>
+      <div class="rc-pros-cons">
+        <div class="rc-pros">
+          <span class="pc-h">✅ 강점</span>
+          <ul><li>vis-base + line × 2 + ball + shadow 4-layer 패럴랙스</li><li>architecture-net/fig SVG path drawing 시퀀스</li><li>마우스 + sin 자체 부유 결합 — 정적+동적 균형</li><li>'A NEW LEVEL OF LIVING' 시그니처</li></ul>
+        </div>
+        <div class="rc-cons">
+          <span class="pc-h">⚠ 약점</span>
+          <ul><li>패럴랙스 5계층 → 저사양 기기 부담</li><li>모바일 터치에서 마우스 패럴랙스 손실</li></ul>
+        </div>
+      </div>
+      <p class="rc-sig">SIGNATURE · 4-layer 패럴랙스 + architecture SVG draw + ball float</p>
+    </article>
+
+    <article class="rank-card" data-id="saem"
+      data-rank="3" data-overall="8.4"
+      data-lookfeel="9" data-animation="8" data-typography="9" data-interaction="8" data-richness="8"
+      data-effects="22">
+      <header class="rc-h">
+        <span class="rc-rank">#3</span>
+        <div class="rc-meta">
+          <span class="rc-url">saem.space</span>
+          <h3>샘 · 만년필바 헤리티지</h3>
+        </div>
+        <span class="rc-stars" data-score="8.4"></span>
+      </header>
+      <div class="rc-bars">
+        <div class="rc-bar"><span class="bk">룩앤필</span><span class="bf"><i style="--w:90%"></i></span><span class="bv">9</span></div>
+        <div class="rc-bar"><span class="bk">애니메이션</span><span class="bf"><i style="--w:80%"></i></span><span class="bv">8</span></div>
+        <div class="rc-bar"><span class="bk">타이포</span><span class="bf"><i style="--w:90%"></i></span><span class="bv">9</span></div>
+        <div class="rc-bar"><span class="bk">인터랙션</span><span class="bf"><i style="--w:80%"></i></span><span class="bv">8</span></div>
+        <div class="rc-bar"><span class="bk">풍부성</span><span class="bf"><i style="--w:80%"></i></span><span class="bv">8</span></div>
+      </div>
+      <div class="rc-pros-cons">
+        <div class="rc-pros">
+          <span class="pc-h">✅ 강점</span>
+          <ul><li>비디오 BG + Photo Wall 8장 헤리티지 타임라인</li><li>섹션별 다른 노이즈 텍스처 (s2/s3 분리)</li><li>'Do nothing italic' 명상적 카피</li><li>Floor 기반 공간 네비 (공간/좌석/펜트리/만년필바)</li></ul>
+        </div>
+        <div class="rc-cons">
+          <span class="pc-h">⚠ 약점</span>
+          <ul><li>QR/예약 인터페이스가 일반 분양 사이트 패턴과 거리</li><li>비디오 BG 모바일 fallback 정책 모호</li></ul>
+        </div>
+      </div>
+      <p class="rc-sig">SIGNATURE · 비디오 BG + Do nothing italic + 노이즈 multi-section + Photo Wall 8장</p>
+    </article>
+
+    <article class="rank-card" data-id="prugio"
+      data-rank="4" data-overall="8.2"
+      data-lookfeel="9" data-animation="7" data-typography="10" data-interaction="7" data-richness="8"
+      data-effects="22">
+      <header class="rc-h">
+        <span class="rc-rank">#4</span>
+        <div class="rc-meta">
+          <span class="rc-url">prugio.com/summit/limited</span>
+          <h3>푸르지오 써밋 리미티드 남천</h3>
+        </div>
+        <span class="rc-stars" data-score="8.2"></span>
+      </header>
+      <div class="rc-bars">
+        <div class="rc-bar"><span class="bk">룩앤필</span><span class="bf"><i style="--w:90%"></i></span><span class="bv">9</span></div>
+        <div class="rc-bar"><span class="bk">애니메이션</span><span class="bf"><i style="--w:70%"></i></span><span class="bv">7</span></div>
+        <div class="rc-bar"><span class="bk">타이포</span><span class="bf"><i style="--w:100%"></i></span><span class="bv">10</span></div>
+        <div class="rc-bar"><span class="bk">인터랙션</span><span class="bf"><i style="--w:70%"></i></span><span class="bv">7</span></div>
+        <div class="rc-bar"><span class="bk">풍부성</span><span class="bf"><i style="--w:80%"></i></span><span class="bv">8</span></div>
+      </div>
+      <div class="rc-pros-cons">
+        <div class="rc-pros">
+          <span class="pc-h">✅ 강점</span>
+          <ul><li>頂點/固有/超越 한자 트리플 위계 — 헤리티지 정수</li><li>12-frame brand reveal popup 스토리텔링</li><li>건축가 4명 갤러리 (ht_per × ht_img)</li><li>4종 평면 페이지 (unit~unit4) + PDF 모달</li></ul>
+        </div>
+        <div class="rc-cons">
+          <span class="pc-h">⚠ 약점</span>
+          <ul><li>.asp 백엔드 + jQuery 의존 → 레거시 스택</li><li>실제 키프레임 라이브러리 임포트 없음 (커스텀 의존)</li></ul>
+        </div>
+      </div>
+      <p class="rc-sig">SIGNATURE · 한자 트리플 위계 + 12-frame brand reveal + 건축가 갤러리</p>
+    </article>
+
+    <article class="rank-card" data-id="theblanz"
+      data-rank="5" data-overall="8.0"
+      data-lookfeel="9" data-animation="8" data-typography="9" data-interaction="7" data-richness="7"
+      data-effects="22">
+      <header class="rc-h">
+        <span class="rc-rank">#5</span>
+        <div class="rc-meta">
+          <span class="rc-url">theblanz.co.kr</span>
+          <h3>더블란츠 한강 · POETIC CLASS</h3>
+        </div>
+        <span class="rc-stars" data-score="8.0"></span>
+      </header>
+      <div class="rc-bars">
+        <div class="rc-bar"><span class="bk">룩앤필</span><span class="bf"><i style="--w:90%"></i></span><span class="bv">9</span></div>
+        <div class="rc-bar"><span class="bk">애니메이션</span><span class="bf"><i style="--w:80%"></i></span><span class="bv">8</span></div>
+        <div class="rc-bar"><span class="bk">타이포</span><span class="bf"><i style="--w:90%"></i></span><span class="bv">9</span></div>
+        <div class="rc-bar"><span class="bk">인터랙션</span><span class="bf"><i style="--w:70%"></i></span><span class="bv">7</span></div>
+        <div class="rc-bar"><span class="bk">풍부성</span><span class="bf"><i style="--w:70%"></i></span><span class="bv">7</span></div>
+      </div>
+      <div class="rc-pros-cons">
+        <div class="rc-pros">
+          <span class="pc-h">✅ 강점</span>
+          <ul><li>_POETIC CLASS_ underscore 시그니처 — 가장 명확한 정체성</li><li>13세대만 마이크로 카피 — 희소성 강조</li><li>4-frame fade chain (intro-figure 1~4)</li><li>Cormorant + Nanum Myeongjo 페어링</li></ul>
+        </div>
+        <div class="rc-cons">
+          <span class="pc-h">⚠ 약점</span>
+          <ul><li>볼륨 자체가 작음 (13세대 컨셉 — 콘텐츠 제한)</li><li>인터랙션 깊이 vs 럭셔리 → 인터랙션 양보</li></ul>
+        </div>
+      </div>
+      <p class="rc-sig">SIGNATURE · _POETIC CLASS_ underscore + 4-frame fade chain + 13세대 카피</p>
+    </article>
+
+    <article class="rank-card" data-id="anadd-gate"
+      data-rank="6" data-overall="6.8"
+      data-lookfeel="8" data-animation="6" data-typography="8" data-interaction="7" data-richness="5"
+      data-effects="15">
+      <header class="rc-h">
+        <span class="rc-rank">#6</span>
+        <div class="rc-meta">
+          <span class="rc-url">anadd.co.kr (게이트)</span>
+          <h3>어나드 게이트 — 두 카드 진입</h3>
+        </div>
+        <span class="rc-stars" data-score="6.8"></span>
+      </header>
+      <div class="rc-bars">
+        <div class="rc-bar"><span class="bk">룩앤필</span><span class="bf"><i style="--w:80%"></i></span><span class="bv">8</span></div>
+        <div class="rc-bar"><span class="bk">애니메이션</span><span class="bf"><i style="--w:60%"></i></span><span class="bv">6</span></div>
+        <div class="rc-bar"><span class="bk">타이포</span><span class="bf"><i style="--w:80%"></i></span><span class="bv">8</span></div>
+        <div class="rc-bar"><span class="bk">인터랙션</span><span class="bf"><i style="--w:70%"></i></span><span class="bv">7</span></div>
+        <div class="rc-bar"><span class="bk">풍부성</span><span class="bf"><i style="--w:50%"></i></span><span class="bv">5</span></div>
+      </div>
+      <div class="rc-pros-cons">
+        <div class="rc-pros">
+          <span class="pc-h">✅ 강점</span>
+          <ul><li>두 게이트 카드 (아파트/오피스텔) 명확한 분기</li><li>상태 뱃지 (선착순/동호지정/계약중) — 즉각적 정보</li><li>유일무이/시대의 가치 슬로건 — Trajan 페어링</li></ul>
+        </div>
+        <div class="rc-cons">
+          <span class="pc-h">⚠ 약점</span>
+          <ul><li>게이트 페이지 특성상 콘텐츠 빈곤</li><li>alert('준비중') 미구현 메뉴 — 미완성 인상</li><li>이펙트 수 15개 — 평균 이하</li></ul>
+        </div>
+      </div>
+      <p class="rc-sig">SIGNATURE · 두 게이트 카드 + 상태 뱃지 + Trajan 슬로건</p>
+    </article>
+
+    <article class="rank-card" data-id="ssyapt-sub"
+      data-rank="7" data-overall="6.6"
+      data-lookfeel="7" data-animation="6" data-typography="6" data-interaction="7" data-richness="7"
+      data-effects="17">
+      <header class="rc-h">
+        <span class="rc-rank">#7</span>
+        <div class="rc-meta">
+          <span class="rc-url">ssyapt.com (sub)</span>
+          <h3>더 플래티넘 — 단지/평면 서브</h3>
+        </div>
+        <span class="rc-stars" data-score="6.6"></span>
+      </header>
+      <div class="rc-bars">
+        <div class="rc-bar"><span class="bk">룩앤필</span><span class="bf"><i style="--w:70%"></i></span><span class="bv">7</span></div>
+        <div class="rc-bar"><span class="bk">애니메이션</span><span class="bf"><i style="--w:60%"></i></span><span class="bv">6</span></div>
+        <div class="rc-bar"><span class="bk">타이포</span><span class="bf"><i style="--w:60%"></i></span><span class="bv">6</span></div>
+        <div class="rc-bar"><span class="bk">인터랙션</span><span class="bf"><i style="--w:70%"></i></span><span class="bv">7</span></div>
+        <div class="rc-bar"><span class="bk">풍부성</span><span class="bf"><i style="--w:70%"></i></span><span class="bv">7</span></div>
+      </div>
+      <div class="rc-pros-cons">
+        <div class="rc-pros">
+          <span class="pc-h">✅ 강점</span>
+          <ul><li>탭 기반 정보 구조 (단지/조감/평면/시설/위치)</li><li>평면도 SVG room hover → 라벨 인터랙션</li><li>모델하우스 갤러리 + 라이트박스</li><li>Naver/Kakao Map 통합</li></ul>
+        </div>
+        <div class="rc-cons">
+          <span class="pc-h">⚠ 약점</span>
+          <ul><li>표준 분양 sub 패턴 — 차별화 부족</li><li>타이포 위계 평이 (분양 럭셔리 기준)</li><li>커스텀 키프레임 거의 없음 (대부분 라이브러리 의존)</li></ul>
+        </div>
+      </div>
+      <p class="rc-sig">SIGNATURE · 단지 sub 표준 — 탭 + 조감도 + 평면 + 갤러리 + 지도</p>
+    </article>
+
+    <article class="rank-card" data-id="ssyapt-main"
+      data-rank="8" data-overall="6.0"
+      data-lookfeel="6" data-animation="6" data-typography="6" data-interaction="6" data-richness="6"
+      data-effects="15">
+      <header class="rc-h">
+        <span class="rc-rank">#8</span>
+        <div class="rc-meta">
+          <span class="rc-url">ssyapt.com (메인)</span>
+          <h3>더 플래티넘 — 마케팅 메인</h3>
+        </div>
+        <span class="rc-stars" data-score="6.0"></span>
+      </header>
+      <div class="rc-bars">
+        <div class="rc-bar"><span class="bk">룩앤필</span><span class="bf"><i style="--w:60%"></i></span><span class="bv">6</span></div>
+        <div class="rc-bar"><span class="bk">애니메이션</span><span class="bf"><i style="--w:60%"></i></span><span class="bv">6</span></div>
+        <div class="rc-bar"><span class="bk">타이포</span><span class="bf"><i style="--w:60%"></i></span><span class="bv">6</span></div>
+        <div class="rc-bar"><span class="bk">인터랙션</span><span class="bf"><i style="--w:60%"></i></span><span class="bv">6</span></div>
+        <div class="rc-bar"><span class="bk">풍부성</span><span class="bf"><i style="--w:60%"></i></span><span class="bv">6</span></div>
+      </div>
+      <div class="rc-pros-cons">
+        <div class="rc-pros">
+          <span class="pc-h">✅ 강점</span>
+          <ul><li>브랜드 영상 진입점 (main_brand_play_btn.svg)</li><li>단지 카드 + 마케팅 배너 — 정보 전달 효율</li><li>전국 단지 통합 진입 게이트 역할</li></ul>
+        </div>
+        <div class="rc-cons">
+          <span class="pc-h">⚠ 약점</span>
+          <ul><li>마케팅 슬라이더 중심 — 럭셔리 차별화 미흡</li><li>한자/명조 위계 거의 부재</li><li>커스텀 키프레임 거의 없음 (Swiper 표준)</li><li>전체적으로 평이한 분양 메인</li></ul>
+        </div>
+      </div>
+      <p class="rc-sig">SIGNATURE · 마케팅 배너 + 단지 카드 그리드 + 브랜드 영상 모달</p>
+    </article>
+
+  </div>
+
+  <!-- 비교 차트 -->
+  <div class="compare">
+    <h3 class="compare-h">5축 비교 차트 (전체 사이트)</h3>
+    <div class="compare-axes">
+      <div class="ca-row" data-axis="lookFeel">
+        <span class="ca-k">룩앤필</span>
+        <div class="ca-bars">
+          <div class="ca-b" data-id="anadd-apt"  style="--w:100%"><span>10 anadd/apt</span></div>
+          <div class="ca-b" data-id="le-el"      style="--w:100%"><span>10 르엘</span></div>
+          <div class="ca-b" data-id="saem"       style="--w:90%"><span>9 saem</span></div>
+          <div class="ca-b" data-id="prugio"     style="--w:90%"><span>9 prugio</span></div>
+          <div class="ca-b" data-id="theblanz"   style="--w:90%"><span>9 theblanz</span></div>
+          <div class="ca-b" data-id="anadd-gate" style="--w:80%"><span>8 anadd 게이트</span></div>
+          <div class="ca-b" data-id="ssyapt-sub" style="--w:70%"><span>7 ssyapt sub</span></div>
+          <div class="ca-b" data-id="ssyapt-main" style="--w:60%"><span>6 ssyapt 메인</span></div>
+        </div>
+      </div>
+      <div class="ca-row" data-axis="animation">
+        <span class="ca-k">애니메이션</span>
+        <div class="ca-bars">
+          <div class="ca-b" data-id="anadd-apt"  style="--w:100%"><span>10 anadd/apt</span></div>
+          <div class="ca-b" data-id="le-el"      style="--w:100%"><span>10 르엘</span></div>
+          <div class="ca-b" data-id="theblanz"   style="--w:80%"><span>8 theblanz</span></div>
+          <div class="ca-b" data-id="saem"       style="--w:80%"><span>8 saem</span></div>
+          <div class="ca-b" data-id="prugio"     style="--w:70%"><span>7 prugio</span></div>
+          <div class="ca-b" data-id="anadd-gate" style="--w:60%"><span>6 anadd 게이트</span></div>
+          <div class="ca-b" data-id="ssyapt-sub" style="--w:60%"><span>6 ssyapt sub</span></div>
+          <div class="ca-b" data-id="ssyapt-main" style="--w:60%"><span>6 ssyapt 메인</span></div>
+        </div>
+      </div>
+      <div class="ca-row" data-axis="typography">
+        <span class="ca-k">타이포</span>
+        <div class="ca-bars">
+          <div class="ca-b" data-id="prugio"     style="--w:100%"><span>10 prugio</span></div>
+          <div class="ca-b" data-id="anadd-apt"  style="--w:100%"><span>10 anadd/apt</span></div>
+          <div class="ca-b" data-id="le-el"      style="--w:90%"><span>9 르엘</span></div>
+          <div class="ca-b" data-id="saem"       style="--w:90%"><span>9 saem</span></div>
+          <div class="ca-b" data-id="theblanz"   style="--w:90%"><span>9 theblanz</span></div>
+          <div class="ca-b" data-id="anadd-gate" style="--w:80%"><span>8 anadd 게이트</span></div>
+          <div class="ca-b" data-id="ssyapt-sub" style="--w:60%"><span>6 ssyapt sub</span></div>
+          <div class="ca-b" data-id="ssyapt-main" style="--w:60%"><span>6 ssyapt 메인</span></div>
+        </div>
+      </div>
+      <div class="ca-row" data-axis="richness">
+        <span class="ca-k">풍부성 (이펙트 수)</span>
+        <div class="ca-bars">
+          <div class="ca-b" data-id="anadd-apt"  style="--w:100%"><span>29 anadd/apt</span></div>
+          <div class="ca-b" data-id="theblanz"   style="--w:76%"><span>22 theblanz</span></div>
+          <div class="ca-b" data-id="prugio"     style="--w:76%"><span>22 prugio</span></div>
+          <div class="ca-b" data-id="saem"       style="--w:76%"><span>22 saem</span></div>
+          <div class="ca-b" data-id="le-el"      style="--w:76%"><span>22 르엘</span></div>
+          <div class="ca-b" data-id="ssyapt-sub" style="--w:59%"><span>17 ssyapt sub</span></div>
+          <div class="ca-b" data-id="ssyapt-main" style="--w:52%"><span>15 ssyapt 메인</span></div>
+          <div class="ca-b" data-id="anadd-gate" style="--w:52%"><span>15 anadd 게이트</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 종합 인사이트 결론 -->
+  <div class="insight-conclusion">
+    <h3>📌 종합 인사이트</h3>
+    <ul>
+      <li><strong>분양 럭셔리 사이트의 정점</strong> — anadd.co.kr/apt가 9.8점으로 가장 풍부. 9개 키프레임 직접 추출 가능한 수준의 정밀한 motion.css 설계.</li>
+      <li><strong>한자 헤리티지 위계가 차별화 핵심</strong> — prugio summit과 anadd/apt가 타이포 10점. 영문 세리프(Trajan/Cormorant) + 한글 명조 + 한자 디스플레이 트리플 페어링.</li>
+      <li><strong>4-layer 패럴랙스의 정수</strong> — 르엘 리버파크는 vis-base / vis-line × 2 / ball / ball-shadow 5계층 분리로 럭셔리 깊이감 구현.</li>
+      <li><strong>비디오 BG는 양날의 검</strong> — saem.space는 비디오로 분위기를 압도하지만 모바일 fallback이 모호. 정적 fallback 이미지 명시 필요.</li>
+      <li><strong>fullPage.js는 여전히 유효</strong> — 2026년에도 fullPage 패턴이 럭셔리 분양에 효과적. 다만 모바일 mousewheel/터치 호환성 별도 정책 필수.</li>
+      <li><strong>마케팅 메인은 럭셔리 차별화 약함</strong> — ssyapt 메인 같은 통합 마케팅 게이트는 단지별 디테일 사이트(/apt 같은)로 깊이 분기하는 구조가 표준.</li>
+      <li><strong>가장 약한 축은 모바일</strong> — 8개 사이트 공통적으로 모바일 fallback 정책이 데스크톱 대비 약함. Gyroscope / DeviceOrientation 활용은 르엘만 가능성 시사.</li>
+      <li><strong>커스텀 키프레임 vs 라이브러리</strong> — 커스텀 motion.css(anadd/apt)가 라이브러리 의존(ssyapt)보다 정체성 차별화에 유리.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ░░ FINALE — 50평대 럭셔리 아파트 · 분양 사이트 갤러리 ░░ -->
+<section id="finale" class="finale">
+  <header class="finale-h">
+    <span class="finale-eyebrow">★  FINALE  ★  THE GALLERY</span>
+    <h2 class="finale-title">럭셔리 50평대 모델하우스</h2>
+    <p class="finale-sub">8개 분양 사이트를 모델하우스의 액자에 걸어 만나다 — Three.js 기반 1인칭 가상 인테리어</p>
+    <div class="finale-meta">
+      <span><b>16 × 10 × 3 m</b> 165㎡ · 50평형</span>
+      <span class="dot">·</span>
+      <span><b>8 frames</b> 분양 사이트 갤러리</span>
+      <span class="dot">·</span>
+      <span><b>20 lights</b> ambient + sun shadow + 천장 spot + 액자 wash + 창문 glow</span>
+      <span class="dot">·</span>
+      <span><b>8 PBR textures</b> 대리석 · 월넛 · 패브릭 · 도시 윈도우</span>
+    </div>
+  </header>
+
+  <div class="finale-stage">
+    <canvas id="apt3d" aria-label="3D Luxury Apartment Gallery"></canvas>
+
+    <div class="apt-overlay" id="aptOverlay">
+      <div class="apt-overlay-inner">
+        <span class="aov-eyebrow">▶  CLICK TO ENTER</span>
+        <h3>가상 모델하우스 입장</h3>
+        <p>마우스로 시점 회전, <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 또는 <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> 로 이동, <kbd>ESC</kbd> 로 나가기. 액자에 가까이 가면 사이트 정보가 표시됩니다.</p>
+        <button class="apt-enter">ENTER GALLERY</button>
+      </div>
+    </div>
+
+    <div class="apt-hud" aria-hidden="true">
+      <div class="hud-tl">
+        <span class="hud-lbl">CURRENT FRAME</span>
+        <strong id="hudFrame">— · — · —</strong>
+      </div>
+      <div class="hud-tr">
+        <span class="hud-lbl">POSITION</span>
+        <strong id="hudPos">x 0.0 · z 0.0</strong>
+      </div>
+      <div class="hud-bl">
+        <span class="hud-lbl">FRAMES</span>
+        <strong>8 / 8</strong>
+        <span class="hud-tip">↑↓←→ 또는 WASD · 마우스 시점</span>
+      </div>
+      <div class="hud-br" id="frameInfo">
+        <span class="fi-rank"></span>
+        <strong class="fi-name"></strong>
+        <span class="fi-tag"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="finale-closing">
+    <span class="fc-line"></span>
+    <p class="fc-text">분양홈페이지를 분석하다 <em>…</em></p>
+    <span class="fc-tag">2026 · BUNYANG · 25 · TOP 8 · 8 SITE GALLERY · 11 PLAYGROUND</span>
+  </div>
+</section>
+
+<!-- Three.js (importmap) -->
+<script type="importmap">
+{
+  "imports": {
+    "three":              "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/":      "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="gallery3d.js"></script>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="foot">
+  <div class="f-row">
+    <span class="f-brand">BUNYANG · 25 — TOP 8</span>
+    <span class="f-sub">Pencil Template by Claude Code · 2026</span>
+  </div>
+  <div class="f-row tiny">
+    <span>Source: theblanz · prugio summit · ssyapt · anadd · saem.space · 르엘 리버파크</span>
+    <span>Built with Web Animations API · CSS @keyframes · feTurbulence</span>
+  </div>
+</footer>
+
+</main>
+
+<script src="animations.js"></script>
+</body>
+</html>
