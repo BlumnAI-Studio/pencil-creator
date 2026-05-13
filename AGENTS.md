@@ -1,10 +1,10 @@
 # AGENTS.md
 
-This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
+This file helps Codex work compatibly with the Claude Code-first workflow used in this repository. The main design workflows and slash-command skills usually run in Claude Code, but this repository is also used from Codex occasionally; when using Codex, treat the Claude skills under `.claude/skills/` as the primary compatibility reference.
 
 ## Project Overview
 
-Pencil Creator is an **animation-first design project** driven by Codex + Pencil MCP. The core workflow: research WPF animations → visualize in Pencil (.pen) → implement as HTML/CSS/JS. There is no traditional build system — all work is orchestrated through MCP servers, custom skills, and a gamified evaluation harness.
+Pencil Creator is an **animation-first design project** driven primarily by Claude Code + Pencil MCP, with Codex support for compatible execution. The core workflow: research WPF animations → visualize in Pencil (.pen) → implement as HTML/CSS/JS. There is no traditional build system — all work is orchestrated through MCP servers, Claude-compatible skills, helper scripts, and a gamified evaluation harness.
 
 ## MCP Servers
 
@@ -13,12 +13,31 @@ Pencil Creator is an **animation-first design project** driven by Codex + Pencil
 
 ## Skills (Slash Commands)
 
+The slash commands below are Claude Code skills first. Codex should use this `AGENTS.md` as a bridge: before answering capability questions or executing a design workflow, check `.claude/skills/` and use the matching `SKILL.md` as the source of truth. These local Claude skills may include scripts, providers, and workflow rules that are not obvious from the top-level README.
+
 | Command | Skill | Purpose |
 |---------|-------|---------|
 | `/harness-usage` | Case A/B/C/W workflow | Execute design workflows with 3-axis evaluation |
 | `/harness-creator` | Harness improvement | Upgrade evaluation framework, add axes, bump versions |
 | `/pencil-design` | Technical diagramming | Architecture diagrams, flowcharts, ERD in .pen files |
 | `/pencil-deploy` | GitHub Pages deployment | Prepare (index.html + git push) then publish (version tag) |
+
+### AI Image Generation
+
+AI-generated raster images are handled through `.claude/skills/pencil-design/SKILL.md` and its image generation CLI:
+
+- Script: `.claude/skills/pencil-design/scripts/image-gen.py`
+- Default output: `image/{provider}/{YYYY-MM-DD}-{topic}.png`
+- Gemini provider: `.claude/skills/pencil-design/scripts/providers/gemini_provider.py`
+  - `--provider gemini`
+  - Cloud generation and editing
+  - Uses `.secret/gemini.json` or `GEMINI_SECRET_PATH`
+- ComfyUI Z-Image-Turbo provider: `.claude/skills/pencil-design/scripts/providers/comfyui_provider.py`
+  - `--provider comfyui`, `z-image`, or `z-image-turbo`
+  - Local text-to-image generation only
+  - Requires ComfyUI server at `http://192.168.0.64:8188`
+
+When the user asks about AI image generation in this project, the expected answer is Gemini and ComfyUI/Z-Image-Turbo, not only generic image assets.
 
 ### Workflow Cases
 
@@ -34,6 +53,7 @@ All paths use **project-root-relative** format:
 - XAML samples: `design/xaml/sample/{NN}.xaml`
 - HTML output: `design/xaml/output/sample{NN}/index.html`
 - Screenshots: `image/pencil/sample{N}/`
+- AI generated images: `image/gemini/`, `image/comfyui/`, or sample-local `design/xaml/output/sample{NN}/img/`
 - Project designs: `projects/design/{name}.pen`
 - Harness config: `harness/harness.config.json`
 - Harness knowledge: `harness/knowledge/design-craft.md`
@@ -71,6 +91,7 @@ Each case is scored on 3 axes (total 100 points). XP formula: `base(score×10) �
 ## Key Rules
 
 - `.pen` files are **only** accessible via Pencil MCP tools — never read them with file tools
+- For AI image generation/editing, first consult `.claude/skills/pencil-design/SKILL.md` section "이미지 생성 / 편집 (Gemini · ComfyUI Z-Image-Turbo)"
 - Always call `get_editor_state()` before working with Pencil MCP to understand current context
 - WPF animation categories are CAT1–CAT13 in `design/wpf-animation.pen`
 - The WPF app (`design-wpf-app/`) targets .NET 10.0 and is opened in Visual Studio Blend
