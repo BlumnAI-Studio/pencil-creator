@@ -18,3 +18,4 @@
 | 2026-05-07 | v1.1.3 | sample12 CH-02 강화: photoreal lane BG + 검정BG 알파 사이버카 (PixiJS Sprite screen-blend) + 타이포 5종(decode scramble·3D flip-letter·line mask·bar grow·typewriter) + glitch RGB split |
 | 2026-05-07 | v1.1.4 | sample12 CH-04 픽셀 시티(PixiJS 순수 8-bit 픽셀 아트) + CH-05 Three.js 3D 인터랙티브 메가타워(47층 + 드래그 회전 + 호버 floor highlight) + CH-04a/b/c 신규(Genesis · Model House · Terminal) + 14 photoreal 자산 추가 |
 | 2026-05-08 | v1.1.5 | sample13 추가: BUNYANG 25 TOP 8 Playground (8개 분양 사이트 애니메이션 분석·Three.js 50평대 가상 모델하우스·액자 갤러리·sample12 재질/실사 패널 재활용·CanvasTexture 아쿠아리움 TV) |
+| 2026-06-06 | v1.1.6 | sample14 추가: Pixel Orchestra (첫 S→W ×1.3 실증·@tonejs/midi+Tone.js·19 chibi 동적 등장·5 PD 클래식 MIDI·3 무대 배경·play.png 단일 시트+animation-play-state 토글·SUSTAIN 3.0s grace·v2.7.0 Case S 자산 영입) |
