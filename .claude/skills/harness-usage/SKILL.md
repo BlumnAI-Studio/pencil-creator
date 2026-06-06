@@ -2,7 +2,7 @@
 name: harness-usage
 description: |
   Pencil Design Harness를 이용한 디자인 작업을 실행하는 스킬.
-  Case A(WPF 조사→템플릿 보강), Case B(템플릿 참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case W(Pencil→HTML) 워크플로우를 실행하고 평가한다.
+  Case A(WPF 조사→템플릿 보강), Case B(템플릿 참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML) 워크플로우를 실행하고 평가한다.
   다음 상황에서 반드시 이 스킬을 사용할 것:
   - "WPF 애니메이션 조사해서 펜슬에 그려줘" → Case A
   - "wpf-템플릿조사 후 템플릿보강해" → Case A
@@ -15,6 +15,10 @@ description: |
   - "designmd에서 OO 디자인 영입해줘" → Case D
   - "디자인엠디 디자인 시스템 복제" → Case D
   - "DESIGN.md 펜슬에 프레임 단위로 복제" → Case D
+  - "악단컨셉 스프라이트 만들어줘" → Case S
+  - "캐릭터별 스프라이트 시트 생성" → Case S
+  - "컨셉아트에서 캐릭터 분리해줘" → Case S
+  - "배경 투명 스프라이트 추출" → Case S
   - "펜슬 참고해서 HTML 페이지 만들어줘" → Case W
   - "디자인을 웹으로 구현해줘" → Case W
   - "디자인 평가해줘", "점수 매겨줘" → 평가 실행
@@ -23,7 +27,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, WebSearch, WebFetch, 
 
 # Harness Usage — Pencil Design 작업 실행
 
-`harness/` 3계층 구조를 기반으로 **Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case W(Pencil→HTML) 워크플로우**를 실행한다.
+`harness/` 3계층 구조를 기반으로 **Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML) 워크플로우**를 실행한다.
 
 ---
 
@@ -35,9 +39,9 @@ idle → prompted → researching → designing → design-evaluating → record
 
 | 상태 | 핵심 행동 |
 |------|----------|
-| prompted | Case A/B/C/D/W 판별, 기존 파일 상태 확인 |
-| researching | WPF 조사 (A) / wpf-animation.pen 파악 (B) / 웹 애니메이션 분석 (C) / designmd CLI 수집 (D) |
-| designing | 카드 추가 (A) / 프로젝트 디자인 (B) / JSON→펜슬 컴포넌트 (C) / design-md.pen 프레임 복제 (D) / HTML 구현 (W) |
+| prompted | Case A/B/C/D/S/W 판별, 기존 파일 상태 확인 |
+| researching | WPF 조사 (A) / wpf-animation.pen 파악 (B) / 웹 애니메이션 분석 (C) / designmd CLI 수집 (D) / 컨셉아트 비전 분석·팔레트 추출 (S) |
+| designing | 카드 추가 (A) / 프로젝트 디자인 (B) / JSON→펜슬 컴포넌트 (C) / design-md.pen 프레임 복제 (D) / Gemini edit + 후처리 + 시트 (S) / HTML 구현 (W) |
 | design-evaluating | 3축 채점 (harness/knowledge/design-craft.md 참조) |
 | recording | 로그 작성 + RPG(XP/레벨/업적) 처리 |
 
@@ -297,6 +301,98 @@ Phase 3 — Verify (design-evaluating):
 
 ---
 
+## 4-3. Case S: Concept Art → Sprite Sheet
+
+컨셉아트(예: `image/sprite/악단컨셉.png`)에서 **캐릭터별 배경 투명 스프라이트 시트**(Aseprite Hash JSON 호환)와 멀티프레임 액션(idle/play 등)을 생성하는 워크플로우.
+**핵심 원칙: Gemini `edit()` 모드로 원본 캐릭터 크롭을 참조하여 일관성을 유지하고, BiRefNet 매팅 + 픽셀 그리드 양자화 + 원본 팔레트 스냅 후처리로 게임/웹 즉시 활용 가능한 자산을 만든다.**
+
+```
+Phase 1 — Gather (researching):
+  → 컨셉아트 비전 분석 (캐릭터 N명 슬롯 추출: 이름·악기·도미넌트색·실루엣 박스)
+  → ColorThief로 글로벌 팔레트 추출 → image/sprite/palette.json
+  → 스타일 키워드 추출 ("chibi pixel art, 24x32, dark fantasy fairy tale, muted earth tones")
+  → 캐릭터별 크롭 저장 (image/sprite/crops/{slug}.png)
+  → slug 규칙: vocal-{1..4} / piano, violin, viola, cello, contrabass, flute, clarinet, oboe,
+                trumpet, trombone, horn, tuba, drum, guitar, harp
+
+Phase 2a — Action: Gemini edit() 다중 포즈 생성 (designing):
+  → 프롬프트 템플릿:
+    base = "{style_kw}, single character isolated on pure #00FF00 chroma green,
+            {character_desc}, {pose: idle|play|walk|cheer} frame {N}, no shadow"
+  → 호출: image-gen.py edit --prompt ... --input-image image/sprite/crops/{slug}.png
+  → 시드 고정: hash(slug) % 2^32 (캐릭터 일관성 핵심)
+  → 출력 256×256 (8배 업스케일 캔버스 — 후처리에서 24×32로 다운)
+  → Batch 모드 권장 (50% 비용 절감)
+  → 원본 보존: image/sprite/raw/{date}-{slug}-{pose}-f{N}.png
+
+Phase 2b — Action: 후처리 파이프라인 (designing):
+  1) BiRefNet 매팅 → 알파 클린업 (또는 폴백 HSV 그린키 제거)
+  2) Unfake-Pixels → 24×32 그리드 검출 + 양자화
+  3) PIL.Image.quantize(palette=원본 13색) 강제 스냅 (ΔE>15 픽셀 → 최근 팔레트 색)
+  4) 알파 이진화 (테두리 ≤ 1px)
+
+Phase 2c — Action: 시트 조립 + Aseprite Hash JSON (designing):
+  → 캐릭터·액션별 시트: design/sprite/output/{slug}/{action}.png
+  → 통합 메타: design/sprite/output/{slug}/sheet.json
+  → 필수 필드: meta.app, meta.image, frames {key: {frame, sourceSize, duration}}, frameTags[]
+  → 균일 패딩 2px
+
+Phase 2d — Action: PACKED MASTER 시트 (designing):
+  → design/sprite/output/_master/orchestra-master.png (19행 × 액션×프레임)
+  → design/sprite/output/_master/index.json: slug → 시트/JSON 경로 매핑
+  → Case W에서 단일 진입점으로 로드 가능
+
+Phase 3 — Verify (design-evaluating):
+  → design-craft.md Case S 3축 평가
+    S1: 캐릭터 충실도 (35점) — 원본 크롭 vs idle frame 0 SSIM/ΔE2000
+    S2: 애니메이션 품질 (35점) — 프레임 수, 그리드 정렬, 루프 이음매
+    S3: 공학적 활용성 (30점) — 알파, Aseprite JSON, PACKED MASTER, index.json
+  → recording: 로그 + RPG
+```
+
+### Case S 체크리스트
+
+```
+□ 컨셉아트에서 캐릭터 N명을 모두 슬롯으로 추출했는가? (slug + 도미넌트색 + 박스)
+□ image/sprite/palette.json (글로벌 팔레트)이 생성되었는가?
+□ image/sprite/crops/{slug}.png (캐릭터 크롭)이 모든 캐릭터에 대해 존재하는가?
+□ Gemini edit() 모드(input_image 참조)를 사용했는가? (generate-only는 자동 -10)
+□ 시드를 고정했는가? (캐릭터별 hash(slug) % 2^32)
+□ 후처리 4단계(BiRefNet → Unfake-Pixels → 팔레트 양자화 → 알파 이진화)를 모두 수행했는가?
+□ 캐릭터별 sheet.json이 Aseprite Hash 포맷(frames/meta/frameTags)인가?
+□ _master/orchestra-master.png + index.json이 생성되었는가?
+□ 표준 스코프(idle 4f + play 4f) 또는 풀 스코프(4액션×6프레임)를 명시했는가?
+□ 파일럿 1명(피아노)부터 시작 → 점수 ≥70 확인 후 N명 배치했는가?
+```
+
+### 파일럿 게이트
+
+19명 전체 배치 전에 **피아노 1명**으로 파일럿 평가 수행:
+- 점수 < 70 → 19명 배치 중단 → 프롬프트/후처리 튜닝 → 재파일럿
+- 점수 ≥ 70 → Gemini Batch로 전체 진행 (비용 폭증 방지)
+
+### 핵심 CLI
+
+```bash
+# 컨셉아트 분석
+python .claude/skills/pencil-design/scripts/sprite-analyze.py \
+  --input image/sprite/악단컨셉.png \
+  --output-dir image/sprite/
+
+# 캐릭터 프레임 생성 (Gemini edit)
+python .claude/skills/pencil-design/scripts/image-gen.py edit \
+  --prompt "..." --input-image image/sprite/crops/piano.png \
+  --topic "piano-idle-f0" --provider gemini
+
+# 후처리 + 시트 조립
+python .claude/skills/pencil-design/scripts/sprite-postprocess.py \
+  --character piano --pose idle --raw-dir image/sprite/raw/ \
+  --palette image/sprite/palette.json \
+  --output design/sprite/output/piano/idle.png
+```
+
+---
+
 ## 5. Case W: Pencil → HTML 구현
 
 ⚠️ Case C의 JSON 기법 정의서가 존재하면 `.pen` + `.json` 이중 참조로 더 정밀한 구현 가능.
@@ -378,9 +474,9 @@ HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 모든 작업 완료 후 recording 단계에서 실행한다.
 
 ```
-1. 로그: harness/logs/yyyy-mm-dd-{키워드}-case{A|B|C|D|W}.md
+1. 로그: harness/logs/yyyy-mm-dd-{키워드}-case{A|B|C|D|S|W}.md
 2. 인덱스: harness/logs/harness-usage.md에 1줄 추가
-3. XP 계산: 기본XP(점수×10) × 등급배율(A:5/B:3/C:1/D:0.5) × 유형배율(A:1.2/B:1.2/C:1.2/W:1.2)
+3. XP 계산: 기본XP(점수×10) × 등급배율(A:5/B:3/C:1/D:0.5) × 유형배율(A:1.2/B:1.2/C:1.2/D:1.2/S:1.2/W:1.2)
 4. 레벨업 판정 + 업적 갱신 (harness/engine/level-achievement-system.md 참조)
 ```
 
@@ -397,6 +493,10 @@ HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 | C → B | 양쪽 60점+ | 각 XP × 1.2 |
 | D → B | 양쪽 60점+ | 각 XP × 1.3 |
 | D → W | 양쪽 60점+ | 각 XP × 1.3 |
+| S → W | 양쪽 60점+ | 각 XP × 1.3 |
+| S → B | 양쪽 60점+ | 각 XP × 1.2 |
+| A → S | 양쪽 60점+ | 각 XP × 1.2 |
 | A → B → W | 전체 60점+ | 각 XP × 1.5 |
 | C → B → W | 전체 60점+ | 각 XP × 1.5 |
 | D → B → W | 전체 60점+ | 각 XP × 1.5 |
+| S → B → W | 전체 60점+ | 각 XP × 1.5 |

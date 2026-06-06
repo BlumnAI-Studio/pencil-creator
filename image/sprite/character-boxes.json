@@ -1,0 +1,257 @@
+{
+  "source": "image/sprite/악단컨셉.png",
+  "image_size": [
+    1329,
+    1183
+  ],
+  "note": "Boxes estimated by row/column variance heuristic on 2026-06-06. (left, top, right, bottom) in PIL crop format. Verify with preview-grid.png; adjust if any crop misses the character. | Expanded by ±20px on 2026-06-06 for crop margin (clip to image bounds).",
+  "characters": [
+    {
+      "slug": "vocal-1",
+      "name_ko": "보컬 1",
+      "section": "가수",
+      "row": 0,
+      "col": 0,
+      "box": [
+        420,
+        50,
+        660,
+        300
+      ]
+    },
+    {
+      "slug": "vocal-2",
+      "name_ko": "보컬 2",
+      "section": "가수",
+      "row": 0,
+      "col": 1,
+      "box": [
+        625,
+        50,
+        865,
+        300
+      ]
+    },
+    {
+      "slug": "vocal-3",
+      "name_ko": "보컬 3",
+      "section": "가수",
+      "row": 0,
+      "col": 2,
+      "box": [
+        830,
+        50,
+        1070,
+        300
+      ]
+    },
+    {
+      "slug": "vocal-4",
+      "name_ko": "보컬 4",
+      "section": "가수",
+      "row": 0,
+      "col": 3,
+      "box": [
+        1035,
+        50,
+        1275,
+        300
+      ]
+    },
+    {
+      "slug": "piano",
+      "name_ko": "피아노",
+      "section": "악기 연주자",
+      "row": 1,
+      "col": 0,
+      "box": [
+        410,
+        330,
+        620,
+        600
+      ]
+    },
+    {
+      "slug": "violin",
+      "name_ko": "바이올린",
+      "section": "악기 연주자",
+      "row": 1,
+      "col": 1,
+      "box": [
+        585,
+        330,
+        790,
+        600
+      ]
+    },
+    {
+      "slug": "viola",
+      "name_ko": "비올라",
+      "section": "악기 연주자",
+      "row": 1,
+      "col": 2,
+      "box": [
+        755,
+        330,
+        960,
+        600
+      ]
+    },
+    {
+      "slug": "cello",
+      "name_ko": "첼로",
+      "section": "악기 연주자",
+      "row": 1,
+      "col": 3,
+      "box": [
+        925,
+        330,
+        1130,
+        600
+      ]
+    },
+    {
+      "slug": "contrabass",
+      "name_ko": "콘트라베이스",
+      "section": "악기 연주자",
+      "row": 1,
+      "col": 4,
+      "box": [
+        1095,
+        330,
+        1300,
+        600
+      ]
+    },
+    {
+      "slug": "flute",
+      "name_ko": "플루트",
+      "section": "악기 연주자",
+      "row": 2,
+      "col": 0,
+      "box": [
+        410,
+        570,
+        620,
+        810
+      ]
+    },
+    {
+      "slug": "clarinet",
+      "name_ko": "클라리넷",
+      "section": "악기 연주자",
+      "row": 2,
+      "col": 1,
+      "box": [
+        585,
+        570,
+        790,
+        810
+      ]
+    },
+    {
+      "slug": "oboe",
+      "name_ko": "오보에",
+      "section": "악기 연주자",
+      "row": 2,
+      "col": 2,
+      "box": [
+        755,
+        570,
+        960,
+        810
+      ]
+    },
+    {
+      "slug": "trumpet",
+      "name_ko": "트럼펫",
+      "section": "악기 연주자",
+      "row": 2,
+      "col": 3,
+      "box": [
+        925,
+        570,
+        1130,
+        810
+      ]
+    },
+    {
+      "slug": "trombone",
+      "name_ko": "트롬본",
+      "section": "악기 연주자",
+      "row": 2,
+      "col": 4,
+      "box": [
+        1095,
+        570,
+        1300,
+        810
+      ]
+    },
+    {
+      "slug": "horn",
+      "name_ko": "호른",
+      "section": "악기 연주자",
+      "row": 3,
+      "col": 0,
+      "box": [
+        410,
+        800,
+        620,
+        1050
+      ]
+    },
+    {
+      "slug": "tuba",
+      "name_ko": "튜바",
+      "section": "악기 연주자",
+      "row": 3,
+      "col": 1,
+      "box": [
+        585,
+        800,
+        790,
+        1050
+      ]
+    },
+    {
+      "slug": "drum",
+      "name_ko": "드럼",
+      "section": "악기 연주자",
+      "row": 3,
+      "col": 2,
+      "box": [
+        755,
+        800,
+        960,
+        1050
+      ]
+    },
+    {
+      "slug": "guitar",
+      "name_ko": "기타",
+      "section": "악기 연주자",
+      "row": 3,
+      "col": 3,
+      "box": [
+        925,
+        800,
+        1130,
+        1050
+      ]
+    },
+    {
+      "slug": "harp",
+      "name_ko": "하프",
+      "section": "악기 연주자",
+      "row": 3,
+      "col": 4,
+      "box": [
+        1095,
+        800,
+        1300,
+        1050
+      ]
+    }
+  ]
+}

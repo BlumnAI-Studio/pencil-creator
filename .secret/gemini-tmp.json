@@ -1,7 +1,0 @@
-{
-  "base_url": "https://generativelanguage.googleapis.com/v1beta",
-  "api_key": "YOUR-API-KEY-HERE",
-  "auth_header": "X-goog-api-key",
-  "text_model": "gemini-flash-latest",
-  "image_model": "gemini-3.1-flash-image-preview"
-}

@@ -1,0 +1,15 @@
+{
+  "source": "image\\sprite\\악단컨셉.png",
+  "image_size": [
+    1329,
+    1183
+  ],
+  "character_count": 19,
+  "style_keywords": "chibi pixel art, 24x32 sprite, dark fantasy fairy tale, muted earth tones, soft cel shading, single character isolated",
+  "target_sprite_size": [
+    24,
+    32
+  ],
+  "chroma_key_color": "#00FF00",
+  "gemini_prompt_template": "{style_keywords}, single {character_desc} on pure {chroma_key_color} chroma background, {pose} pose frame {frame_index}, no shadow, no text, no border"
+}
