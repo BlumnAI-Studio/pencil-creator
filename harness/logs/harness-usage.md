@@ -28,3 +28,4 @@
 | 2026-05-07 | W ext-2 | [+인사이트] sample13 SITE INSIGHT 섹션 (8 사이트 별점 10점 평가 + 5축 비교 차트 + 강점/약점/시그니처 + 정렬 탭) | 99/100 A | [로그](2026-05-07-bunyang25-top8-extension.md) |
 | 2026-05-07 | W ext-3 | [+FINALE] sample13 50평형 럭셔리 모델하우스 (Three.js 1인칭+8 분양사이트 액자+14광원+8PBR재질+캔버스 동적텍스처+'분양홈페이지를 분석하다 …' 마무리) — 5번째 만점 | 100/100 A | [로그](2026-05-07-bunyang25-top8-extension.md) |
 | 2026-06-06 | S | 픽셀 음악단 19명 스프라이트 시트 (19×idle4f+play4f=152프레임, 첫 Case S, v2.7.0 신설, A 8명 + B 11명) | 평균 77/100 B | [로그](2026-06-06-pixel-orchestra-caseS.md) |
+| 2026-06-06 | W | Pixel Orchestra MIDI 데모 sample14 (첫 S→W ×1.3, @tonejs/midi+Tone.js, 19캐릭터×2액션+5 PD MIDI+3 stages, midi-orchestra 지식 축적) | 91/100 A | [로그](2026-06-06-pixel-orchestra-caseW.md) |

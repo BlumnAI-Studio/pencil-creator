@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixel Orchestra — MIDI-driven Chibi Performers (sample14)</title>
+<style>
+  :root {
+    --bg: #0a0a14;
+    --panel: rgba(12, 12, 22, 0.85);
+    --panel-border: #1f2937;
+    --text: #e5e7eb;
+    --text-dim: #9ca3af;
+    --accent: #fbbf24;
+    --accent-dim: #b45309;
+    --success: #34d399;
+    --danger: #f87171;
+    --fg-mono: 'JetBrains Mono', 'Geist Mono', ui-monospace, Consolas, monospace;
+    --fg-ui: 'Inter', system-ui, -apple-system, sans-serif;
+    --char-size: 96px;
+    --idle-fps: 6;
+    --play-fps: 10;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--fg-ui);
+    color: var(--text);
+    background: var(--bg);
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  /* ========== Header ========== */
+  header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--panel-border);
+    padding: 12px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, var(--accent), #fde68a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header h1 small {
+    font-family: var(--fg-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-left: 8px;
+    font-weight: 400;
+    -webkit-text-fill-color: var(--text-dim);
+  }
+  .stage-tabs { display: flex; gap: 6px; }
+  .stage-tabs button {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--panel-border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--fg-mono);
+    font-size: 11px;
+    transition: all 0.2s;
+  }
+  .stage-tabs button:hover { color: var(--text); border-color: var(--accent-dim); }
+  .stage-tabs button.active {
+    color: #0a0a14;
+    background: var(--accent);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .midi-select {
+    background: rgba(0,0,0,0.4);
+    color: var(--text);
+    border: 1px solid var(--panel-border);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: var(--fg-mono);
+    font-size: 12px;
+    min-width: 280px;
+    cursor: pointer;
+  }
+  .play-btn, .stop-btn {
+    background: var(--accent);
+    color: #0a0a14;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: var(--fg-mono);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    transition: transform 0.1s;
+  }
+  .stop-btn { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+  .play-btn:hover, .stop-btn:hover { transform: translateY(-1px); }
+  .play-btn:disabled, .stop-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .time-display {
+    font-family: var(--fg-mono);
+    color: var(--text-dim);
+    font-size: 12px;
+    min-width: 90px;
+    text-align: right;
+    margin-left: auto;
+  }
+
+  /* ========== Stage ========== */
+  main.stage {
+    flex: 1 1 auto;
+    min-height: 280px;
+    position: relative;
+    background-size: cover;
+    background-position: center 70%; /* anchor floor area so it stays visible at small heights */
+    background-color: #000;
+    overflow: hidden;
+    image-rendering: pixelated;
+    transition: background-image 0.4s ease;
+  }
+  .orchestra {
+    position: absolute;
+    inset: 0;
+    image-rendering: pixelated;
+  }
+  .character {
+    position: absolute;
+    width: var(--char-size);
+    height: var(--char-size);
+    background-repeat: no-repeat;
+    /* sheet is 202×52 of pixels at native 48px frame; scale proportionally to --char-size */
+    background-size: calc(var(--char-size) * 202 / 48) calc(var(--char-size) * 52 / 48);
+    background-position: calc(var(--char-size) * -2 / 48) calc(var(--char-size) * -2 / 48);
+    image-rendering: pixelated;
+    transform: translate(-50%, -100%);
+    transition: opacity 0.5s, transform 0.5s;
+    opacity: 0;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+    /* Always run play animation; paused by default — resumes from current frame when notes come. */
+    animation: char-play-anim 1.0s steps(4) infinite;
+    animation-play-state: paused;
+  }
+  .character.spawned { opacity: 1; }
+  .character.playing { animation-play-state: running; }
+  /* Animate the full background-position so y stays locked while x steps through frames. */
+  @keyframes char-play-anim {
+    from { background-position: calc(var(--char-size) * -2  / 48) calc(var(--char-size) * -2 / 48); }
+    to   { background-position: calc(var(--char-size) * -202 / 48) calc(var(--char-size) * -2 / 48); }
+  }
+  .character .label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--fg-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    background: rgba(0,0,0,0.7);
+    padding: 1px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .character.playing .label { opacity: 1; color: var(--accent); }
+
+  /* ========== Footer ========== */
+  footer {
+    background: var(--panel);
+    border-top: 1px solid var(--panel-border);
+    padding: 6px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 10;
+    flex-wrap: nowrap;     /* never wrap — keeps stage size stable */
+    flex-shrink: 0;
+    font-size: 11px;
+    font-family: var(--fg-mono);
+    color: var(--text-dim);
+    min-height: 32px;
+  }
+  .active-instruments {
+    display: flex;
+    gap: 6px;
+    flex-wrap: nowrap;
+    flex: 1 1 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    padding-bottom: 2px;
+  }
+  .active-instruments::-webkit-scrollbar { height: 4px; }
+  .active-instruments::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+  .active-tag {
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--panel-border);
+    color: var(--text-dim);
+    transition: all 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .credits {
+    flex-shrink: 0;
+    white-space: nowrap;
+    opacity: 0.7;
+  }
+  .active-tag.active {
+    color: #0a0a14;
+    background: var(--accent);
+    border-color: var(--accent);
+    font-weight: 600;
+    transform: translateY(-1px);
+  }
+  .credits {
+    color: var(--text-dim);
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  /* ========== Loading / Empty state ========== */
+  .stage-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: rgba(255,255,255,0.5);
+    font-family: var(--fg-mono);
+    font-size: 14px;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .stage-hint .icon { font-size: 36px; opacity: 0.5; }
+  .stage-hint.hidden { opacity: 0; }
+
+  /* Progress bar overlay on stage */
+  .progress-bar {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 3px;
+    background: rgba(0,0,0,0.5);
+    z-index: 5;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #fde68a);
+    width: 0;
+    transition: width 0.1s linear;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Pixel Orchestra <small>sample14 · S→W pipeline · MIDI-driven chibi performers</small></h1>
+  <div class="stage-tabs" id="stage-tabs">
+    <button data-stage="concert-hall" class="active">🎭 Concert Hall</button>
+    <button data-stage="garden-pavilion">🌿 Garden Pavilion</button>
+    <button data-stage="moonlit-castle">🌙 Moonlit Castle</button>
+  </div>
+  <select class="midi-select" id="midi-select">
+    <option value="midi/01-beethoven-symphony5-1st.mid">Beethoven · Symphony No.5 — 1st mvt</option>
+    <option value="midi/02-mozart-symphony40-1st.mid">Mozart · Symphony No.40 — 1st mvt</option>
+    <option value="midi/03-dvorak-newworld-largo.mid">Dvořák · Symphony No.9 "New World" — Largo</option>
+    <option value="midi/04-vivaldi-autumn.mid">Vivaldi · Autumn (Four Seasons)</option>
+    <option value="midi/05-grieg-morning-mood.mid">Grieg · Morning Mood (Peer Gynt)</option>
+  </select>
+  <button class="play-btn" id="play-btn">▶ Play</button>
+  <button class="stop-btn" id="stop-btn" disabled>⏹ Stop</button>
+  <div class="time-display" id="time-display">0:00 / 0:00</div>
+</header>
+
+<main class="stage" id="stage" style="background-image: url('stages/concert-hall.png')">
+  <div class="orchestra" id="orchestra"></div>
+  <div class="stage-hint" id="stage-hint">
+    <div class="icon">🎼</div>
+    <div>Choose a piece and press ▶ Play</div>
+    <div style="font-size:10px; opacity:0.6">Characters spawn as their instruments enter</div>
+  </div>
+  <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
+</main>
+
+<footer>
+  <div class="active-instruments" id="active-instruments"></div>
+  <div class="credits">19 chibi sprites · 5 PD MIDI · @tonejs/midi + Tone.js · Case S→W pipeline (harness v2.7.0)</div>
+</footer>
+
+<script type="module">
+  import * as Tone from 'https://cdn.jsdelivr.net/npm/tone@14.7.77/+esm';
+  import { Midi } from 'https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.28/+esm';
+
+  // ============ GM Program → Character slug ============
+  // (channel 9/10 → drum always)
+  function programToSlug(program, trackName) {
+    const name = (trackName || '').toLowerCase();
+    // Track name patterns override
+    if (/soprano/.test(name))   return 'vocal-1';
+    if (/alto/.test(name))      return 'vocal-2';
+    if (/tenor/.test(name))     return 'vocal-3';
+    if (/bass\b/.test(name))    return 'vocal-4';
+    if (/choir|voice/.test(name)) return 'vocal-1';
+    if (/violin/.test(name))    return 'violin';
+    if (/viola/.test(name))     return 'viola';
+    if (/cello/.test(name))     return 'cello';
+    if (/contrabass|double bass/.test(name)) return 'contrabass';
+    if (/flute/.test(name))     return 'flute';
+    if (/clarinet/.test(name))  return 'clarinet';
+    if (/oboe/.test(name))      return 'oboe';
+    if (/trumpet/.test(name))   return 'trumpet';
+    if (/trombone/.test(name))  return 'trombone';
+    if (/horn/.test(name))      return 'horn';
+    if (/tuba/.test(name))      return 'tuba';
+    if (/drum|percussion/.test(name)) return 'drum';
+    if (/guitar/.test(name))    return 'guitar';
+    if (/harp/.test(name))      return 'harp';
+    if (/piano/.test(name))     return 'piano';
+    // GM program fallback
+    if (program >= 0 && program <= 7)   return 'piano';
+    if (program >= 24 && program <= 31) return 'guitar';
+    if (program === 40)                 return 'violin';
+    if (program === 41)                 return 'viola';
+    if (program === 42)                 return 'cello';
+    if (program === 43)                 return 'contrabass';
+    if (program === 46)                 return 'harp';
+    if (program === 56)                 return 'trumpet';
+    if (program === 57)                 return 'trombone';
+    if (program === 58)                 return 'tuba';
+    if (program === 60)                 return 'horn';
+    if (program === 68)                 return 'oboe';
+    if (program === 71)                 return 'clarinet';
+    if (program === 73 || program === 72) return 'flute';
+    if (program >= 52 && program <= 54) return 'vocal-1';
+    if (program >= 80 && program <= 95) return 'vocal-2'; // synth pads → choir
+    return 'piano'; // ultimate fallback
+  }
+
+  // ============ Stage positions (normalized to stage box) ============
+  // Multi-row orchestra layout, conductor at center back, performers fanning out
+  const POSITIONS = [
+    // row 0 — front row (closest to viewer): vocals + soloists
+    { x: 0.30, y: 0.80 }, { x: 0.40, y: 0.80 }, { x: 0.50, y: 0.80 },
+    { x: 0.60, y: 0.80 }, { x: 0.70, y: 0.80 },
+    // row 1 — strings
+    { x: 0.25, y: 0.70 }, { x: 0.35, y: 0.70 }, { x: 0.45, y: 0.70 },
+    { x: 0.55, y: 0.70 }, { x: 0.65, y: 0.70 }, { x: 0.75, y: 0.70 },
+    // row 2 — winds
+    { x: 0.30, y: 0.60 }, { x: 0.40, y: 0.60 }, { x: 0.50, y: 0.60 },
+    { x: 0.60, y: 0.60 }, { x: 0.70, y: 0.60 },
+    // row 3 — brass & percussion (back)
+    { x: 0.35, y: 0.52 }, { x: 0.50, y: 0.52 }, { x: 0.65, y: 0.52 },
+  ];
+
+  // ============ Globals ============
+  const orchestraEl = document.getElementById('orchestra');
+  const playBtn     = document.getElementById('play-btn');
+  const stopBtn     = document.getElementById('stop-btn');
+  const stageEl     = document.getElementById('stage');
+  const hintEl      = document.getElementById('stage-hint');
+  const midiSelect  = document.getElementById('midi-select');
+  const timeDisplay = document.getElementById('time-display');
+  const progressFill= document.getElementById('progress-fill');
+  const activeBar   = document.getElementById('active-instruments');
+  const stageTabs   = document.getElementById('stage-tabs');
+
+  let midi = null;
+  let synths = [];
+  let scheduledIds = [];
+  let updateRafId = null;
+  let characterIntervals = {};   // { slug: [{start,end}, ...] }
+  let characterEntries = {};     // { slug: {el, position, firstTime} }
+  let entrySequence = [];        // ordered slugs by first appearance
+  let nextPosIdx = 0;
+  let playStartedAt = 0;         // Tone.now() at playback start
+  let totalDuration = 0;
+  let isPlaying = false;
+
+  // ============ Stage tabs ============
+  stageTabs.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    [...stageTabs.querySelectorAll('button')].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    stageEl.style.backgroundImage = `url('stages/${btn.dataset.stage}.png')`;
+  });
+
+  // ============ Format helpers ============
+  function fmtTime(sec) {
+    if (!Number.isFinite(sec) || sec < 0) sec = 0;
+    const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+    return `${m}:${s.toString().padStart(2,'0')}`;
+  }
+
+  // ============ Parse MIDI → instrument intervals ============
+  async function loadMidi(url) {
+    const buf = await fetch(url).then(r => r.arrayBuffer());
+    midi = new Midi(buf);
+    totalDuration = midi.duration;
+    characterIntervals = {};
+    midi.tracks.forEach(track => {
+      if (!track.notes || track.notes.length === 0) return;
+      const isDrum = track.channel === 9 || /drum|percussion/i.test(track.name);
+      const slug = isDrum ? 'drum' : programToSlug(track.instrument?.number ?? 0, track.name);
+      if (!characterIntervals[slug]) characterIntervals[slug] = [];
+      track.notes.forEach(n => {
+        characterIntervals[slug].push({
+          start: n.time,
+          end:   n.time + Math.max(n.duration, 0.05),
+        });
+      });
+    });
+    // Sort intervals + extend each note's end by SUSTAIN_GRACE so the play animation
+    // stays smooth across short gaps; then merge overlapping intervals.
+    // 3s grace: animation only pauses after 3s of true silence on this instrument.
+    const SUSTAIN_GRACE = 3.0;   // seconds — keep "playing" pose this long after a note ends
+    const MERGE_GAP    = 3.5;    // seconds — bridge gaps shorter than this (phrase continuity)
+    for (const slug of Object.keys(characterIntervals)) {
+      const arr = characterIntervals[slug]
+        .map(iv => ({ start: iv.start, end: iv.end + SUSTAIN_GRACE }))
+        .sort((a,b) => a.start - b.start);
+      const merged = [];
+      for (const iv of arr) {
+        const last = merged[merged.length-1];
+        if (last && iv.start - last.end < MERGE_GAP) {
+          last.end = Math.max(last.end, iv.end);
+        } else {
+          merged.push({ ...iv });
+        }
+      }
+      characterIntervals[slug] = merged;
+    }
+    // Entry order by first note time
+    entrySequence = Object.entries(characterIntervals)
+      .map(([slug, ivs]) => ({ slug, firstTime: ivs[0].start }))
+      .sort((a,b) => a.firstTime - b.firstTime);
+  }
+
+  // ============ Spawn / update characters ============
+  function spawnCharacter(slug) {
+    if (characterEntries[slug]) return;
+    const pos = POSITIONS[nextPosIdx % POSITIONS.length];
+    nextPosIdx++;
+    const el = document.createElement('div');
+    el.className = 'character';   // play animation always loaded, paused until playing
+    el.style.left = `${pos.x * 100}%`;
+    el.style.top  = `${pos.y * 100}%`;
+    el.style.backgroundImage = `url('sprites/${slug}/play.png')`;   // single sheet only
+    el.dataset.slug = slug;
+    const label = document.createElement('span');
+    label.className = 'label';
+    label.textContent = slug;
+    el.appendChild(label);
+    orchestraEl.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('spawned'));
+    characterEntries[slug] = { el, position: pos, mode: 'resting' };
+    renderActiveBar();
+  }
+
+  function setCharacterMode(slug, mode /* 'playing' | 'resting' */) {
+    const entry = characterEntries[slug];
+    if (!entry || entry.mode === mode) return;
+    entry.mode = mode;
+    // Only toggle the 'playing' class — animation-play-state switches running/paused,
+    // preserving the current frame position when paused.
+    entry.el.classList.toggle('playing', mode === 'playing');
+  }
+
+  function isActiveAt(slug, t) {
+    const ivs = characterIntervals[slug];
+    if (!ivs) return false;
+    // Binary search would be faster but linear is fine for ~hundreds of notes
+    for (const iv of ivs) {
+      if (iv.start > t) return false;
+      if (t >= iv.start && t <= iv.end) return true;
+    }
+    return false;
+  }
+
+  function renderActiveBar() {
+    activeBar.innerHTML = '';
+    for (const { slug } of entrySequence) {
+      if (!characterEntries[slug]) continue;
+      const tag = document.createElement('div');
+      tag.className = 'active-tag' + (characterEntries[slug].mode === 'playing' ? ' active' : '');
+      tag.textContent = slug;
+      tag.dataset.slug = slug;
+      activeBar.appendChild(tag);
+    }
+  }
+
+  function updateActiveBarMode() {
+    [...activeBar.children].forEach(tag => {
+      const slug = tag.dataset.slug;
+      const isPlaying = characterEntries[slug]?.mode === 'playing';
+      tag.classList.toggle('active', isPlaying);
+    });
+  }
+
+  // ============ Playback loop ============
+  function tick() {
+    if (!isPlaying) return;
+    const t = Tone.now() - playStartedAt;
+    if (t >= totalDuration) { stopPlayback(); return; }
+    // Spawn newly arriving characters
+    for (const { slug, firstTime } of entrySequence) {
+      if (firstTime <= t && !characterEntries[slug]) spawnCharacter(slug);
+    }
+    // Toggle play animation: running while active interval, paused at current frame otherwise
+    for (const slug of Object.keys(characterEntries)) {
+      setCharacterMode(slug, isActiveAt(slug, t) ? 'playing' : 'resting');
+    }
+    updateActiveBarMode();
+    // Progress + time
+    progressFill.style.width = `${(t / totalDuration) * 100}%`;
+    timeDisplay.textContent = `${fmtTime(t)} / ${fmtTime(totalDuration)}`;
+    updateRafId = requestAnimationFrame(tick);
+  }
+
+  // ============ Synthesis (Tone.js PolySynth per character) ============
+  function createSynths() {
+    // 1 polysynth per used character — cleaner separation
+    const usedSlugs = Object.keys(characterIntervals);
+    synths = [];
+    const synthByChar = {};
+    for (const slug of usedSlugs) {
+      const s = new Tone.PolySynth(Tone.Synth, {
+        oscillator: { type: slug === 'drum' ? 'square' : (slug.startsWith('vocal') ? 'sine' : 'triangle') },
+        envelope: { attack: 0.02, decay: 0.1, sustain: 0.4, release: 0.5 },
+        volume: -10,
+      }).toDestination();
+      synths.push(s);
+      synthByChar[slug] = s;
+    }
+    return synthByChar;
+  }
+
+  function scheduleNotes(synthByChar) {
+    scheduledIds = [];
+    midi.tracks.forEach(track => {
+      if (!track.notes || track.notes.length === 0) return;
+      const isDrum = track.channel === 9 || /drum|percussion/i.test(track.name);
+      const slug = isDrum ? 'drum' : programToSlug(track.instrument?.number ?? 0, track.name);
+      const synth = synthByChar[slug];
+      if (!synth) return;
+      track.notes.forEach(n => {
+        const id = Tone.Transport.schedule(time => {
+          try {
+            synth.triggerAttackRelease(n.name, Math.max(n.duration, 0.05), time, n.velocity);
+          } catch (e) { /* swallow occasional Tone clipping errors */ }
+        }, n.time);
+        scheduledIds.push(id);
+      });
+    });
+  }
+
+  // ============ Play / Stop controls ============
+  function hardResetTransport() {
+    // 1) stop transport so no more events fire
+    try { Tone.Transport.stop(); } catch(e) {}
+    try { Tone.Transport.cancel(0); } catch(e) {}
+    Tone.Transport.position = 0;
+    // 2) defer dispose so any in-flight scheduled callbacks finish first
+    const toDispose = synths.slice();
+    synths = [];
+    scheduledIds = [];
+    setTimeout(() => {
+      toDispose.forEach(s => { try { s.releaseAll && s.releaseAll(); s.dispose(); } catch(e) {} });
+    }, 150);
+  }
+
+  async function startPlayback() {
+    playBtn.disabled = true;
+    midiSelect.disabled = true;
+    try {
+      // Hard reset prior state, stop the rAF loop
+      hardResetTransport();
+      if (updateRafId) { cancelAnimationFrame(updateRafId); updateRafId = null; }
+      isPlaying = false;
+      // Ensure audio context is unsuspended (chrome may auto-suspend on idle)
+      await Tone.start();
+      try { await Tone.context.resume(); } catch(e) {}
+      // Brief wait so deferred dispose from previous stop completes before we build new synths
+      await new Promise(r => setTimeout(r, 200));
+      await loadMidi(midiSelect.value);
+      orchestraEl.innerHTML = '';
+      activeBar.innerHTML = '';
+      characterEntries = {};
+      nextPosIdx = 0;
+      hintEl.classList.add('hidden');
+      progressFill.style.width = '0%';
+      // Build synths + schedule (fresh)
+      const synthByChar = createSynths();
+      scheduleNotes(synthByChar);
+      const LEAD_IN = 0.15;             // 150 ms lead-in covers cold-start latency
+      Tone.Transport.start(`+${LEAD_IN}`);
+      playStartedAt = Tone.now() + LEAD_IN;
+      isPlaying = true;
+      stopBtn.disabled = false;
+      tick();
+    } catch (err) {
+      console.error(err);
+      alert(`Playback error: ${err.message}`);
+      hardResetTransport();
+      playBtn.disabled = false;
+      midiSelect.disabled = false;
+    }
+  }
+
+  function stopPlayback() {
+    isPlaying = false;
+    if (updateRafId) cancelAnimationFrame(updateRafId);
+    updateRafId = null;
+    hardResetTransport();
+    playBtn.disabled = false;
+    stopBtn.disabled = true;
+    midiSelect.disabled = false;
+    // Keep characters on stage (user requirement: never remove); just freeze animation
+    Object.keys(characterEntries).forEach(slug => setCharacterMode(slug, 'resting'));
+    updateActiveBarMode();
+    timeDisplay.textContent = `${fmtTime(0)} / ${fmtTime(totalDuration)}`;
+    progressFill.style.width = '0%';
+  }
+
+  playBtn.addEventListener('click', startPlayback);
+  stopBtn.addEventListener('click', stopPlayback);
+
+  // Reset orchestra when picking a different piece (before playing)
+  midiSelect.addEventListener('change', () => {
+    if (isPlaying) return;
+    orchestraEl.innerHTML = '';
+    activeBar.innerHTML = '';
+    characterEntries = {};
+    nextPosIdx = 0;
+    hintEl.classList.remove('hidden');
+    timeDisplay.textContent = '0:00 / 0:00';
+    progressFill.style.width = '0%';
+  });
+</script>
+
+</body>
+</html>
