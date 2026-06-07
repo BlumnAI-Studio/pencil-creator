@@ -177,15 +177,35 @@
     background-size: calc(var(--dance-size) * 808 / 192) calc(var(--dance-size) * 208 / 192);
     background-position: calc(var(--dance-size) * -8 / 192) calc(var(--dance-size) * -8 / 192);
     image-rendering: pixelated;
-    transform: translate(-50%, -100%);
-    transition: opacity 0.6s;
+    /* --pitch-lift = gentle bob (global pitch) · --jump = onset trigger for this dancer's band */
+    transform: translate(-50%, -100%)
+               translateY(calc(var(--pitch-lift, 0px) * -1 - var(--jump, 0px)));
+    transition: opacity 0.6s, transform 0.08s linear, filter 0.12s linear;
     opacity: 0;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7));
-    animation: dance-anim 0.72s steps(4) infinite;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7))
+            brightness(calc(1 + var(--pitch-glow, 0) * 0.35))
+            hue-rotate(calc(var(--pitch-hue, 0) * 1deg));
+    /* cycle locked to song tempo via --dance-cycle (set per playback) */
+    animation: dance-anim var(--dance-cycle, 1.6s) steps(4) infinite;
     animation-play-state: paused;
   }
   .dancer.spawned { opacity: 1; }
   .dancer.dancing { animation-play-state: running; }
+  .dancer-band-label {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--fg-mono);
+    font-size: 9px;
+    color: var(--accent);
+    background: rgba(0,0,0,0.78);
+    padding: 1px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.3px;
+  }
   @keyframes dance-anim {
     from { background-position: calc(var(--dance-size) * -8  / 192) calc(var(--dance-size) * -8 / 192); }
     to   { background-position: calc(var(--dance-size) * -808 / 192) calc(var(--dance-size) * -8 / 192); }
@@ -282,6 +302,49 @@
   .stage-hint .icon { font-size: 36px; opacity: 0.5; }
   .stage-hint.hidden { opacity: 0; }
 
+  /* MIDI analysis panel */
+  .analysis-panel {
+    background: rgba(8, 8, 16, 0.92);
+    border-bottom: 1px solid var(--panel-border);
+    padding: 6px 20px;
+    display: flex;
+    gap: 18px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    align-items: center;
+    z-index: 9;
+    flex-shrink: 0;
+    font-family: var(--fg-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    min-height: 30px;
+  }
+  .analysis-panel.hidden { display: none; }
+  .analysis-item {
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .analysis-item .label {
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 9px;
+  }
+  .analysis-item .value {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .analysis-sep {
+    width: 1px;
+    height: 12px;
+    background: rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+
   /* Progress bar overlay on stage */
   .progress-bar {
     position: absolute;
@@ -326,6 +389,8 @@
   <button class="stop-btn" id="stop-btn" disabled>⏹ Stop</button>
   <div class="time-display" id="time-display">0:00 / 0:00</div>
 </header>
+
+<div class="analysis-panel hidden" id="analysis-panel"></div>
 
 <main class="stage" id="stage" style="background-image: url('stages/concert-hall.png')">
   <!-- back tier — dance troupe (autonomous, MIDI-independent) -->
@@ -422,11 +487,17 @@
     { x: 0.82, y: 0.50 },
   ];
 
-  function spawnDanceTroupe() {
+  function spawnDanceTroupe(cycleSec) {
+    danceCycleSec = cycleSec;
+    pitchSmooth = 0.5;
+    glowSmooth = 0;
     const wrap = document.getElementById('dance-troupe');
     wrap.innerHTML = '';
-    // Randomize order so positions don't always show the same style
+    document.documentElement.style.setProperty('--dance-cycle', `${cycleSec.toFixed(3)}s`);
+    // Randomize style assignments (visual variety) but keep positional index = pitch-band index
+    // (dancer i at DANCE_POSITIONS[i] is responsible for pitchBandLabels[i] — low band → left)
     const styles = DANCE_STYLES.slice().sort(() => Math.random() - 0.5);
+    const N = DANCE_POSITIONS.length;
     styles.forEach((style, i) => {
       const num = 1 + Math.floor(Math.random() * 6);
       const slug = `${style}-${num}`;
@@ -437,8 +508,17 @@
       el.style.top  = `${pos.y * 100}%`;
       el.style.backgroundImage = `url('dance/${style}/${slug}.png')`;
       el.dataset.slug = slug;
-      // Stagger animation start so 6 dancers aren't synchronized
-      el.style.animationDelay = `-${(Math.random() * 0.72).toFixed(2)}s`;
+      el.dataset.idx = String(i);
+      // Wave stagger: each dancer is 1/N cycle behind the previous → 옆으로 흐르는 wave
+      el.style.animationDelay = `${(-(i / N) * cycleSec).toFixed(3)}s`;
+      // Pitch-band label
+      if (pitchBandLabels && pitchBandLabels[i]) {
+        const b = pitchBandLabels[i];
+        const lab = document.createElement('span');
+        lab.className = 'dancer-band-label';
+        lab.textContent = `${midiToName(b.low)}~${midiToName(b.high)}`;
+        el.appendChild(lab);
+      }
       wrap.appendChild(el);
       requestAnimationFrame(() => {
         el.classList.add('spawned');
@@ -447,11 +527,193 @@
     });
   }
 
+  function updateDancersPitch(t) {
+    const p = lookupPitch(t);
+    if (!p) return;
+    // Exponential smoothing prevents jitter; reacts within ~150ms
+    pitchSmooth += (p.normPitch - pitchSmooth) * 0.18;
+    glowSmooth  += (p.velocity  - glowSmooth ) * 0.22;
+    const dancers = document.querySelectorAll('.dancer');
+    const N = dancers.length || 1;
+    const omega = (Math.PI * 2) / danceCycleSec;
+    // Lift range: ±40px from pitch + ±8px gentle per-dancer wave bob
+    dancers.forEach(d => {
+      const i = parseInt(d.dataset.idx || '0', 10);
+      const phase = i * (Math.PI * 2 / N);
+      const wave = Math.sin(omega * t + phase) * 8;
+      const pitchLift = (pitchSmooth - 0.5) * 30;   // -15 ~ +15 px (subtle bob)
+      // Onset-driven jump: this dancer's band fires → big upward burst
+      const jumpFactor = lookupJumpFactor(t, i);   // 0~1
+      const jumpPx = jumpFactor * 70;              // up to 70px peak
+      d.style.setProperty('--pitch-lift', `${(pitchLift + wave).toFixed(1)}px`);
+      d.style.setProperty('--jump', `${jumpPx.toFixed(1)}px`);
+      d.style.setProperty('--pitch-glow', Math.max(glowSmooth, jumpFactor).toFixed(2));
+      d.style.setProperty('--pitch-hue', (pitchSmooth * 40 - 20).toFixed(1));
+    });
+  }
+
   function freezeDanceTroupe() {
     document.querySelectorAll('.dancer').forEach(d => d.classList.remove('dancing'));
   }
   function resumeDanceTroupe() {
     document.querySelectorAll('.dancer').forEach(d => d.classList.add('dancing'));
+  }
+
+  // ============ MIDI analysis + analysis panel ============
+  const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+  function midiToName(m) {
+    return `${NOTE_NAMES[m % 12]}${Math.floor(m / 12) - 1}`;
+  }
+
+  function precomputePitchTimeline(midiObj) {
+    const total = midiObj.duration;
+    const frames = Math.max(1, Math.ceil(total / PITCH_DT));
+    const sumPitchVel = new Float32Array(frames);
+    const sumVel = new Float32Array(frames);
+    const allNotes = midiObj.tracks.flatMap(t => t.notes || []);
+    if (allNotes.length === 0) { pitchTimeline = null; return; }
+    const allPitches = allNotes.map(n => n.midi);
+    const minP = Math.min(...allPitches);
+    const maxP = Math.max(...allPitches);
+    const range = Math.max(1, maxP - minP);
+    for (const n of allNotes) {
+      const startIdx = Math.max(0, Math.floor(n.time / PITCH_DT));
+      const endIdx   = Math.min(frames - 1, Math.ceil((n.time + n.duration) / PITCH_DT));
+      const v = n.velocity || 0.5;
+      for (let i = startIdx; i <= endIdx; i++) {
+        sumPitchVel[i] += n.midi * v;
+        sumVel[i] += v;
+      }
+    }
+    const out = new Array(frames);
+    for (let i = 0; i < frames; i++) {
+      if (sumVel[i] > 0) {
+        const avg = sumPitchVel[i] / sumVel[i];
+        out[i] = {
+          normPitch: (avg - minP) / range,         // 0~1
+          velocity: Math.min(1, sumVel[i] / 4),    // intensity proxy
+        };
+      } else {
+        out[i] = { normPitch: 0.5, velocity: 0 };
+      }
+    }
+    pitchTimeline = out;
+  }
+
+  function precomputePitchBands(midiObj, N = 6) {
+    const allNotes = midiObj.tracks.flatMap(t => t.notes || []);
+    if (allNotes.length === 0) { pitchBandsOnsets = null; pitchBandLabels = null; return; }
+    const pitches = allNotes.map(n => n.midi);
+    const minP = Math.min(...pitches);
+    const maxP = Math.max(...pitches);
+    const step = Math.max(1, (maxP - minP) / N);
+    pitchBandsOnsets = Array.from({length: N}, () => []);
+    pitchBandLabels = Array.from({length: N}, (_, i) => ({
+      low:  Math.round(minP + i * step),
+      high: Math.round(minP + (i + 1) * step),
+    }));
+    const sortedNotes = allNotes.slice().sort((a, b) => a.time - b.time);
+    for (const n of sortedNotes) {
+      const band = Math.min(N - 1, Math.max(0, Math.floor((n.midi - minP) / step)));
+      pitchBandsOnsets[band].push({ t: n.time, vel: n.velocity || 0.5 });
+    }
+    // Debounce onsets within same band (<50ms) keeping the loudest
+    pitchBandsOnsets = pitchBandsOnsets.map(onsets => {
+      const out = [];
+      for (const o of onsets) {
+        const last = out[out.length - 1];
+        if (!last || o.t - last.t > 0.05) {
+          out.push({ ...o });
+        } else {
+          last.vel = Math.max(last.vel, o.vel);
+        }
+      }
+      return out;
+    });
+  }
+
+  // Binary-search the most recent onset at or before t for a band
+  function lookupJumpFactor(t, bandIdx) {
+    if (!pitchBandsOnsets) return 0;
+    const onsets = pitchBandsOnsets[bandIdx];
+    if (!onsets || onsets.length === 0) return 0;
+    let lo = 0, hi = onsets.length - 1, latest = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (onsets[mid].t <= t) { latest = mid; lo = mid + 1; }
+      else hi = mid - 1;
+    }
+    if (latest === -1) return 0;
+    const dt = t - onsets[latest].t;
+    const WINDOW = 0.30;     // jump envelope length
+    if (dt > WINDOW) return 0;
+    // Fast attack (peak immediately) + linear decay
+    const env = 1 - (dt / WINDOW);
+    return env * onsets[latest].vel;
+  }
+
+  function lookupPitch(t) {
+    if (!pitchTimeline) return null;
+    const i = Math.max(0, Math.min(pitchTimeline.length - 1, Math.floor(t / PITCH_DT)));
+    return pitchTimeline[i];
+  }
+
+  function analyzeMidi(midi) {
+    const tempo = midi.header.tempos[0]?.bpm ?? 120;
+    const keyEntry = midi.header.keySignatures && midi.header.keySignatures[0];
+    const tsEntry  = midi.header.timeSignatures && midi.header.timeSignatures[0];
+    const key = keyEntry ? `${keyEntry.key} ${keyEntry.scale}` : '—';
+    const sig = tsEntry ? tsEntry.timeSignature.join('/') : '4/4';
+    const allNotes = midi.tracks.flatMap(t => t.notes || []);
+    const pitches = allNotes.map(n => n.midi);
+    const trackInstruments = midi.tracks
+      .filter(t => t.notes && t.notes.length > 0)
+      .map(t => t.instrument?.name || `prog ${t.instrument?.number ?? 0}`)
+      .slice(0, 4);
+    return {
+      bpm: Math.round(tempo),
+      key,
+      timeSig: sig,
+      duration: midi.duration,
+      noteCount: allNotes.length,
+      trackCount: midi.tracks.filter(t => (t.notes || []).length > 0).length,
+      pitchRange: pitches.length ? `${midiToName(Math.min(...pitches))}~${midiToName(Math.max(...pitches))}` : '—',
+      topInstruments: trackInstruments,
+      beatSec: 60 / tempo,
+      cycleSec: 4 * (60 / tempo),   // 4-frame dance cycle = 4 beats
+    };
+  }
+
+  function renderAnalysisPanel(info) {
+    const items = [
+      ['TEMPO', `${info.bpm} BPM`],
+      ['KEY',   info.key],
+      ['METER', info.timeSig],
+      ['LENGTH', fmtTime(info.duration)],
+      ['TRACKS', `${info.trackCount}`],
+      ['NOTES', `${info.noteCount}`],
+      ['RANGE', info.pitchRange],
+      ['DANCE CYCLE', `${info.cycleSec.toFixed(2)}s (4 beats)`],
+    ];
+    const panel = document.getElementById('analysis-panel');
+    panel.innerHTML = items.map(([l, v], i) => `
+      <div class="analysis-item"><span class="label">${l}</span><span class="value">${v}</span></div>
+      ${i < items.length - 1 ? '<div class="analysis-sep"></div>' : ''}
+    `).join('');
+    panel.classList.remove('hidden');
+  }
+
+  async function previewAnalysis(url) {
+    try {
+      const buf = await fetch(url).then(r => r.arrayBuffer());
+      const m = new Midi(buf);
+      const info = analyzeMidi(m);
+      renderAnalysisPanel(info);
+      return info;
+    } catch (e) {
+      console.warn('previewAnalysis failed:', e);
+      return null;
+    }
   }
 
   // ============ Globals ============
@@ -477,6 +739,15 @@
   let playStartedAt = 0;         // Tone.now() at playback start
   let totalDuration = 0;
   let isPlaying = false;
+  let danceCycleSec = 1.6;       // updated per song
+  // Pitch timeline (precomputed per song) — index = floor(t/PITCH_DT)
+  const PITCH_DT = 0.05;
+  let pitchTimeline = null;      // Array<{normPitch, velocity}>
+  let pitchSmooth = 0.5;         // exponentially smoothed pitch (avoids jitter)
+  let glowSmooth = 0;
+  // Pitch-band split — 6 bands by song's actual pitch range, each band → 1 dancer
+  let pitchBandsOnsets = null;   // Array<Array<{t, vel}>>  (length 6)
+  let pitchBandLabels = null;    // Array<{low, high}> midi numbers
 
   // ============ Stage tabs ============
   stageTabs.addEventListener('click', e => {
@@ -612,6 +883,8 @@
     for (const slug of Object.keys(characterEntries)) {
       setCharacterMode(slug, isActiveAt(slug, t) ? 'playing' : 'resting');
     }
+    // Back tier — real-time pitch reactive dancers
+    updateDancersPitch(t);
     updateActiveBarMode();
     // Progress + time
     progressFill.style.width = `${(t / totalDuration) * 100}%`;
@@ -691,8 +964,12 @@
       nextPosIdx = 0;
       hintEl.classList.add('hidden');
       progressFill.style.width = '0%';
-      // Back tier — autonomous dance troupe (MIDI-independent, randomized each playback)
-      spawnDanceTroupe();
+      // Back tier — autonomous dance troupe synced to song BPM (1/N wave stagger)
+      const info = analyzeMidi(midi);
+      renderAnalysisPanel(info);
+      precomputePitchTimeline(midi);
+      precomputePitchBands(midi, 6);
+      spawnDanceTroupe(info.cycleSec);
       // Build synths + schedule (fresh)
       const synthByChar = createSynths();
       scheduleNotes(synthByChar);
@@ -740,7 +1017,12 @@
     hintEl.classList.remove('hidden');
     timeDisplay.textContent = '0:00 / 0:00';
     progressFill.style.width = '0%';
+    // Pre-analysis preview (load song meta without playback)
+    previewAnalysis(midiSelect.value);
   });
+
+  // Initial preview on page load
+  previewAnalysis(midiSelect.value);
 </script>
 
 </body>
