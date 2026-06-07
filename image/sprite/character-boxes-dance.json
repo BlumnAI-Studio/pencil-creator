@@ -1,0 +1,49 @@
+{
+  "source": "image/sprite/댄스단컨셉.png",
+  "image_size": [1536, 1024],
+  "note": "Boxes estimated by 6×6 grid heuristic on 2026-06-07. (left, top, right, bottom) in PIL crop format. Label area on left of each row (kpop/hiphop/etc text); character grid starts at x≈600. ±15px margin baked in.",
+  "styles": ["kpop", "hiphop", "jazz", "ballet", "cheer", "waacking"],
+  "characters": [
+    { "slug": "kpop-1",     "style": "kpop",     "row": 0, "col": 0, "box": [600,  60,  745, 200] },
+    { "slug": "kpop-2",     "style": "kpop",     "row": 0, "col": 1, "box": [745,  60,  890, 200] },
+    { "slug": "kpop-3",     "style": "kpop",     "row": 0, "col": 2, "box": [890,  60, 1035, 200] },
+    { "slug": "kpop-4",     "style": "kpop",     "row": 0, "col": 3, "box": [1035, 60, 1180, 200] },
+    { "slug": "kpop-5",     "style": "kpop",     "row": 0, "col": 4, "box": [1180, 60, 1325, 200] },
+    { "slug": "kpop-6",     "style": "kpop",     "row": 0, "col": 5, "box": [1325, 60, 1500, 200] },
+
+    { "slug": "hiphop-1",   "style": "hiphop",   "row": 1, "col": 0, "box": [600, 215,  745, 355] },
+    { "slug": "hiphop-2",   "style": "hiphop",   "row": 1, "col": 1, "box": [745, 215,  890, 355] },
+    { "slug": "hiphop-3",   "style": "hiphop",   "row": 1, "col": 2, "box": [890, 215, 1035, 355] },
+    { "slug": "hiphop-4",   "style": "hiphop",   "row": 1, "col": 3, "box": [1035,215, 1180, 355] },
+    { "slug": "hiphop-5",   "style": "hiphop",   "row": 1, "col": 4, "box": [1180,215, 1325, 355] },
+    { "slug": "hiphop-6",   "style": "hiphop",   "row": 1, "col": 5, "box": [1325,215, 1500, 355] },
+
+    { "slug": "jazz-1",     "style": "jazz",     "row": 2, "col": 0, "box": [600, 370,  745, 510] },
+    { "slug": "jazz-2",     "style": "jazz",     "row": 2, "col": 1, "box": [745, 370,  890, 510] },
+    { "slug": "jazz-3",     "style": "jazz",     "row": 2, "col": 2, "box": [890, 370, 1035, 510] },
+    { "slug": "jazz-4",     "style": "jazz",     "row": 2, "col": 3, "box": [1035,370, 1180, 510] },
+    { "slug": "jazz-5",     "style": "jazz",     "row": 2, "col": 4, "box": [1180,370, 1325, 510] },
+    { "slug": "jazz-6",     "style": "jazz",     "row": 2, "col": 5, "box": [1325,370, 1500, 510] },
+
+    { "slug": "ballet-1",   "style": "ballet",   "row": 3, "col": 0, "box": [600, 525,  745, 665] },
+    { "slug": "ballet-2",   "style": "ballet",   "row": 3, "col": 1, "box": [745, 525,  890, 665] },
+    { "slug": "ballet-3",   "style": "ballet",   "row": 3, "col": 2, "box": [890, 525, 1035, 665] },
+    { "slug": "ballet-4",   "style": "ballet",   "row": 3, "col": 3, "box": [1035,525, 1180, 665] },
+    { "slug": "ballet-5",   "style": "ballet",   "row": 3, "col": 4, "box": [1180,525, 1325, 665] },
+    { "slug": "ballet-6",   "style": "ballet",   "row": 3, "col": 5, "box": [1325,525, 1500, 665] },
+
+    { "slug": "cheer-1",    "style": "cheer",    "row": 4, "col": 0, "box": [600, 680,  745, 820] },
+    { "slug": "cheer-2",    "style": "cheer",    "row": 4, "col": 1, "box": [745, 680,  890, 820] },
+    { "slug": "cheer-3",    "style": "cheer",    "row": 4, "col": 2, "box": [890, 680, 1035, 820] },
+    { "slug": "cheer-4",    "style": "cheer",    "row": 4, "col": 3, "box": [1035,680, 1180, 820] },
+    { "slug": "cheer-5",    "style": "cheer",    "row": 4, "col": 4, "box": [1180,680, 1325, 820] },
+    { "slug": "cheer-6",    "style": "cheer",    "row": 4, "col": 5, "box": [1325,680, 1500, 820] },
+
+    { "slug": "waacking-1", "style": "waacking", "row": 5, "col": 0, "box": [600, 835,  745, 975] },
+    { "slug": "waacking-2", "style": "waacking", "row": 5, "col": 1, "box": [745, 835,  890, 975] },
+    { "slug": "waacking-3", "style": "waacking", "row": 5, "col": 2, "box": [890, 835, 1035, 975] },
+    { "slug": "waacking-4", "style": "waacking", "row": 5, "col": 3, "box": [1035,835, 1180, 975] },
+    { "slug": "waacking-5", "style": "waacking", "row": 5, "col": 4, "box": [1180,835, 1325, 975] },
+    { "slug": "waacking-6", "style": "waacking", "row": 5, "col": 5, "box": [1325,835, 1500, 975] }
+  ]
+}
