@@ -20,3 +20,4 @@
 | 2026-05-08 | v1.1.5 | sample13 추가: BUNYANG 25 TOP 8 Playground (8개 분양 사이트 애니메이션 분석·Three.js 50평대 가상 모델하우스·액자 갤러리·sample12 재질/실사 패널 재활용·CanvasTexture 아쿠아리움 TV) |
 | 2026-06-06 | v1.1.6 | sample14 추가: Pixel Orchestra (첫 S→W ×1.3 실증·@tonejs/midi+Tone.js·19 chibi 동적 등장·5 PD 클래식 MIDI·3 무대 배경·play.png 단일 시트+animation-play-state 토글·SUSTAIN 3.0s grace·v2.7.0 Case S 자산 영입) |
 | 2026-06-07 | v1.1.7 | sample14 v2: 2단 무대 + 댄스단 자율 + 13 PD MIDI (앞 1단 음악단 19명 MIDI 동기화 + 뒤 2단 댄스단 6명 자율 4컷 사이클·K-POP/HIP HOP/JAZZ/BALLET/CHEER/WAACKING 셔플 무작위·192×192 고해상도 시트·MIDI 5→13 추가·Handel/Bach/Brahms/Tchaikovsky/Mahler/Saint-Saëns) |
+| 2026-06-07 | v1.1.8 | sample14 v3: Pitch-Reactive 실시간 효과 (곡 분석 패널 TEMPO/KEY/METER/LENGTH/TRACKS/NOTES/RANGE·BPM 박자 1/N wave stagger 군무·음역대 6분할 댄서별 담당 좌→우 베이스→트레블·onset 발생 시 70px 점프·pitchSmooth bob ±15px + 댄서별 sin wave + velocity glow + hue rotate 실시간) |
