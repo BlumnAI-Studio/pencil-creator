@@ -18,6 +18,7 @@
     --fg-mono: 'JetBrains Mono', 'Geist Mono', ui-monospace, Consolas, monospace;
     --fg-ui: 'Inter', system-ui, -apple-system, sans-serif;
     --char-size: 96px;
+    --dance-size: 132px;
     --idle-fps: 6;
     --play-fps: 10;
   }
@@ -159,6 +160,36 @@
     from { background-position: calc(var(--char-size) * -2  / 48) calc(var(--char-size) * -2 / 48); }
     to   { background-position: calc(var(--char-size) * -202 / 48) calc(var(--char-size) * -2 / 48); }
   }
+
+  /* ========== Dance troupe (back tier — autonomous) ========== */
+  .dance-troupe {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    image-rendering: pixelated;
+  }
+  .dancer {
+    position: absolute;
+    width: var(--dance-size);
+    height: var(--dance-size);
+    background-repeat: no-repeat;
+    /* dance sheet is 808x208 at native 192px frame — scale to --dance-size */
+    background-size: calc(var(--dance-size) * 808 / 192) calc(var(--dance-size) * 208 / 192);
+    background-position: calc(var(--dance-size) * -8 / 192) calc(var(--dance-size) * -8 / 192);
+    image-rendering: pixelated;
+    transform: translate(-50%, -100%);
+    transition: opacity 0.6s;
+    opacity: 0;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7));
+    animation: dance-anim 0.72s steps(4) infinite;
+    animation-play-state: paused;
+  }
+  .dancer.spawned { opacity: 1; }
+  .dancer.dancing { animation-play-state: running; }
+  @keyframes dance-anim {
+    from { background-position: calc(var(--dance-size) * -8  / 192) calc(var(--dance-size) * -8 / 192); }
+    to   { background-position: calc(var(--dance-size) * -808 / 192) calc(var(--dance-size) * -8 / 192); }
+  }
   .character .label {
     position: absolute;
     bottom: -20px;
@@ -282,6 +313,14 @@
     <option value="midi/03-dvorak-newworld-largo.mid">Dvořák · Symphony No.9 "New World" — Largo</option>
     <option value="midi/04-vivaldi-autumn.mid">Vivaldi · Autumn (Four Seasons)</option>
     <option value="midi/05-grieg-morning-mood.mid">Grieg · Morning Mood (Peer Gynt)</option>
+    <option value="midi/06-handel-water-music.mid">Handel · Water Music — Hornpipe</option>
+    <option value="midi/07-bach-toccata-fugue.mid">Bach · Toccata and Fugue in D minor</option>
+    <option value="midi/08-brahms-symphony3-3rd.mid">Brahms · Symphony No.3 — 3rd Theme</option>
+    <option value="midi/09-tchaikovsky-sugarplum.mid">Tchaikovsky · Sugar Plum Fairy</option>
+    <option value="midi/10-mahler-symphony5-4th.mid">Mahler · Symphony No.5 — 4th (Adagietto)</option>
+    <option value="midi/11-mozart-eine-kleine.mid">Mozart · Eine Kleine Nachtmusik — 1st mvt</option>
+    <option value="midi/12-vivaldi-estro-armonico.mid">Vivaldi · L'estro Armonico No.11 — 2nd mvt</option>
+    <option value="midi/13-saint-saens-orchestra.mid">Saint-Saëns · Orchestra Extract</option>
   </select>
   <button class="play-btn" id="play-btn">▶ Play</button>
   <button class="stop-btn" id="stop-btn" disabled>⏹ Stop</button>
@@ -289,18 +328,21 @@
 </header>
 
 <main class="stage" id="stage" style="background-image: url('stages/concert-hall.png')">
+  <!-- back tier — dance troupe (autonomous, MIDI-independent) -->
+  <div class="dance-troupe" id="dance-troupe"></div>
+  <!-- front tier — orchestra (MIDI-synced) -->
   <div class="orchestra" id="orchestra"></div>
   <div class="stage-hint" id="stage-hint">
     <div class="icon">🎼</div>
     <div>Choose a piece and press ▶ Play</div>
-    <div style="font-size:10px; opacity:0.6">Characters spawn as their instruments enter</div>
+    <div style="font-size:10px; opacity:0.6">Orchestra spawns to MIDI · dance troupe performs freely</div>
   </div>
   <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
 </main>
 
 <footer>
   <div class="active-instruments" id="active-instruments"></div>
-  <div class="credits">19 chibi sprites · 5 PD MIDI · @tonejs/midi + Tone.js · Case S→W pipeline (harness v2.7.0)</div>
+  <div class="credits">19 orchestra + 36 dance chibi · 13 PD MIDI · 2-tier stage · @tonejs/midi + Tone.js · Case S→W (harness v2.7.0)</div>
 </footer>
 
 <script type="module">
@@ -367,6 +409,50 @@
     // row 3 — brass & percussion (back)
     { x: 0.35, y: 0.52 }, { x: 0.50, y: 0.52 }, { x: 0.65, y: 0.52 },
   ];
+
+  // ============ Dance troupe (back tier) ============
+  const DANCE_STYLES = ['kpop', 'hiphop', 'jazz', 'ballet', 'cheer', 'waacking'];
+  // 6 positions back tier (y ~38-48% — clearly behind orchestra; staggered for depth)
+  const DANCE_POSITIONS = [
+    { x: 0.18, y: 0.50 },
+    { x: 0.31, y: 0.46 },
+    { x: 0.44, y: 0.43 },
+    { x: 0.56, y: 0.43 },
+    { x: 0.69, y: 0.46 },
+    { x: 0.82, y: 0.50 },
+  ];
+
+  function spawnDanceTroupe() {
+    const wrap = document.getElementById('dance-troupe');
+    wrap.innerHTML = '';
+    // Randomize order so positions don't always show the same style
+    const styles = DANCE_STYLES.slice().sort(() => Math.random() - 0.5);
+    styles.forEach((style, i) => {
+      const num = 1 + Math.floor(Math.random() * 6);
+      const slug = `${style}-${num}`;
+      const pos = DANCE_POSITIONS[i];
+      const el = document.createElement('div');
+      el.className = 'dancer';
+      el.style.left = `${pos.x * 100}%`;
+      el.style.top  = `${pos.y * 100}%`;
+      el.style.backgroundImage = `url('dance/${style}/${slug}.png')`;
+      el.dataset.slug = slug;
+      // Stagger animation start so 6 dancers aren't synchronized
+      el.style.animationDelay = `-${(Math.random() * 0.72).toFixed(2)}s`;
+      wrap.appendChild(el);
+      requestAnimationFrame(() => {
+        el.classList.add('spawned');
+        el.classList.add('dancing');
+      });
+    });
+  }
+
+  function freezeDanceTroupe() {
+    document.querySelectorAll('.dancer').forEach(d => d.classList.remove('dancing'));
+  }
+  function resumeDanceTroupe() {
+    document.querySelectorAll('.dancer').forEach(d => d.classList.add('dancing'));
+  }
 
   // ============ Globals ============
   const orchestraEl = document.getElementById('orchestra');
@@ -605,6 +691,8 @@
       nextPosIdx = 0;
       hintEl.classList.add('hidden');
       progressFill.style.width = '0%';
+      // Back tier — autonomous dance troupe (MIDI-independent, randomized each playback)
+      spawnDanceTroupe();
       // Build synths + schedule (fresh)
       const synthByChar = createSynths();
       scheduleNotes(synthByChar);
@@ -634,6 +722,7 @@
     // Keep characters on stage (user requirement: never remove); just freeze animation
     Object.keys(characterEntries).forEach(slug => setCharacterMode(slug, 'resting'));
     updateActiveBarMode();
+    freezeDanceTroupe();   // also freeze back tier dancers at their current frame
     timeDisplay.textContent = `${fmtTime(0)} / ${fmtTime(totalDuration)}`;
     progressFill.style.width = '0%';
   }
