@@ -1,6 +1,6 @@
 {
   "frames": {
-    "cheer-6_pose_0.png": {
+    "cheer-6_dance_0.png": {
       "frame": {
         "x": 8,
         "y": 8,
@@ -19,7 +19,70 @@
         "w": 192,
         "h": 192
       },
-      "duration": 1000
+      "duration": 180
+    },
+    "cheer-6_dance_1.png": {
+      "frame": {
+        "x": 208,
+        "y": 8,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      },
+      "duration": 180
+    },
+    "cheer-6_dance_2.png": {
+      "frame": {
+        "x": 408,
+        "y": 8,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      },
+      "duration": 180
+    },
+    "cheer-6_dance_3.png": {
+      "frame": {
+        "x": 608,
+        "y": 8,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      },
+      "duration": 180
     }
   },
   "meta": {
@@ -28,18 +91,19 @@
     "image": "cheer-6.png",
     "format": "RGBA8888",
     "size": {
-      "w": 208,
+      "w": 808,
       "h": 208
     },
     "scale": "1",
     "frameTags": [
       {
-        "name": "pose",
+        "name": "dance",
         "from": 0,
-        "to": 0,
+        "to": 3,
         "direction": "forward"
       }
     ],
-    "slug": "cheer-6"
+    "slug": "cheer-6",
+    "style": "cheer"
   }
 }
