@@ -2,85 +2,85 @@
   "frames": {
     "violin_play_0.png": {
       "frame": {
-        "x": 2,
-        "y": 2,
-        "w": 48,
-        "h": 48
+        "x": 8,
+        "y": 8,
+        "w": 192,
+        "h": 192
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 48,
-        "h": 48
+        "w": 192,
+        "h": 192
       },
       "sourceSize": {
-        "w": 48,
-        "h": 48
+        "w": 192,
+        "h": 192
       },
       "duration": 120
     },
     "violin_play_1.png": {
       "frame": {
-        "x": 52,
-        "y": 2,
-        "w": 48,
-        "h": 48
+        "x": 208,
+        "y": 8,
+        "w": 192,
+        "h": 192
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 48,
-        "h": 48
+        "w": 192,
+        "h": 192
       },
       "sourceSize": {
-        "w": 48,
-        "h": 48
+        "w": 192,
+        "h": 192
       },
       "duration": 120
     },
     "violin_play_2.png": {
       "frame": {
-        "x": 102,
-        "y": 2,
-        "w": 48,
-        "h": 48
+        "x": 408,
+        "y": 8,
+        "w": 192,
+        "h": 192
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 48,
-        "h": 48
+        "w": 192,
+        "h": 192
       },
       "sourceSize": {
-        "w": 48,
-        "h": 48
+        "w": 192,
+        "h": 192
       },
       "duration": 120
     },
     "violin_play_3.png": {
       "frame": {
-        "x": 152,
-        "y": 2,
-        "w": 48,
-        "h": 48
+        "x": 608,
+        "y": 8,
+        "w": 192,
+        "h": 192
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 48,
-        "h": 48
+        "w": 192,
+        "h": 192
       },
       "sourceSize": {
-        "w": 48,
-        "h": 48
+        "w": 192,
+        "h": 192
       },
       "duration": 120
     }
@@ -91,8 +91,8 @@
     "image": "play.png",
     "format": "RGBA8888",
     "size": {
-      "w": 202,
-      "h": 52
+      "w": 808,
+      "h": 208
     },
     "scale": "1",
     "frameTags": [

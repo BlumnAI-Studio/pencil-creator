@@ -196,6 +196,10 @@ def cmd_process(args) -> int:
     output_dir = pathlib.Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     target_w, target_h = parse_size(args.target_size)
+    # Scale SHEET_PADDING proportionally to maintain consistent sheet/frame ratio
+    # (default base = 48px frame -> 2px padding; 192px frame -> 8px)
+    global SHEET_PADDING
+    SHEET_PADDING = max(1, 2 * target_w // 48)
 
     pattern = f"*-{args.character}-{args.pose}-f*.png"
     raw_files = sorted(raw_dir.glob(pattern))
@@ -241,6 +245,12 @@ def cmd_assemble(args) -> int:
     boxes = json.loads(pathlib.Path(args.boxes).read_text(encoding="utf-8"))
     actions = args.actions.split(",")
     slugs = [c["slug"] for c in boxes["characters"]]
+
+    # Override frame + padding from --target-size if provided
+    global TARGET_W, TARGET_H, SHEET_PADDING
+    if getattr(args, "target_size", None):
+        TARGET_W, TARGET_H = parse_size(args.target_size)
+        SHEET_PADDING = max(1, 2 * TARGET_W // 48)
 
     cell_w = len(actions) * (TARGET_W + SHEET_PADDING) + SHEET_PADDING
     cell_h = TARGET_H + 2 * SHEET_PADDING
@@ -457,6 +467,7 @@ def main() -> int:
     a.add_argument("--output-dir", required=True, help="design/sprite/output/")
     a.add_argument("--boxes", required=True, help="image/sprite/character-boxes.json")
     a.add_argument("--actions", default="idle,play", help="comma-separated action names")
+    a.add_argument("--target-size", default=None, help="WxH override (default uses 24x32 base)")
     a.set_defaults(func=cmd_assemble)
 
     e = sub.add_parser("evaluate", help="Compute Case S 3-axis score for a target character dir")
