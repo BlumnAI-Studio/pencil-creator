@@ -1,13 +1,27 @@
 {
   "name": "pencil-design-harness",
-  "version": "2.7.0",
-  "description": "Pencil Design 품질 하네스 — Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹→JSON→펜슬 컴포넌트), Case D(DesignMD→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML) 평가",
+  "version": "2.8.0",
+  "description": "Pencil Design 품질 하네스 — Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹→JSON→펜슬 컴포넌트), Case D(DesignMD→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML) 평가 · v2.8.0에서 sprite-animator 전문가 도입",
   "scope": "pencil-design",
   "layers": {
     "knowledge": "harness/knowledge/",
     "agents": "harness/agents/",
     "engine": "harness/engine/"
   },
+  "agents": [
+    { "name": "design-evaluator", "path": "harness/agents/design-evaluator.md", "scope": "all-cases" },
+    { "name": "sprite-animator",  "path": "harness/agents/sprite-animator.md",  "scope": "case-S", "since": "v2.8.0" }
+  ],
+  "engine_workflows": [
+    { "name": "design-journey",        "path": "harness/engine/design-journey.md",         "scope": "all-cases" },
+    { "name": "sprite-animation-flow", "path": "harness/engine/sprite-animation-flow.md",  "scope": "case-S", "since": "v2.8.0" },
+    { "name": "level-achievement",     "path": "harness/engine/level-achievement-system.md", "scope": "rpg" }
+  ],
+  "knowledge_docs": [
+    { "name": "design-craft",            "path": "harness/knowledge/design-craft.md" },
+    { "name": "midi-orchestra",          "path": "harness/knowledge/midi-orchestra.md" },
+    { "name": "sprite-animation-craft",  "path": "harness/knowledge/sprite-animation-craft.md", "since": "v2.8.0" }
+  ],
   "evaluation": {
     "design": {
       "cases": {
