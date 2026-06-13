@@ -1,7 +1,7 @@
 {
   "name": "pencil-design-harness",
-  "version": "2.8.0",
-  "description": "Pencil Design 품질 하네스 — Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹→JSON→펜슬 컴포넌트), Case D(DesignMD→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML) 평가 · v2.8.0에서 sprite-animator 전문가 도입",
+  "version": "2.9.0",
+  "description": "Pencil Design 품질 하네스 — Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹→JSON→펜슬 컴포넌트), Case D(DesignMD→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML) 평가 · v2.8.0 sprite-animator 도입 · v2.9.0 gpt-image-2 프로바이더 + 실제 영상 동작 분석 입력 소스 + 통합 자산 플레이어",
   "scope": "pencil-design",
   "layers": {
     "knowledge": "harness/knowledge/",
@@ -74,7 +74,8 @@
   "skills": {
     "pencil-design": {
       "path": ".claude/skills/pencil-design/",
-      "current_version": "1.4.0"
+      "current_version": "1.5.0",
+      "note": "v1.5.0: OpenAI gpt-image-2 이미지 프로바이더 추가 (generate+edit, urllib only)"
     },
     "harness-creator": {
       "path": ".claude/skills/harness-creator/",
@@ -83,6 +84,12 @@
     "harness-usage": {
       "path": ".claude/skills/harness-usage/",
       "current_version": "2.6.0"
+    },
+    "video-motion-analysis": {
+      "path": ".claude/skills/video-motion-analysis/",
+      "current_version": "1.0.0",
+      "scope": "case-S-input",
+      "note": "실제 영상(YouTube/로컬) 동작 분석 → 스프라이트 모션 키프레임 입력 소스 (Case S 피더)"
     }
   }
 }

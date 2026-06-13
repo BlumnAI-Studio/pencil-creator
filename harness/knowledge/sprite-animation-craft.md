@@ -12,8 +12,25 @@
 |------|------|--------|------|-----------|
 | 간소 (single-pose) | 컨셉아트 1장 | 1 라운드 × N 캐릭터 | 1프레임 시트 + JSON | 캐릭터맵, 카탈로그 |
 | 풀 (multi-frame) | 컨셉아트 1장 + 검증된 reference | 2 라운드 (single-pose → cycle) | 4프레임 시트 + JSON + master + index | 게임 자산, sample14 |
+| 확장 (rich multi-frame) | **실제 영상 동작 분석** + gpt-image-2 컨셉 | 컨셉 1 + 프레임 N(가변) | idle 6f + play 8f 등 **가변 프레임** 시트 + JSON | 자연 동작 강조 캐릭터 (vocal-ex) |
 
 간소 모드의 산출물을 **풀 모드의 reference로 재활용**하는 게 일관성의 핵심 — 한 번 검증된 캐릭터 정체성이 다음 라운드에서도 유지된다.
+
+### 입력 소스 — 실제 영상 동작 분석 (v2.9.0~)
+
+컨셉아트가 없어도 **실제 영상(YouTube/로컬)의 인물 동작**을 모션 소스로 삼을 수 있다.
+`video-motion-analysis` 스킬(yt-dlp + ffmpeg 콘택트 시트)로 구간별 프레임을 추출해
+**동작 어휘**(베이스 포즈 · 반복 모션 · 클라이맥스 · 전환)를 뽑고, 이를 스프라이트
+프레임의 키포즈로 매핑한다. 추상적 idle/play 대신 실측 동작을 쓰면 모션이 자연스럽다.
+- 실증: vocal-ex = FIFA 'DNA' 무대 가수 47–55초 시퀀스(마이크홀드→헤드스웨이→챈업→양팔 거상)
+  → play 8프레임 키포즈. video-motion-analysis → Case S 파이프라인.
+
+### 프레임 스코프는 동작 복잡도에 맞춘다
+
+기본 4f가 표준이나, **자연 동작이 핵심인 캐릭터는 프레임을 늘린다**. 단순 루프(악기 연주)는
+4f로 충분하지만, 발성 프레이즈처럼 도입→전개→클라이맥스→피날레 아크가 있으면 6~8f가 자연스럽다.
+- vocal-ex: idle 6f + play 8f (기존 vocal 4+4=8f 대비 1.75배) → S1/S3 만점, S2 28.
+- 주의: 프레임 수만큼 이미지 생성 호출이 늘어 비용↑ → 파일럿 게이트로 스타일 선검증 후 확장.
 
 ---
 
@@ -93,6 +110,26 @@ reference 선택 우선순위:
 1. `image/sprite/crops/{slug}.png` — 컨셉아트 직접 크롭 (1라운드)
 2. `image/sprite/raw_dance/{style}/{slug}.png` — 1라운드 검증된 결과 (2라운드 multi-frame)
 3. `image/sprite/raw{*}/{slug}-pose-fN.png` — 동일 캐릭터의 다른 정상 프레임 (fix-pass)
+
+### 4-3. gpt-image-2 (OpenAI) provider — 컨셉 reference 일관성 (v2.9.0~)
+
+Gemini 외 대안 프로바이더. `image-gen.py --provider openai` (별칭 `gpt-image-2`/`gpt2`).
+**시드 파라미터가 없어도** 캐릭터 일관성을 확보하는 패턴:
+
+```
+1. generate 1회 → 캐릭터 디자인 컨셉 시트 (정면+표정 썸네일 포함) 생성
+2. 그 컨셉 시트를 edit() 의 input_image reference 로 "고정"
+3. 모든 프레임을 동일 컨셉 reference + 명시적 포즈 desc 로 edit() 호출
+```
+
+- 컨셉을 전 프레임 공통 reference로 고정 = Gemini 시드 고정의 대안. 14프레임 내내 머리/의상/소품 유지.
+- 프롬프트에 `redraw THIS exact character ... as ONE single full-body sprite, on solid #00FF00 green`
+  + `no other characters, no thumbnails` 를 명시 (컨셉 시트의 썸네일 오염 방지).
+- 의존성 없음(urllib). 시크릿 `.secret/openai.json`(`image_model: "gpt-image-2"`).
+- 실증: vocal-ex 14프레임, 그린 잔여 0px, S1 35/35. 파일럿 3프레임 선검증 후 전체 진행.
+
+> 선택 가이드: 대량(19~36명 × 다프레임)·시드 재현성 필요 → **Gemini**. 단일 캐릭터·풍부한 표정/포즈
+> + 컨셉 우선 설계 → **gpt-image-2**. 편집(edit)은 두 프로바이더 모두 지원.
 
 ---
 
@@ -201,9 +238,19 @@ background-size: calc(var(--char-size) * 202 / 48) ...;
 
 표준 필드: `frames`, `meta.app/version/image/format/size/scale/frameTags/slug`. 이 포맷이 Phaser·Godot에서 즉시 로드 가능.
 
-### 7-4. sample14 미러
+### 7-4. sample{N} 미러 — 배포 자산 번들링 규칙
 
-`design/sprite/output{*}/...`을 `design/xaml/output/sample14/{sprites|dance}/...`에 복사. 미러는 후처리 스크립트의 마지막 단계에서 자동 처리.
+`design/sprite/output{*}/...`을 `design/xaml/output/sample{N}/...`에 복사.
+**핵심 규칙**: GitHub Pages publish 경로가 `design/xaml/output` 이므로, 그 밖(`design/sprite/output`)의
+스프라이트 시트는 배포되지 않는다. **반드시 sample{N} 폴더 안으로 자산을 번들**해야 라이브에서 보인다.
+
+### 7-5. 통합 자산 플레이어 (sample15, v2.9.0~)
+
+여러 컬렉션을 한 페이지에서 재생·검수하는 패턴. 자산 매니페스트(`manifest.js` 전역 변수 →
+file:// 에서도 fetch 없이 동작)에 그룹/캐릭터/액션/프레임수를 기록하고, 캔버스로 프레임 슬라이스
+애니메이션. 그룹 필터 탭 + 액션 전환(idle/play/dance) + 속도 슬라이더.
+- 실증: sample15 = 악단15 + 가수4 + 댄스36 + vocal-ex = 56캐릭터 / 76 PNG 번들.
+- 프레임 좌표는 시트 규격(192px + padding 8)으로 JS에서 계산 → JSON 런타임 fetch 불필요.
 
 ---
 
