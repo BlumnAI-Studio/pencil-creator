@@ -85,6 +85,104 @@ window.MANIFEST = {
       ]
     },
     {
+      "id": "vox7",
+      "name": "걸그룹 vox7 (스탠드 댄스) ⭐",
+      "highlight": true,
+      "chars": [
+        {
+          "slug": "vox7-1",
+          "actions": {
+            "idle": {
+              "file": "assets/vox7/vox7-1/idle.png",
+              "frames": 6
+            },
+            "dance": {
+              "file": "assets/vox7/vox7-1/dance.png",
+              "frames": 8
+            }
+          }
+        },
+        {
+          "slug": "vox7-2",
+          "actions": {
+            "idle": {
+              "file": "assets/vox7/vox7-2/idle.png",
+              "frames": 6
+            },
+            "dance": {
+              "file": "assets/vox7/vox7-2/dance.png",
+              "frames": 8
+            }
+          }
+        },
+        {
+          "slug": "vox7-3",
+          "actions": {
+            "idle": {
+              "file": "assets/vox7/vox7-3/idle.png",
+              "frames": 6
+            },
+            "dance": {
+              "file": "assets/vox7/vox7-3/dance.png",
+              "frames": 8
+            }
+          }
+        },
+        {
+          "slug": "vox7-4",
+          "actions": {
+            "idle": {
+              "file": "assets/vox7/vox7-4/idle.png",
+              "frames": 6
+            },
+            "dance": {
+              "file": "assets/vox7/vox7-4/dance.png",
+              "frames": 8
+            }
+          }
+        },
+        {
+          "slug": "vox7-5",
+          "actions": {
+            "idle": {
+              "file": "assets/vox7/vox7-5/idle.png",
+              "frames": 6
+            },
+            "dance": {
+              "file": "assets/vox7/vox7-5/dance.png",
+              "frames": 8
+            }
+          }
+        },
+        {
+          "slug": "vox7-6",
+          "actions": {
+            "idle": {
+              "file": "assets/vox7/vox7-6/idle.png",
+              "frames": 6
+            },
+            "dance": {
+              "file": "assets/vox7/vox7-6/dance.png",
+              "frames": 8
+            }
+          }
+        },
+        {
+          "slug": "vox7-7",
+          "actions": {
+            "idle": {
+              "file": "assets/vox7/vox7-7/idle.png",
+              "frames": 6
+            },
+            "dance": {
+              "file": "assets/vox7/vox7-7/dance.png",
+              "frames": 8
+            }
+          }
+        }
+      ]
+    },
+    {
       "id": "orchestra",
       "name": "악단 Orchestra",
       "chars": [
