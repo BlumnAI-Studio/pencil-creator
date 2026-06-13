@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>vocal-ex — 스프라이트 애니메이션 프리뷰</title>
+<style>
+  :root { --bg:#0e1320; --panel:#19203200; --ink:#e8edf7; --sub:#8a93a8; --accent:#5fb0d6; --gold:#c9a24b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:radial-gradient(circle at 50% 0%, #1a2236, #0a0e18 70%); color:var(--ink);
+         font-family:"Segoe UI",system-ui,sans-serif; min-height:100vh; padding:32px 16px; }
+  h1 { font-size:20px; margin:0 0 4px; letter-spacing:.5px; }
+  h1 b { color:var(--gold); }
+  .sub { color:var(--sub); font-size:13px; margin-bottom:24px; }
+  .stage { display:flex; gap:32px; justify-content:center; flex-wrap:wrap; }
+  .card { background:linear-gradient(180deg,#141b2c,#0d1320); border:1px solid #243049;
+          border-radius:16px; padding:18px 18px 14px; box-shadow:0 12px 40px #0008; text-align:center; }
+  .label { font-size:12px; text-transform:uppercase; letter-spacing:2px; color:var(--accent); margin-bottom:10px; }
+  canvas { image-rendering:pixelated; background:
+            repeating-conic-gradient(#1c2030 0% 25%, #161a28 0% 50%) 50% / 22px 22px; border-radius:10px; }
+  .meta { color:var(--sub); font-size:11px; margin-top:10px; }
+  .controls { text-align:center; margin-top:24px; }
+  button { background:#1d2741; color:var(--ink); border:1px solid #31405f; border-radius:8px;
+           padding:8px 16px; font-size:13px; cursor:pointer; margin:0 4px; }
+  button:hover { border-color:var(--accent); }
+  .arc { max-width:760px; margin:28px auto 0; color:var(--sub); font-size:12px; line-height:1.7;
+         border-top:1px solid #243049; padding-top:16px; }
+  .arc b { color:var(--ink); }
+</style>
+</head>
+<body>
+  <h1><b>vocal-ex</b> — 보컬 확장 스프라이트 (실제 가수 동작 분석 기반)</h1>
+  <div class="sub">FIFA 월드컵 'DNA' 무대 가수 동작 분석 → gpt-image-2 컨셉 → 14프레임 스프라이트 셋트 · 192×192 · Aseprite Hash JSON</div>
+
+  <div class="stage">
+    <div class="card">
+      <div class="label">idle · 6 frames</div>
+      <canvas id="idle" width="220" height="220"></canvas>
+      <div class="meta">마이크 가슴 · 호흡/미세 스웨이 · 120ms/frame</div>
+    </div>
+    <div class="card">
+      <div class="label">play (sing) · 8 frames</div>
+      <canvas id="play" width="220" height="220"></canvas>
+      <div class="meta">마이크 입가 → 헤드스웨이 → 챈업 클라이맥스 → 양팔 거상</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="setSpeed(0.5)">0.5×</button>
+    <button onclick="setSpeed(1)">1×</button>
+    <button onclick="setSpeed(2)">2×</button>
+  </div>
+
+  <div class="arc">
+    <b>노래 동작 아크 (play):</b> f0 마이크 들어올림 → f1 입가·고개 좌향 → f2 정면 발성 →
+    f3 턱 들기 시작 → <b>f4 챈업 클라이맥스(고음)</b> → f5 지속음·고개 우향 →
+    f6 왼팔 상승 → <b>f7 양팔 거상 피날레</b>. 실제 가수의 47–55초 클로즈업 시퀀스를 모션 키프레임으로 재구성.
+  </div>
+
+<script>
+// 프레임 레이아웃은 sprite-postprocess 규격과 동일 (192px frame, 8px padding)
+const FW = 192, PAD = 8;
+const ACTIONS = {
+  idle: { img: "idle.png",  n: 6 },
+  play: { img: "play.png",  n: 8 },
+};
+let speed = 1;
+function setSpeed(s){ speed = s; }
+
+function rects(n){
+  const r = [];
+  for (let i=0;i<n;i++) r.push({ x: PAD + i*(FW+PAD), y: PAD, w: FW, h: FW });
+  return r;
+}
+
+function run(canvasId, action){
+  const cv = document.getElementById(canvasId);
+  const ctx = cv.getContext("2d");
+  ctx.imageSmoothingEnabled = false;
+  const img = new Image();
+  img.src = action.img;
+  const r = rects(action.n);
+  let frame = 0, last = 0;
+  const DUR = 120; // ms
+  img.onload = () => {
+    function loop(t){
+      if (!last) last = t;
+      if ((t - last) * speed >= DUR){ frame = (frame + 1) % action.n; last = t; }
+      const s = r[frame];
+      ctx.clearRect(0,0,cv.width,cv.height);
+      // 하단 정렬 + 약간의 여백
+      const scale = Math.min(cv.width/s.w, cv.height/s.h) * 0.96;
+      const dw = s.w*scale, dh = s.h*scale;
+      ctx.drawImage(img, s.x, s.y, s.w, s.h, (cv.width-dw)/2, cv.height-dh, dw, dh);
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  };
+}
+run("idle", ACTIONS.idle);
+run("play", ACTIONS.play);
+</script>
+</body>
+</html>
