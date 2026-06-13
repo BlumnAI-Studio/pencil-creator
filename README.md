@@ -219,6 +219,40 @@ Converts the .pen file's static design + animation guide into HTML/CSS/JS.
 | W2 Animation Fidelity | 35 | Were the animation guides actually implemented? |
 | W3 Creative Extension | 30 | Were interactions beyond the design added? |
 
+### Case S: Sprite Animation (Concept / Video -> Sprite Sheet)
+
+```bash
+> "Make sprite sheets from this concept art"
+> "Analyze this YouTube singer's motion and build a vocal-ex sprite"
+```
+
+Turns concept art **or a real video's motion** into background-transparent, game/web-ready
+sprite sheets (Aseprite Hash JSON). Two image providers are supported — **Gemini** (batch,
+seed-fixed consistency) and **OpenAI gpt-image-2** (concept-as-reference consistency, no seed).
+Real footage can be analyzed first via the `video-motion-analysis` skill (yt-dlp + ffmpeg
+contact sheets) to extract a motion vocabulary, which is then mapped to sprite keyframes.
+
+**Featured case — `vocal-ex`** (FIFA World Cup 'DNA' stage singer):
+the singer's 47–55s close-up sequence was analyzed, a character concept was generated with
+gpt-image-2, then 14 frames (idle 6 + play 8 — 1.75x the standard 8) were produced and
+post-processed (HSV matte -> palette quantize -> Aseprite JSON). Case S score: **93 / A**.
+
+Concept (gpt-image-2) -> sprite sheet (play, 8 frames):
+
+![vocal-ex concept](image/openai/2026-06-13-vocal-ex-concept.png)
+
+![vocal-ex play sheet](design/sprite/output/vocal-ex/play.png)
+
+> The motion arc: mic raise -> head sway -> **chin-up climax** -> sustain -> **both-arms finale**.
+> A live player for all sprite collections (orchestra + vocal + dance + vocal-ex) ships as
+> `sample15` — see the [demo site](https://psmon.github.io/pencil-creator/sample15/).
+
+| Evaluation Axis | Max Score | Key Criteria |
+|-----------------|-----------|-------------|
+| S1 Character Fidelity | 35 | Concept vs. frame 0 palette/identity consistency |
+| S2 Animation Quality | 35 | Frame count, grid alignment, loop seam |
+| S3 Engineering Usability | 30 | Alpha, Aseprite JSON, packed master + index |
+
 ### Pipeline Bonus
 
 | Path | Condition | XP Bonus |
@@ -226,7 +260,9 @@ Converts the .pen file's static design + animation guide into HTML/CSS/JS.
 | A -> B | Both 60+ pts | x1.2 |
 | A -> W | Both 60+ pts | x1.2 |
 | B -> W | Both 60+ pts | x1.3 |
+| S -> W | Both 60+ pts | x1.3 |
 | A -> B -> W | All 60+ pts | x1.5 |
+| S -> B -> W | All 60+ pts | x1.5 |
 
 ---
 
