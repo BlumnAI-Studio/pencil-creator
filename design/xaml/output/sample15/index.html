@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample 15 — 스프라이트 자산 플레이어 (악단·가수·댄스·Vocal EX)</title>
+<style>
+  :root{
+    --bg0:#080b14; --bg1:#0f1626; --panel:#121a2c; --panel2:#0c1322;
+    --line:#23304b; --ink:#e9eef9; --sub:#8893ab; --accent:#5fb0d6; --gold:#c9a24b;
+    --new:#e4324f;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#1a2540,var(--bg0) 70%);
+       color:var(--ink);font-family:"Segoe UI",system-ui,sans-serif;}
+  .wrap{max-width:1280px;margin:0 auto;padding:28px 18px 80px;}
+  header h1{font-size:24px;margin:0 0 6px;letter-spacing:.4px;}
+  header h1 b{color:var(--gold);}
+  header .sub{color:var(--sub);font-size:13.5px;line-height:1.6;max-width:780px;}
+  .pill{display:inline-block;font-size:11px;color:var(--accent);border:1px solid var(--line);
+        border-radius:999px;padding:2px 10px;margin-right:6px;background:#0e1626;}
+
+  /* featured */
+  .featured{margin:26px 0 8px;background:linear-gradient(180deg,#15203a,#0c1322);
+            border:1px solid #2a3a5c;border-radius:18px;padding:20px 22px;box-shadow:0 16px 50px #0009;}
+  .featured .ttl{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+  .featured .ttl .badge{background:var(--new);color:#fff;font-size:10px;padding:2px 7px;border-radius:6px;margin-left:8px;letter-spacing:1px;}
+  .featured .row{display:flex;gap:24px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+  .feat-card{text-align:center;}
+  .feat-card .lab{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+  .arc{flex:1;min-width:280px;color:var(--sub);font-size:12.5px;line-height:1.8;}
+  .arc b{color:var(--ink);} .arc .hot{color:var(--gold);}
+
+  /* controls */
+  .controls{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+            background:rgba(10,14,24,.82);backdrop-filter:blur(8px);border:1px solid var(--line);
+            border-radius:12px;padding:10px 14px;margin:22px 0;}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;}
+  .tab{background:#142036;color:var(--sub);border:1px solid var(--line);border-radius:8px;
+       padding:6px 13px;font-size:12.5px;cursor:pointer;}
+  .tab.active{color:#fff;border-color:var(--accent);background:#1c2c49;}
+  .spacer{flex:1;}
+  .ctl{display:flex;align-items:center;gap:7px;color:var(--sub);font-size:12px;}
+  input[type=range]{accent-color:var(--accent);}
+  button.act{background:#1d2741;color:var(--ink);border:1px solid #31405f;border-radius:8px;
+             padding:6px 12px;font-size:12px;cursor:pointer;}
+  button.act:hover{border-color:var(--accent);}
+
+  .section-h{margin:26px 0 12px;font-size:14px;letter-spacing:1px;color:var(--ink);
+             display:flex;align-items:center;gap:10px;}
+  .section-h .cnt{color:var(--sub);font-size:12px;font-weight:400;}
+  .section-h::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}
+  .card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+        border-radius:14px;padding:12px 10px 10px;text-align:center;transition:.15s;}
+  .card:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .card.hl{border-color:var(--new);box-shadow:0 0 0 1px var(--new) inset;}
+  canvas{image-rendering:pixelated;width:130px;height:130px;
+         background:repeating-conic-gradient(#1a1f2e 0% 25%,#151a27 0% 50%) 50%/18px 18px;border-radius:9px;}
+  .nm{font-size:12.5px;margin-top:8px;color:var(--ink);}
+  .nm .b{font-size:10px;background:var(--new);color:#fff;padding:1px 5px;border-radius:5px;margin-left:5px;}
+  .acts{display:flex;gap:5px;justify-content:center;margin-top:7px;}
+  .ab{font-size:10.5px;color:var(--sub);border:1px solid var(--line);border-radius:6px;
+      padding:3px 8px;cursor:pointer;background:#0f1828;}
+  .ab.active{color:#fff;border-color:var(--accent);background:#1b2b48;}
+  .ab .fr{color:var(--gold);font-size:9px;margin-left:3px;}
+  footer{margin-top:40px;color:var(--sub);font-size:11.5px;text-align:center;line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🎬 Sample 15 — <b>스프라이트 자산 플레이어</b></h1>
+    <div class="sub">
+      <span class="pill">악단 15</span><span class="pill">가수 4</span>
+      <span class="pill">댄스 36</span><span class="pill">Vocal EX ⭐</span>
+      Pencil Creator 픽셀 음악단·댄스단 + 실제 가수 영상 동작 분석으로 만든 <b style="color:var(--gold)">vocal-ex 확장판</b>까지
+      모든 스프라이트 시트를 한 곳에서 재생·검수합니다. (192×192 · Aseprite Hash JSON)
+    </div>
+  </header>
+
+  <!-- FEATURED: vocal-ex -->
+  <section class="featured" id="featured">
+    <div class="ttl">Featured — vocal-ex<span class="badge">NEW</span></div>
+    <div style="color:var(--sub);font-size:12px;">실제 가수(FIFA 월드컵 'DNA' 무대) 동작 분석 → gpt-image-2 컨셉 → 14프레임 스프라이트</div>
+    <div class="row" id="featRow"></div>
+  </section>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="tabs" id="tabs"></div>
+    <div class="spacer"></div>
+    <div class="ctl">속도 <input type="range" id="speed" min="0.25" max="3" step="0.25" value="1"><span id="spv">1.0×</span></div>
+    <button class="act" id="toggle">⏸ 일시정지</button>
+  </div>
+
+  <div id="sections"></div>
+
+  <footer>
+    Pencil Design Harness · Case S(스프라이트) → Case W(HTML) 파이프라인 · sample15<br>
+    각 캐릭터 카드의 액션 버튼(idle/play/dance)으로 동작 전환 · 상단 탭으로 그룹 필터 · 속도 슬라이더로 재생 속도 조절
+  </footer>
+</div>
+
+<script src="manifest.js"></script>
+<script>
+const M = window.MANIFEST;
+const [FW] = M.frame;       // 192
+const PAD = M.padding;      // 8
+let speed = 1, running = true;
+const animators = [];
+
+function rectFor(i){ return { x: PAD + i*(FW+PAD), y: PAD, w: FW, h: FW }; }
+
+// 캔버스 1개 + 액션맵 → 애니메이터
+function makeAnimator(canvas, actions, startAction){
+  const imgs = {};       // action -> {img, n, loaded}
+  let cur = startAction;
+  const ctx = canvas.getContext("2d");
+  ctx.imageSmoothingEnabled = false;
+  for(const a in actions){
+    const o = { img: new Image(), n: actions[a].frames, loaded:false };
+    o.img.onload = ()=>{ o.loaded = true; };
+    o.img.src = actions[a].file;
+    imgs[a] = o;
+  }
+  let frame = 0, last = 0;
+  const DUR = 120;
+  const anim = {
+    setAction(a){ if(imgs[a]){ cur = a; frame = 0; } },
+    get action(){ return cur; },
+    tick(t){
+      const o = imgs[cur]; if(!o || !o.loaded) return;
+      if(running && (t-last)*speed >= DUR){ frame = (frame+1)%o.n; last = t; }
+      const r = rectFor(frame);
+      const cw = canvas.width, ch = canvas.height;
+      ctx.clearRect(0,0,cw,ch);
+      const sc = Math.min(cw/r.w, ch/r.h)*0.98;
+      const dw = r.w*sc, dh = r.h*sc;
+      ctx.drawImage(o.img, r.x, r.y, r.w, r.h, (cw-dw)/2, ch-dh, dw, dh);
+    }
+  };
+  animators.push(anim);
+  return anim;
+}
+
+// 카드 생성
+function buildCard(ch, highlight){
+  const card = document.createElement("div");
+  card.className = "card" + (highlight ? " hl" : "");
+  const cv = document.createElement("canvas"); cv.width = 200; cv.height = 200;
+  card.appendChild(cv);
+  const acts = Object.keys(ch.actions);
+  const anim = makeAnimator(cv, ch.actions, acts[0]);
+
+  const nm = document.createElement("div"); nm.className = "nm";
+  nm.innerHTML = ch.slug + (ch.badge ? `<span class="b">${ch.badge}</span>` : "");
+  card.appendChild(nm);
+
+  if(acts.length >= 1){
+    const ab = document.createElement("div"); ab.className = "acts";
+    acts.forEach((a,i)=>{
+      const b = document.createElement("div");
+      b.className = "ab" + (i===0 ? " active" : "");
+      b.innerHTML = `${a}<span class="fr">${ch.actions[a].frames}f</span>`;
+      b.onclick = ()=>{ anim.setAction(a); ab.querySelectorAll(".ab").forEach(x=>x.classList.remove("active")); b.classList.add("active"); };
+      ab.appendChild(b);
+    });
+    card.appendChild(ab);
+  }
+  return card;
+}
+
+// FEATURED vocal-ex (큰 플레이어 2종 + 모션 아크)
+function buildFeatured(){
+  const ex = M.groups.find(g=>g.id==="ex").chars[0];
+  const row = document.getElementById("featRow");
+  ["idle","play"].forEach(a=>{
+    if(!ex.actions[a]) return;
+    const wrap = document.createElement("div"); wrap.className="feat-card";
+    const lab = document.createElement("div"); lab.className="lab";
+    lab.textContent = (a==="play"?"play (sing)":"idle") + " · " + ex.actions[a].frames + "f";
+    const cv = document.createElement("canvas"); cv.width=200; cv.height=200;
+    cv.style.width="150px"; cv.style.height="150px";
+    wrap.appendChild(lab); wrap.appendChild(cv);
+    makeAnimator(cv, {[a]:ex.actions[a]}, a);
+    row.appendChild(wrap);
+  });
+  const arc = document.createElement("div"); arc.className="arc";
+  arc.innerHTML = `<b>노래 동작 아크 (play 8f):</b> 마이크 들기 → 입가·좌향 → 정면 발성 → 턱 들기 →
+    <span class="hot">챈업 클라이맥스(고음)</span> → 지속음·우향 → 왼팔 상승 → <span class="hot">양팔 거상 피날레</span>.<br>
+    기존 vocal(idle 4f + play 4f = 8f) → <b>vocal-ex (idle 6f + play 8f = 14f, 1.75배)</b> 확장. 실측 47–55초 시퀀스 기반.`;
+  row.appendChild(arc);
+}
+
+// 그룹 섹션 + 탭
+function buildSections(){
+  const sections = document.getElementById("sections");
+  const tabs = document.getElementById("tabs");
+  const groups = M.groups;
+  // 탭: 전체 + 각 그룹
+  const tabDefs = [{id:"all",name:"전체"}].concat(groups.map(g=>({id:g.id,name:g.name})));
+  tabDefs.forEach((t,i)=>{
+    const b = document.createElement("div"); b.className="tab"+(i===0?" active":""); b.textContent=t.name;
+    b.onclick=()=>{ tabs.querySelectorAll(".tab").forEach(x=>x.classList.remove("active")); b.classList.add("active");
+      document.querySelectorAll("[data-group]").forEach(sec=>{
+        sec.style.display = (t.id==="all"||sec.dataset.group===t.id) ? "" : "none";
+      });
+    };
+    tabs.appendChild(b);
+  });
+  groups.forEach(g=>{
+    const sec = document.createElement("div"); sec.dataset.group = g.id;
+    const h = document.createElement("div"); h.className="section-h";
+    h.innerHTML = `${g.name} <span class="cnt">${g.chars.length}명</span>`;
+    sec.appendChild(h);
+    const grid = document.createElement("div"); grid.className="grid";
+    g.chars.forEach(ch=> grid.appendChild(buildCard(ch, !!g.highlight)));
+    sec.appendChild(grid);
+    sections.appendChild(sec);
+  });
+}
+
+buildFeatured();
+buildSections();
+
+// 글로벌 루프
+function loop(t){ for(const a of animators) a.tick(t); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+// 컨트롤
+document.getElementById("speed").addEventListener("input", e=>{
+  speed = parseFloat(e.target.value); document.getElementById("spv").textContent = speed.toFixed(2)+"×";
+});
+document.getElementById("toggle").addEventListener("click", e=>{
+  running = !running; e.target.textContent = running ? "⏸ 일시정지" : "▶ 재생";
+});
+</script>
+</body>
+</html>

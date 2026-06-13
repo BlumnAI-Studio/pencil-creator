@@ -6,3 +6,4 @@
 __pycache__/
 # video-motion-analysis 스킬이 받은 원본 영상은 대용량이라 제외 (분석 몽타주 PNG는 커밋)
 image/video-analysis/**/video.*
+.claude/settings.local.json
