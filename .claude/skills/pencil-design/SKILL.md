@@ -21,6 +21,7 @@ description: |
   - "이미지 생성해줘", "그림 만들어줘", "일러스트 생성", "이미지 그려줘"
   - "제미나이로 이미지 만들어", "제미나이 이용해 이미지 생성", "Gemini 이미지"
   - "제트이미지를 이용해 이미지생성", "z-image로 그려줘", "ComfyUI로 이미지", "로컬로 이미지 생성"
+  - "gpt로 이미지 만들어", "gpt2 이미지 생성", "gpt-image로 그려줘", "openai 이미지 생성"
   - "OOO 내용으로 이미지 생성해줘" 패턴 모두
   - "이미지 편집해줘", "이 이미지를 수정해줘"
   - 펜슬 카드 삽화/배경/썸네일/HTML 페이지용 이미지가 필요할 때
@@ -673,36 +674,42 @@ tools/RESTORE/
 
 ---
 
-## 13. 이미지 생성 / 편집 (Gemini · ComfyUI Z-Image-Turbo)
+## 13. 이미지 생성 / 편집 (Gemini · ComfyUI Z-Image-Turbo · OpenAI gpt-image-2)
 
 펜슬 카드의 삽화·배경, HTML 페이지의 히어로 이미지, 디자인 레퍼런스 등 이미지가 필요할 때 사용한다.
-프로바이더 추상화 구조로 **Gemini**(클라우드, generate + edit)와 **ComfyUI Z-Image-Turbo**(로컬, generate only)를 지원한다.
+프로바이더 추상화 구조로 **Gemini**(클라우드, generate + edit), **ComfyUI Z-Image-Turbo**(로컬, generate only),
+**OpenAI gpt-image-2**(클라우드, generate + edit)를 지원한다.
 
 ### 13.1 기본 설정
 
 | 항목 | 값 |
 |------|-----|
-| 시크릿 파일 | `.secret/gemini.json` (저장소 루트 기준, ComfyUI는 불필요) |
+| 시크릿 파일 | 서비스별 `.secret/{service}.json` (저장소 루트 기준) — `gemini.json`, `openai.json` 등. ComfyUI는 불필요 |
 | 기본 프로바이더 | `gemini` |
 | 이미지 저장 루트 | `image/` (저장소 루트 기준) |
 | 저장 패턴 | `image/{provider}/{YYYY-MM-DD}-{topic}.png` |
 | 스크립트 | `.claude/skills/pencil-design/scripts/image-gen.py` |
 
-> 환경변수 `GEMINI_SECRET_PATH`, `IMAGE_GEN_ROOT`로 경로 override 가능.
-> 시크릿 형식: `{ "api_key": "...", "image_model": "gemini-3.1-flash-image-preview" }`
+> 환경변수 `GEMINI_SECRET_PATH`, `OPENAI_SECRET_PATH`, `IMAGE_GEN_ROOT`로 경로 override 가능.
+> Gemini 시크릿: `{ "api_key": "...", "image_model": "gemini-3.1-flash-image-preview" }`
+> OpenAI 시크릿: `{ "api_key": "...", "base_url": "https://api.openai.com/v1", "image_model": "gpt-image-2" }`
+> ⚠️ `.secret/*.json`은 `.gitignore`에 등록되어 커밋되지 않는다 — 키는 절대 커밋하지 말 것.
 
 ### 13.2 프로바이더 비교
 
-| 항목 | Gemini | ComfyUI Z-Image-Turbo |
-|------|--------|----------------------|
-| 호출명 | `--provider gemini` | `--provider comfyui` 또는 `z-image` / `z-image-turbo` |
-| 위치 | 클라우드 (Google API) | 로컬 (`http://192.168.0.64:8188`) |
-| API 키 | 필요 (`.secret/gemini.json` → `api_key`) | 불필요 |
-| 모델 | gemini-3.1-flash-image-preview | Z-Image-Turbo BF16 (4 step) |
-| 이미지 편집 | O (generate + edit) | X (text-to-image only) |
-| 비율 지원 | 자유 | 1:1, 16:9, 9:16, 4:3, 3:4 |
-| 속도 | 네트워크 의존 | 로컬 GPU, 약 5–15초 |
-| 주의 | 일일 쿼터 | ComfyUI 서버 실행 필요 |
+| 항목 | Gemini | ComfyUI Z-Image-Turbo | OpenAI gpt-image-2 |
+|------|--------|----------------------|--------------------|
+| 호출명 | `--provider gemini` | `--provider comfyui` / `z-image` / `z-image-turbo` | `--provider openai` / `gpt-image-2` / `gpt2` |
+| 위치 | 클라우드 (Google API) | 로컬 (`http://192.168.0.64:8188`) | 클라우드 (OpenAI API) |
+| API 키 | 필요 (`.secret/gemini.json`) | 불필요 | 필요 (`.secret/openai.json`) |
+| 모델 | gemini-3.1-flash-image-preview | Z-Image-Turbo BF16 (4 step) | gpt-image-2 |
+| 이미지 편집 | O (generate + edit) | X (text-to-image only) | O (generate + edit) |
+| 비율 지원 | 자유 | 1:1, 16:9, 9:16, 4:3, 3:4 | 1:1, 3:2, 2:3, 16:9, 9:16, auto |
+| 속도 | 네트워크 의존 | 로컬 GPU, 약 5–15초 | 네트워크 의존 |
+| 주의 | 일일 쿼터 | ComfyUI 서버 실행 필요 | 토큰 과금 |
+
+> OpenAI는 의존성이 없다(`urllib`만 사용). 비율은 OpenAI 허용 크기로 자동 매핑되며,
+> `--size 1024x1024`처럼 WxH를 직접 주면 그대로 사용한다.
 
 ### 13.3 CLI 사용법
 
@@ -731,17 +738,29 @@ py .claude/skills/pencil-design/scripts/image-gen.py generate \
 
 `--provider` 별칭: `comfyui`, `z-image`, `z-image-turbo` 모두 동일.
 
-#### 이미지 편집 (Gemini only)
+#### 이미지 생성 (OpenAI gpt-image-2)
+
+```bash
+py .claude/skills/pencil-design/scripts/image-gen.py generate \
+  --prompt "A friendly robot reading a book in a cozy library" \
+  --topic robot-reading \
+  --provider openai \
+  --aspect-ratio 16:9
+```
+
+`--provider` 별칭: `openai`, `gpt-image`, `gpt-image-2`, `gpt2` 모두 동일.
+
+#### 이미지 편집 (Gemini / OpenAI)
 
 ```bash
 py .claude/skills/pencil-design/scripts/image-gen.py edit \
   --prompt "배경을 석양이 지는 해변으로 바꿔줘" \
   --input-image image/samsung.jpg \
   --topic samsung-sunset \
-  --provider gemini
+  --provider gemini      # 또는 --provider openai
 ```
 
-> ComfyUI Z-Image-Turbo는 text-to-image 전용이므로 edit 미지원. 편집은 gemini 사용.
+> ComfyUI Z-Image-Turbo는 text-to-image 전용이므로 edit 미지원. 편집은 gemini / openai 사용.
 
 #### 출력 형식
 
@@ -789,7 +808,8 @@ Step 4. (선택) 펜슬 / HTML 통합
 └── providers/
     ├── __init__.py           ← 프로바이더 레지스트리
     ├── gemini_provider.py    ← Gemini 구현 (클라우드, .secret/gemini.json)
-    └── comfyui_provider.py   ← ComfyUI Z-Image-Turbo (로컬, 키 불필요)
+    ├── comfyui_provider.py   ← ComfyUI Z-Image-Turbo (로컬, 키 불필요)
+    └── openai_provider.py    ← OpenAI gpt-image-2 (클라우드, .secret/openai.json)
 ```
 
 향후 프로바이더 추가 시:
@@ -807,6 +827,7 @@ py -m pip install google-genai
 py -m pip install Pillow
 
 # ComfyUI provider — 추가 의존성 없음 (urllib만 사용)
+# OpenAI provider  — 추가 의존성 없음 (urllib만 사용)
 ```
 
 설치 확인:

@@ -1,5 +1,5 @@
 /.idea
 /.playwright-mcp
 /tmp/
-.secret/gemini.json
+.secret/*.json
 *.stackdump

@@ -8,4 +8,10 @@ def get_provider(name: str):
     if name in ("comfyui", "z-image", "z-image-turbo"):
         from .comfyui_provider import ComfyUIProvider
         return ComfyUIProvider()
-    raise ValueError(f"Unknown provider: {name}. Available: gemini, comfyui (z-image)")
+    if name in ("openai", "gpt-image", "gpt-image-2", "gpt2"):
+        from .openai_provider import OpenAIImageProvider
+        return OpenAIImageProvider()
+    raise ValueError(
+        f"Unknown provider: {name}. "
+        "Available: gemini, comfyui (z-image), openai (gpt-image-2)"
+    )
