@@ -128,6 +128,13 @@ Gemini 외 대안 프로바이더. `image-gen.py --provider openai` (별칭 `gpt
 - 의존성 없음(urllib). 시크릿 `.secret/openai.json`(`image_model: "gpt-image-2"`).
 - 실증: vocal-ex 14프레임, 그린 잔여 0px, S1 35/35. 파일럿 3프레임 선검증 후 전체 진행.
 
+**팔레트 주의 — 모던 색상엔 per-character 팔레트 필수 (v2.9.1~)**: 글로벌 다크판타지
+어스톤 팔레트(악단용)를 강제하면 교복/아이돌의 네이비·레드·옐로·데님 색이 왜곡된다.
+대신 **각 캐릭터 컨셉에서 48색 적응 팔레트를 추출**(`PIL.quantize(colors=48, MAXCOVERAGE)`)해
+`image/sprite/idol-palettes/{slug}.json` 으로 저장 후 후처리에 사용 → 드리프트 0.0, 고유색 보존.
+- 실증: vox7 걸그룹 7인(레드/옐로/화이트/네이비/데님/와인/크림) 전원 93/A, 드리프트 0.0.
+- 가이드: 원본 팔레트가 분명한 컨셉아트(악단) → 글로벌 팔레트. 다채로운 신규 캐릭터 → per-character.
+
 > 선택 가이드: 대량(19~36명 × 다프레임)·시드 재현성 필요 → **Gemini**. 단일 캐릭터·풍부한 표정/포즈
 > + 컨셉 우선 설계 → **gpt-image-2**. 편집(edit)은 두 프로바이더 모두 지원.
 

@@ -6,4 +6,6 @@
 __pycache__/
 # video-motion-analysis 스킬이 받은 원본 영상은 대용량이라 제외 (분석 몽타주 PNG는 커밋)
 image/video-analysis/**/video.*
+# gpt-image-2 raw 프레임 렌더는 대용량 중간 산출물이라 제외 (컨셉/최종 시트는 커밋)
+image/openai/*-f*.png
 .claude/settings.local.json

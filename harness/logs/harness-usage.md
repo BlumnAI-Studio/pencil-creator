@@ -30,3 +30,4 @@
 | 2026-06-06 | S | 픽셀 음악단 19명 스프라이트 시트 (19×idle4f+play4f=152프레임, 첫 Case S, v2.7.0 신설, A 8명 + B 11명) | 평균 77/100 B | [로그](2026-06-06-pixel-orchestra-caseS.md) |
 | 2026-06-06 | W | Pixel Orchestra MIDI 데모 sample14 (첫 S→W ×1.3, @tonejs/midi+Tone.js, 19캐릭터×2액션+5 PD MIDI+3 stages, midi-orchestra 지식 축적) | 91/100 A | [로그](2026-06-06-pixel-orchestra-caseW.md) |
 | 2026-06-13 | S | vocal-ex 보컬 확장 스프라이트 (실제 가수 영상 동작 분석 기반, gpt-image-2 컨셉+edit 14프레임=idle6+play8, 기존 8f→1.75배, 그린잔여0) | 93/100 A | [로그](2026-06-13-vocal-ex-caseS.md) |
+| 2026-06-13 | S | vox7 걸그룹 7인 동시영입 (실제 걸그룹 영상 분석, gpt-image-2 105호출, 멤버별 의상·헤어 차별화 + 리듬 스탠드 댄스 idle6+dance8, per-character 팔레트로 모던색 보존 드리프트0, sample15 통합 63캐릭터) | 7인 평균 93/100 A | [로그](2026-06-13-vox7-girlgroup-caseS.md) |
