@@ -4,8 +4,9 @@
 .secret/*.json
 *.stackdump
 __pycache__/
-# video-motion-analysis 스킬이 받은 원본 영상은 대용량이라 제외 (분석 몽타주 PNG는 커밋)
-image/video-analysis/**/video.*
+# 영상 분석 산출물(원본 영상·콘택트 시트)은 대용량 리소스라 관리 대상에서 제외.
+# 이미 커밋된 파일은 추적 유지(삭제 안 함) — 신규/대용량만 무시.
+image/video-analysis/
 # gpt-image-2 raw 프레임 렌더는 대용량 중간 산출물이라 제외 (컨셉/최종 시트는 커밋)
 image/openai/*-f*.png
 .claude/settings.local.json
