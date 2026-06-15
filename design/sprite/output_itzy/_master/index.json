@@ -1,0 +1,33 @@
+{
+  "version": "2.7.0",
+  "characters": {
+    "itzy-center": {
+      "row": 0,
+      "actions": {
+        "idle": {
+          "sheet": "itzy-center/idle.png",
+          "json": "itzy-center/idle.json"
+        },
+        "play": {
+          "sheet": "itzy-center/play.png",
+          "json": "itzy-center/play.json"
+        },
+        "playex": {
+          "sheet": "itzy-center/playex.png",
+          "json": "itzy-center/playex.json"
+        }
+      }
+    }
+  },
+  "actions": [
+    "idle",
+    "play",
+    "playex"
+  ],
+  "master_sheet": "_master/orchestra-master.png",
+  "frame_size": [
+    192,
+    192
+  ],
+  "padding": 8
+}

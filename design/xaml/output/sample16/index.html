@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample 16 — ITZY 센터 댄서 (영상 동작 분석 → 14프레임 스프라이트)</title>
+<style>
+  :root{
+    --bg0:#0a0710; --bg1:#1a0f1f; --panel:#1c1322; --panel2:#120b18;
+    --line:#3a2a44; --ink:#f5edf7; --sub:#a290ac; --accent:#e8b84b; --gold:#f0c95a;
+    --new:#e4326f; --pink:#ff6ba6;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#2a1530,var(--bg0) 70%);
+       color:var(--ink);font-family:"Segoe UI",system-ui,sans-serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 80px;}
+  header h1{font-size:25px;margin:0 0 6px;letter-spacing:.4px;}
+  header h1 b{color:var(--gold);}
+  header .sub{color:var(--sub);font-size:13.5px;line-height:1.65;max-width:820px;}
+  .pill{display:inline-block;font-size:11px;color:var(--accent);border:1px solid var(--line);
+        border-radius:999px;padding:2px 10px;margin-right:6px;background:#1a0f22;}
+
+  /* hero */
+  .hero{margin:24px 0 8px;background:linear-gradient(180deg,#241430,#140b1c);
+        border:1px solid #4a2c54;border-radius:18px;padding:22px;box-shadow:0 16px 50px #000a;}
+  .hero .ttl{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .hero .ttl .badge{background:var(--new);color:#fff;font-size:10px;padding:2px 7px;border-radius:6px;margin-left:8px;letter-spacing:1px;}
+  .hero .row{display:flex;gap:26px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+  .stage{display:flex;gap:20px;}
+  .feat-card{text-align:center;}
+  .feat-card .lab{font-size:11px;color:var(--pink);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+  canvas{image-rendering:pixelated;}
+  .big{width:200px;height:200px;background:repeating-conic-gradient(#23182e 0% 25%,#1a1222 0% 50%) 50%/20px 20px;border-radius:12px;border:1px solid var(--line);}
+  .concept{width:150px;height:200px;object-fit:cover;border-radius:12px;border:1px solid var(--line);}
+  .arc{flex:1;min-width:300px;color:var(--sub);font-size:12.5px;line-height:1.85;}
+  .arc b{color:var(--ink);} .arc .hot{color:var(--gold);}
+
+  /* controls */
+  .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+            background:rgba(20,11,28,.85);border:1px solid var(--line);
+            border-radius:12px;padding:11px 15px;margin:22px 0;}
+  .ctl{display:flex;align-items:center;gap:8px;color:var(--sub);font-size:12.5px;}
+  input[type=range]{accent-color:var(--accent);}
+  .spacer{flex:1;}
+  button.act{background:#2a1838;color:var(--ink);border:1px solid #4a2c54;border-radius:8px;
+             padding:7px 14px;font-size:12.5px;cursor:pointer;}
+  button.act:hover{border-color:var(--accent);}
+  button.act.on{border-color:var(--pink);background:#3a1c40;}
+
+  .section-h{margin:26px 0 14px;font-size:14px;letter-spacing:1px;color:var(--ink);
+             display:flex;align-items:center;gap:10px;}
+  .section-h .cnt{color:var(--sub);font-size:12px;font-weight:400;}
+  .section-h::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* filmstrip */
+  .strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;}
+  .fcell{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+         border-radius:12px;padding:9px 8px;text-align:center;}
+  .fcell.climax{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset;}
+  .fcell canvas{width:104px;height:104px;background:repeating-conic-gradient(#23182e 0% 25%,#1a1222 0% 50%) 50%/14px 14px;border-radius:8px;}
+  .fcell .fi{font-size:10px;color:var(--accent);margin-top:6px;letter-spacing:1px;}
+  .fcell .fl{font-size:11px;color:var(--sub);margin-top:2px;line-height:1.3;min-height:28px;}
+  footer{margin-top:40px;color:var(--sub);font-size:11.5px;text-align:center;line-height:1.7;}
+  footer b{color:var(--gold);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🎬 Sample 16 — <b>ITZY 센터 댄서</b> 스프라이트</h1>
+    <div class="sub">
+      <span class="pill">video-motion-analysis</span><span class="pill">Case S</span><span class="pill">gpt-image-2</span>
+      실제 무대 영상(<b style="color:var(--gold)">ITZY 퍼포먼스, 2분 19초</b>)을 도입부부터 클라이맥스까지 전 구간 분석하여
+      센터 포지션 한 명의 댄스를 <b>idle 6프레임 + play 8프레임 = 14프레임</b>으로 영입했습니다. (192×192 · Aseprite Hash JSON)
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="ttl">Featured — itzy-center<span class="badge">NEW</span></div>
+    <div style="color:var(--sub);font-size:12px;">실제 영상 동작 분석 → gpt-image-2 컨셉 고정 reference → 14프레임 일관성 스프라이트</div>
+    <div class="row">
+      <div class="stage">
+        <div class="feat-card">
+          <div class="lab" style="color:var(--sub)">concept</div>
+          <img class="concept" src="assets/itzy/itzy-center/concept.png" alt="concept">
+        </div>
+        <div class="feat-card">
+          <div class="lab">idle · 6f</div>
+          <canvas class="big" id="bigIdle" width="200" height="200"></canvas>
+        </div>
+        <div class="feat-card">
+          <div class="lab">play · 8f</div>
+          <canvas class="big" id="bigPlay" width="200" height="200"></canvas>
+        </div>
+        <div class="feat-card">
+          <div class="lab" style="color:var(--gold)">playex · 8f ⭐</div>
+          <canvas class="big" id="bigPlayex" width="200" height="200" style="border-color:var(--gold)"></canvas>
+        </div>
+      </div>
+      <div class="arc" id="arcText"></div>
+    </div>
+  </section>
+
+  <div class="controls">
+    <div class="ctl">속도 <input type="range" id="speed" min="0.25" max="3" step="0.25" value="1"><span id="spv">1.00×</span></div>
+    <div class="spacer"></div>
+    <button class="act" id="toggle">⏸ 일시정지</button>
+  </div>
+
+  <div class="section-h" id="idleH">idle 루프 <span class="cnt">6프레임 — 도입 베이스 동작</span></div>
+  <div class="strip" id="idleStrip"></div>
+
+  <div class="section-h" id="playH">play 시퀀스 <span class="cnt">8프레임 — 도입 → 클라이맥스 → 피날레 (전 구간 아크)</span></div>
+  <div class="strip" id="playStrip"></div>
+
+  <div class="section-h" id="playexH">playex 시퀀스 ⭐ <span class="cnt">8프레임 — 0:50~1:00 군무 정점 그루브 브레이크</span></div>
+  <div class="strip" id="playexStrip"></div>
+
+  <footer>
+    Pencil Design Harness · <b>video-motion-analysis → Case S(스프라이트) → Case W(HTML)</b> 파이프라인 · sample16<br>
+    출처 영상 youtu.be/Geh1ZEjkaeM · 골드 V·⑦ 표시는 V-arms 클라이맥스 프레임 · 속도 슬라이더로 재생 속도 조절
+  </footer>
+</div>
+
+<script src="manifest.js"></script>
+<script>
+const M = window.MANIFEST;
+const [FW] = M.frame;       // 192
+const PAD = M.padding;      // 8
+let speed = 1, running = true;
+const animators = [];
+const CH = M.groups[0].chars[0];
+
+function rectFor(i){ return { x: PAD + i*(FW+PAD), y: PAD, w: FW, h: FW }; }
+
+// single-action animator over a canvas
+function makeAnimator(canvas, file, n, dur){
+  const ctx = canvas.getContext("2d");
+  ctx.imageSmoothingEnabled = false;
+  const img = new Image(); let loaded=false;
+  img.onload = ()=>{ loaded=true; }; img.src = file;
+  let frame=0, last=0;
+  const anim = {
+    setFrame(f){ frame=f; },
+    tick(t){
+      if(!loaded) return;
+      if(running && (t-last)*speed >= dur){ frame=(frame+1)%n; last=t; }
+      const r = rectFor(frame), cw=canvas.width, ch=canvas.height;
+      ctx.clearRect(0,0,cw,ch);
+      const sc=Math.min(cw/r.w,ch/r.h)*0.98, dw=r.w*sc, dh=r.h*sc;
+      ctx.drawImage(img, r.x,r.y,r.w,r.h, (cw-dw)/2, ch-dh, dw, dh);
+    }
+  };
+  animators.push(anim);
+  return anim;
+}
+
+// static single-frame renderer (filmstrip cells)
+function makeFrameCell(file, frameIdx, n){
+  const cv = document.createElement("canvas"); cv.width=160; cv.height=160;
+  const ctx = cv.getContext("2d"); ctx.imageSmoothingEnabled=false;
+  const img = new Image();
+  img.onload = ()=>{
+    const r = rectFor(frameIdx), cw=cv.width, ch=cv.height;
+    const sc=Math.min(cw/r.w,ch/r.h)*0.98, dw=r.w*sc, dh=r.h*sc;
+    ctx.clearRect(0,0,cw,ch);
+    ctx.drawImage(img, r.x,r.y,r.w,r.h, (cw-dw)/2, ch-dh, dw, dh);
+  };
+  img.src = file;
+  return cv;
+}
+
+function buildStrip(elId, action){
+  const el = document.getElementById(elId);
+  const a = CH.actions[action];
+  const labels = CH.frameLabels[action];
+  for(let i=0;i<a.frames;i++){
+    const cell = document.createElement("div");
+    const isClimax = /climax|finale|releve|drop|whip|accent/i.test(labels[i]||"");
+    cell.className = "fcell" + (isClimax ? " climax" : "");
+    cell.appendChild(makeFrameCell(a.file, i, a.frames));
+    const fi = document.createElement("div"); fi.className="fi"; fi.textContent = "f"+i;
+    const fl = document.createElement("div"); fl.className="fl"; fl.textContent = labels[i]||"";
+    cell.appendChild(fi); cell.appendChild(fl);
+    el.appendChild(cell);
+  }
+}
+
+// hero players
+makeAnimator(document.getElementById("bigIdle"), CH.actions.idle.file, CH.actions.idle.frames, 150);
+makeAnimator(document.getElementById("bigPlay"), CH.actions.play.file, CH.actions.play.frames, 120);
+makeAnimator(document.getElementById("bigPlayex"), CH.actions.playex.file, CH.actions.playex.frames, 110);
+
+document.getElementById("arcText").innerHTML =
+  `<b>play (전 구간 아크 8f):</b> 트리플스텝 스윕 → 발 포인트·머리 아이솔 → 슬라이드 어퍼 → 푸시풀 빌드 →
+   <span class="hot">V-arms 클라이맥스 ①</span> → 프리즈 → <span class="hot">V-arms 릴레베 ②</span> → <span class="hot">그랜드 피날레</span>.<br>
+   <b style="color:var(--gold)">playex (0:50~1:00 군무 정점 8f) ⭐:</b> 대각 포인트 → 크로스 스윕 → <span class="hot">로우 그루브 드롭</span> →
+   스냅업 팝 → <span class="hot">헤어휩 턴</span> → 오버헤드 리치 → 힙히트 어티튜드 → <span class="hot">파워 액센트</span>.<br>
+   idle 6f(도입 베이스) + play 8f(전 구간) + playex 8f(클라이맥스 그루브) = <b>22프레임</b> · 실측 0:00~2:14.`;
+
+buildStrip("idleStrip", "idle");
+buildStrip("playStrip", "play");
+buildStrip("playexStrip", "playex");
+
+function loop(t){ for(const a of animators) a.tick(t); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+document.getElementById("speed").addEventListener("input", e=>{
+  speed = parseFloat(e.target.value); document.getElementById("spv").textContent = speed.toFixed(2)+"×";
+});
+document.getElementById("toggle").addEventListener("click", e=>{
+  running = !running; e.target.classList.toggle("on", !running);
+  e.target.textContent = running ? "⏸ 일시정지" : "▶ 재생";
+});
+</script>
+</body>
+</html>

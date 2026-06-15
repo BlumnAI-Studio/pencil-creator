@@ -1,0 +1,16 @@
+{
+  "collection": "itzy",
+  "source": "https://www.youtube.com/watch?v=Geh1ZEjkaeM",
+  "characters": [
+    {
+      "slug": "itzy-center",
+      "name": "ITZY Center Dancer",
+      "desc": "K-pop female idol center dancer, long dark-brown wavy hair, champagne-gold sequined long-sleeve top, gold flared mini skirt, black opaque tights, gold ankle boots",
+      "actions": {
+        "idle": 6,
+        "play": 8,
+        "playex": 8
+      }
+    }
+  ]
+}
